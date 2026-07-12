@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vamos programar juntos · Aulas 1, 2 e 3 — Python</title>
+<style>
+  :root{
+    --navy:#1B2A4A; --blue:#2E5EAA; --yellow:#F2B705;
+    --lightblue:#EAF1FB; --lightyellow:#FFF8E1; --green:#1E8E5A; --red:#C0392B;
+    --grey:#5A6472; --bg:#F4F6FA; --code-bg:#1E1E2E; --code-fg:#F5F5F5;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; background:var(--bg); color:#222; line-height:1.6;}
+  .wrap{max-width:940px; margin:0 auto; padding:20px 16px 70px;}
+
+  header.hero{background:linear-gradient(135deg, var(--navy), var(--blue)); color:#fff; padding:26px 22px; border-radius:14px; margin-bottom:16px; box-shadow:0 6px 18px rgba(27,42,74,0.25);}
+  header.hero .kicker{font-size:12.5px; opacity:.85; letter-spacing:.5px; text-transform:uppercase;}
+  header.hero h1{margin:6px 0 6px; font-size:24px;}
+  header.hero p{margin:0; opacity:.92; font-size:14px;}
+
+  .howto{background:#fff; border:1px solid #E7ECF5; border-radius:12px; padding:14px 18px; margin-bottom:16px; font-size:13.5px;}
+  .howto b{color:var(--navy);}
+
+  nav.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; position:sticky; top:8px; z-index:20;}
+  nav.tabs button{flex:1 1 auto; min-width:110px; border:none; background:#fff; color:var(--navy); padding:11px 10px; border-radius:10px; font-weight:600; font-size:13px; cursor:pointer; box-shadow:0 2px 6px rgba(0,0,0,0.1); transition:.15s;}
+  nav.tabs button.active{background:var(--navy); color:#fff;}
+  nav.tabs button:hover{transform:translateY(-1px);}
+
+  section.panel{display:none; animation:fade .25s ease;}
+  section.panel.active{display:block;}
+  @keyframes fade{from{opacity:0; transform:translateY(4px);} to{opacity:1; transform:translateY(0);}}
+
+  .aula-head{color:#fff; border-radius:12px; padding:18px 20px; margin-bottom:10px;}
+  .aula-head .tag{font-size:12px; opacity:.85; text-transform:uppercase; letter-spacing:.5px;}
+  .aula-head h2{margin:4px 0 4px; font-size:20px;}
+  .aula-head p{margin:0; font-size:13.5px; opacity:.92;}
+
+  .progress-wrap{background:#fff; border:1px solid #E7ECF5; border-radius:10px; padding:10px 14px; margin-bottom:16px; font-size:12.5px; color:var(--grey);}
+  .progress-mini{height:7px; background:#E7ECF5; border-radius:4px; overflow:hidden; margin-top:6px;}
+  .progress-mini .fill{height:100%; background:var(--green); width:0%; transition:.35s;}
+
+  .station{border:1px solid #E7ECF5; border-radius:12px; padding:16px 18px; margin-bottom:14px; background:#fff; box-shadow:0 2px 8px rgba(20,30,60,0.05);}
+  .station-head{display:flex; align-items:center; gap:10px; margin-bottom:10px;}
+  .station-num{background:var(--navy); color:#fff; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:12px; flex:none;}
+  .station-head h3{margin:0; font-size:15px; color:var(--navy);}
+  .station p, .station li{font-size:13.8px; color:#333;}
+  .station ul{margin:6px 0; padding-left:20px;}
+
+  .teacher-msg{background:#EAF1FB; border-left:4px solid var(--blue); padding:10px 14px; border-radius:0 8px 8px 0; margin:10px 0; font-size:13.6px;}
+  .teacher-msg .who{font-weight:700; color:var(--navy); display:block; margin-bottom:2px; font-size:12.5px;}
+
+  .box{border-radius:10px; padding:12px 14px; margin:10px 0; font-size:13.6px;}
+  .box.blue{background:var(--lightblue); border:1px solid #C7D8F2;}
+  .box.yellow{background:var(--lightyellow); border:1px solid #F0DFA0;}
+  .box b.title{display:block; color:var(--navy); margin-bottom:4px;}
+
+  pre.code{background:var(--code-bg); color:var(--code-fg); padding:12px 14px; border-radius:8px; font-family:"SF Mono",Consolas,Monaco,monospace; font-size:12.6px; overflow-x:auto; margin:10px 0; white-space:pre;}
+  .reveal-btn{background:var(--yellow); color:#3a2f00; border:none; padding:7px 14px; border-radius:20px; font-weight:600; font-size:12.5px; cursor:pointer; margin:4px 4px 6px 0;}
+  .reveal-btn:hover{filter:brightness(0.95);}
+  .output-box{display:none; background:#0d0d14; color:#8CF08C; font-family:monospace; font-size:12.6px; padding:10px 14px; border-radius:8px; margin:6px 0 10px; border-left:3px solid var(--green); white-space:pre-wrap;}
+  .output-box.shown{display:block;}
+
+  table.tbl{width:100%; border-collapse:collapse; margin:10px 0; font-size:12.8px;}
+  table.tbl th{background:var(--navy); color:#fff; padding:8px 10px; text-align:left;}
+  table.tbl td{padding:8px 10px; border-bottom:1px solid #E7ECF5;}
+  table.tbl tr:nth-child(even) td{background:#F7FAFF;}
+
+  .accordion{border:1px solid #E7ECF5; border-radius:8px; margin:8px 0; overflow:hidden;}
+  .accordion .q{background:#F7FAFF; padding:10px 14px; cursor:pointer; font-weight:600; font-size:13.3px; color:var(--navy); display:flex; justify-content:space-between; align-items:center;}
+  .accordion .a{display:none; padding:10px 14px; font-size:13.3px; border-top:1px solid #E7ECF5;}
+  .accordion.open .a{display:block;}
+  .accordion .arrow{transition:.2s;}
+  .accordion.open .arrow{transform:rotate(180deg);}
+
+  .exercise{border-left:4px solid var(--blue); background:#FBFCFF; padding:10px 14px; border-radius:0 8px 8px 0; margin:10px 0;}
+  .exercise .lvl{font-size:10.5px; font-weight:700; text-transform:uppercase; color:var(--blue); letter-spacing:.4px;}
+  .exercise .ans{display:none; margin-top:8px; padding:8px 10px; background:#EFFCEF; border-radius:6px; font-size:12.8px; border:1px dashed var(--green);}
+  .exercise .ans.shown{display:block;}
+  .ans-standalone{display:none; margin-top:8px; padding:10px 12px; background:#EFFCEF; border-radius:8px; font-size:12.8px; border:1px dashed var(--green);}
+  .ans-standalone.shown{display:block;}
+  .exercise button{background:#fff; border:1px solid var(--blue); color:var(--blue); padding:5px 12px; border-radius:16px; font-size:12px; cursor:pointer; margin-top:6px;}
+  .exercise button:hover{background:var(--lightblue);}
+
+  .checkq{background:#F7FAFF; border:1px solid #DCE6F5; border-radius:10px; padding:12px 14px; margin-top:10px;}
+  .checkq p.qtext{font-weight:600; font-size:13.3px; margin:0 0 8px; color:var(--navy);}
+  .quiz-opts{display:flex; flex-direction:column; gap:6px;}
+  .quiz-opt{text-align:left; border:1px solid #DCE3F0; background:#fff; padding:8px 12px; border-radius:8px; cursor:pointer; font-size:12.8px; transition:.15s;}
+  .quiz-opt:hover{background:#F7FAFF;}
+  .quiz-opt.correct{background:#EFFCEF; border-color:var(--green); color:#1E6A3F; font-weight:600;}
+  .quiz-opt.wrong{background:#FDEDEC; border-color:var(--red); color:#922B21;}
+
+  .console-box{background:#12121c; border-radius:10px; padding:14px; margin:12px 0; border:1px solid #2a2a3d;}
+  .console-label{color:#9aa3b2; font-size:11.5px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;}
+  .console-box textarea{width:100%; min-height:100px; background:#1E1E2E; color:#F5F5F5; border:1px solid #34344a; border-radius:8px; padding:10px; font-family:"SF Mono",Consolas,Monaco,monospace; font-size:12.6px; resize:vertical;}
+  .console-runrow{display:flex; justify-content:space-between; align-items:center; margin-top:8px; flex-wrap:wrap; gap:6px;}
+  .run-btn{background:var(--green); color:#fff; border:none; padding:8px 16px; border-radius:20px; font-weight:700; font-size:12.5px; cursor:pointer;}
+  .run-btn:hover{filter:brightness(1.08);}
+  .reset-btn{background:transparent; color:#9aa3b2; border:1px solid #34344a; padding:7px 14px; border-radius:20px; font-size:12px; cursor:pointer;}
+  .console-inputs{margin-top:8px; display:flex; gap:8px; flex-wrap:wrap;}
+  .console-inputs .inp-field{background:#22222f; color:#ddd; border-radius:6px; padding:6px 10px; font-size:12px; display:flex; gap:6px; align-items:center;}
+  .console-inputs .inp-field input{width:80px; padding:4px 6px; border-radius:4px; border:1px solid #444; background:#fff;}
+  .console-out{background:#0a0a10; color:#8CF08C; font-family:monospace; font-size:12.6px; padding:10px 12px; border-radius:8px; margin-top:8px; min-height:20px; white-space:pre-wrap; border-left:3px solid var(--green);}
+
+  .checkme{margin-top:10px; display:flex; align-items:center; gap:8px; font-size:12.8px; color:var(--grey);}
+  .checkme input{width:16px; height:16px;}
+
+  .mem-step-btns{display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap;}
+  .mem-step-btns button{background:var(--navy); color:#fff; border:none; padding:7px 12px; border-radius:16px; font-size:12.3px; cursor:pointer;}
+  .mem-step-btns button:disabled{background:#ccc; cursor:default;}
+  .mem-visual{display:flex; align-items:center; gap:14px; min-height:80px; flex-wrap:wrap;}
+  .label-tag{background:var(--yellow); color:#3a2f00; padding:8px 14px; border-radius:8px; font-weight:700; font-family:monospace; opacity:.15; transition:.3s;}
+  .label-tag.on{opacity:1;}
+  .arrow-connect{font-size:22px; color:var(--navy); opacity:.15; transition:.3s;}
+  .arrow-connect.on{opacity:1;}
+  .mem-slot{background:#fff; border:2px dashed #CBD5E8; padding:8px 16px; border-radius:8px; font-family:monospace; color:#aaa; transition:.3s;}
+  .mem-slot.on{border-color:var(--green); color:var(--green); font-weight:700; background:#EFFCEF;}
+
+  .calc-box{background:#fff; border:1px solid #E7ECF5; border-radius:10px; padding:14px; margin:10px 0;}
+  .calc-box input{width:80px; padding:7px 8px; border:1px solid #CCD5E5; border-radius:6px; font-size:13.5px; text-align:center;}
+  .calc-box .row{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:8px;}
+  .calc-result{display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;}
+  .calc-result .pill{background:var(--lightblue); border-radius:8px; padding:8px 12px; font-size:12.5px; min-width:110px; text-align:center;}
+  .calc-result .pill b{display:block; font-size:16px; color:var(--navy);}
+  .go-btn{background:var(--navy); color:#fff; border:none; padding:7px 14px; border-radius:16px; cursor:pointer; font-size:12.8px;}
+
+  .git-steps{display:flex; gap:0; margin:12px 0; flex-wrap:wrap;}
+  .git-step{flex:1; min-width:140px; text-align:center; padding:12px 8px; border:2px solid #E7ECF5; border-radius:8px; margin:4px; cursor:pointer; transition:.2s;}
+  .git-step.on{border-color:var(--green); background:#EFFCEF;}
+  .git-step .gi{font-size:20px;}
+  .git-step .gt{font-weight:700; font-size:12.5px; color:var(--navy); margin-top:4px;}
+  .git-step .gd{font-size:11px; color:var(--grey);}
+  .term-sim{background:#0a0a10; color:#c9c9d9; font-family:monospace; font-size:12px; padding:10px 12px; border-radius:8px; margin-top:8px; min-height:20px; white-space:pre-wrap;}
+
+  .summary-box{background:var(--lightyellow); border:1px solid #F0DFA0; border-radius:10px; padding:14px 16px; margin-top:16px;}
+  .summary-box h4{margin:0 0 6px; color:var(--navy); font-size:14px;}
+
+  .score-bar{position:sticky; bottom:0; background:#fff; border-top:1px solid #E7ECF5; padding:10px 14px; border-radius:12px 12px 0 0; box-shadow:0 -4px 12px rgba(0,0,0,0.08); margin-top:20px; display:flex; justify-content:space-between; align-items:center; font-size:13px; color:var(--navy);}
+  .score-bar b{font-size:15px;}
+  .final-note{background:linear-gradient(135deg,#FFF8E1,#FFF3CC); border:1px solid #F0DFA0; border-radius:12px; padding:16px 18px; margin-top:16px; font-size:13.8px;}
+  footer.tiny{text-align:center; font-size:11px; color:#9aa3b2; margin-top:24px;}
+  code{background:#eef2fa; padding:1px 5px; border-radius:4px; font-size:.93em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="kicker">SENAC · Programação em Python — UC1</div>
+    <h1>Vamos programar juntos — Aulas 1, 2 e 3</h1>
+    <p>Este material foi feito para ser usado como se eu estivesse do seu lado. Vá estação por estação, sem
+    pular nada, e digite os códigos você mesma(o) — é assim que a mão e a cabeça aprendem juntas.</p>
+  </header>
+
+  <div class="howto">
+    <b>Como usar:</b> cada aula está dividida em "estações" pequenas. Cada uma tem uma explicação, uma
+    analogia, e — sempre que possível — um <b>console de Python de mentirinha</b> (uma caixa escura) onde
+    você escreve o código e clica em <b>▶ Rodar</b> para ver o resultado na hora, exatamente como aconteceria
+    no computador de verdade. Use isso para <b>testar, errar, corrigir e tentar de novo</b> — é assim que se aprende.
+  </div>
+
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="a1">① Aula 1</button>
+    <button class="tab-btn" data-tab="a2">② Aula 2</button>
+    <button class="tab-btn" data-tab="a3">③ Aula 3</button>
+    <button class="tab-btn" data-tab="cola">★ Cola Rápida</button>
+  </nav>
+
+  <!-- ==================== AULA 1 ==================== -->
+  <section class="panel active" id="a1">
+    <div class="aula-head" style="background:linear-gradient(135deg,var(--navy),var(--blue));">
+      <div class="tag">Aula 1 · 9 estações</div>
+      <h2>Pensamento Computacional e o Ambiente Python</h2>
+      <p>O que é programar, de verdade — e como o computador "pensa"</p>
+    </div>
+    <div class="progress-wrap">
+      Seu progresso nesta aula: <span id="pctA1">0</span>% —
+      marque a caixinha "já entendi" ao final de cada estação, no seu ritmo.
+      <div class="progress-mini"><div class="fill" id="fillA1"></div></div>
+    </div>
+
+    <!-- Estação 1 -->
+    <div class="station">
+      <div class="station-head"><div class="station-num">1</div><h3>Bem-vindo(a) — o que vamos fazer hoje</h3></div>
+      <div class="teacher-msg"><span class="who">🧑‍🏫 Antes de começar</span>
+      Abra o VS Code (ou o editor que você usa), crie uma pasta chamada <code>aula1</code>, e dentro dela um
+      arquivo chamado <code>aula1.py</code>. Não se preocupe se ainda não souber exatamente onde clicar — o
+      importante agora é ter um lugar para digitar os códigos que vamos ver juntos. Se travar nessa parte,
+      isso não é "não saber programar" — é só familiarização com a ferramenta, e passa rápido.</div>
+      <p>Hoje vamos entender três coisas, nessa ordem: <b>(1)</b> o que realmente significa "programar", <b>(2)</b>
+      como quebrar um problema em pedaços menores (pensamento computacional), e <b>(3)</b> escrever seu primeiro
+      código de verdade, o <code>print()</code>.</p>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a1')"> Já abri meu editor e criei o arquivo aula1.py</div>
+    </div>
+
+    <!-- Estação 2 -->
+    <div class="station">
+      <div class="station-head"><div class="station-num">2</div><h3>O computador é obediente, não inteligente</h3></div>
+      <p>Isso é o ponto mais importante de hoje, então vamos com calma: o computador <b>não pensa</b>. Ele é
+      rápido e extremamente obediente — faz exatamente o que mandamos, nem mais, nem menos. Quando um programa
+      dá errado (isso se chama <b>bug</b>), o problema quase sempre está na ordem que <b>nós</b> escrevemos, e
+      não no computador em si.</p>
+      <div class="box blue"><b class="title">☕ Vamos pensar juntos: pedir um café</b>
+      Se você disser para alguém <i>"faça um café"</i>, sem mais detalhes, essa pessoa (ou um robô) pode travar —
+      não sabe os passos exatos. Mas se você disser: <i>"pegue a xícara → coloque uma colher de pó → ferva
+      200&nbsp;ml de água → despeje"</i>, agora dá para seguir — e repetir isso 1000 vezes sem errar nunca.
+      <b>Programar é escrever ordens tão detalhadas quanto essa, sem deixar nada subentendido.</b></div>
+      <div class="teacher-msg"><span class="who">✍️ Sua vez — mini desafio (no papel, sem código ainda)</span>
+      Escreva, em 4 ou 5 frases bem curtas, o passo a passo de "amarrar o cadarço do tênis". Tente ser tão
+      detalhado quanto a receita do café. Depois clique para ver uma versão possível.</div>
+      <button class="reveal-btn" onclick="toggleAns('shoelace')">▶ Ver uma versão possível</button>
+      <div class="exercise ans-standalone" id="shoelace">
+        1) Segure as duas pontas do cadarço. 2) Cruze uma ponta sobre a outra. 3) Passe uma ponta por baixo e
+        puxe, formando um nó simples. 4) Faça um laço com uma ponta. 5) Passe a outra ponta ao redor do laço e
+        puxe por dentro, formando o laço duplo. — Repare: se você pulou um "por dentro" ou "ao redor", o
+        cadarço não amarra. É exatamente assim que um algoritmo se comporta: pular um passo, ou deixá-lo vago,
+        quebra o resultado.
+      </div>
+      <div class="checkq">
+        <p class="qtext">✅ Confira se entendeu: quando um programa dá erro, de quem costuma ser o "problema"?</p>
+        <div class="quiz-opts" data-q="1">
+          <button class="quiz-opt" data-correct="false">Do computador, que é burro</button>
+          <button class="quiz-opt" data-correct="true">De quem escreveu as instruções, que deixou algo ambíguo ou fora de ordem</button>
+          <button class="quiz-opt" data-correct="false">Da eletricidade</button>
+        </div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a1')"> Entendi que o computador só obedece — ele não "pensa" sozinho</div>
+    </div>
+
+    <!-- Estação 3 -->
+    <div class="station">
+      <div class="station-head"><div class="station-num">3</div><h3>Algoritmo: a receita por trás de tudo</h3></div>
+      <p>Um <b>algoritmo</b> é uma sequência finita e ordenada de passos para resolver um problema — pense
+      numa receita de bolo:</p>
+      <ul>
+        <li><b>A ordem importa:</b> não asse antes de misturar.</li>
+        <li><b>Os passos não podem ser ambíguos:</b> "bata 5 minutos", não "bata um pouco".</li>
+        <li><b>Tem que ter um fim garantido:</b> a receita não pode rodar para sempre.</li>
+      </ul>
+      <p>Guarde essa palavra: <b>algoritmo</b>. Vamos usá-la o curso inteiro.</p>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a1')"> Entendi o que é um algoritmo</div>
+    </div>
+
+    <!-- Estação 4 -->
+    <div class="station">
+      <div class="station-head"><div class="station-num">4</div><h3>Os 4 pilares do pensamento computacional</h3></div>
+      <p>Antes de programar qualquer coisa, todo profissional passa (mesmo sem perceber) por 4 etapas mentais.
+      Clique em cada uma para ver o que significa e um exemplo do dia a dia:</p>
+      <div id="pilares" style="display:flex; gap:10px; flex-wrap:wrap;"></div>
+      <div class="checkq">
+        <p class="qtext">✅ Qual pilar está sendo usado aqui? "Para calcular o total da compra, não importa se o produto é vermelho ou azul — só o preço interessa."</p>
+        <div class="quiz-opts" data-q="2">
+          <button class="quiz-opt" data-correct="false">Decomposição</button>
+          <button class="quiz-opt" data-correct="true">Abstração (ignorar o que não importa agora)</button>
+          <button class="quiz-opt" data-correct="false">Padrões</button>
+        </div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a1')"> Consigo explicar os 4 pilares com minhas palavras</div>
+    </div>
+
+    <!-- Estação 5 -->
+    <div class="station">
+      <div class="station-head"><div class="station-num">5</div><h3>Por que Python?</h3></div>
+      <p>Python tem uma sintaxe próxima do inglês comum e menos "cerimônia" que outras linguagens. É uma
+      linguagem <b>interpretada</b> — o computador lê e executa linha por linha, na hora — e é usada por
+      empresas como Google, Netflix e Instagram.</p>
+      <div class="box yellow"><b class="title">🧪 Curiosidade</b>
+      O nome vem do grupo de comédia britânico <i>Monty Python</i> — não da cobra! E use sempre o <b>Python
+      3</b>: o Python 2 foi oficialmente descontinuado em 2020.</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a1')"> Sei por que usamos Python e por que sempre a versão 3</div>
+    </div>
+
+    <!-- Estação 6 -->
+    <div class="station">
+      <div class="station-head"><div class="station-num">6</div><h3>Agora sim: seu primeiro código, juntos</h3></div>
+      <div class="teacher-msg"><span class="who">🧑‍🏫 Vamos construir isso juntos, uma peça de cada vez</span>
+      Repare que o código abaixo tem só 2 linhas de verdade (a primeira é um comentário). Vamos entender cada
+      pedacinho antes de rodar.</div>
+      <table class="tbl">
+        <tr><th>Parte do código</th><th>O que significa</th></tr>
+        <tr><td><code>#</code></td><td>Início de um <b>comentário</b> — o Python ignora tudo depois dele nesta linha. É uma anotação só para humanos lerem.</td></tr>
+        <tr><td><code>print( )</code></td><td>Uma <b>função</b> pronta do Python que exibe algo na tela.</td></tr>
+        <tr><td><code>"texto"</code></td><td>Uma <b>string</b> (texto) — em Python, texto sempre vai entre aspas.</td></tr>
+      </table>
+      <p>Agora rode você mesma(o). Clique em <b>▶ Rodar</b> no console abaixo, veja o resultado, depois
+      <b>troque o texto pelo seu próprio nome</b> e rode de novo:</p>
+      <div class="console-box">
+        <div class="console-label"><span>console1.py</span><span>Python (simulado)</span></div>
+        <textarea id="code1"># Meu primeiro programa em Python
+print("Olá! Bem-vindo à JWC Tech.")</textarea>
+        <div class="console-runrow">
+          <div><button class="run-btn" onclick="runConsole(1)">▶ Rodar</button>
+          <button class="reset-btn" onclick="resetConsole(1, '# Meu primeiro programa em Python\nprint(&quot;Olá! Bem-vindo à JWC Tech.&quot;)')">↺ Restaurar original</button></div>
+        </div>
+        <div class="console-inputs" id="inputs1"></div>
+        <div class="console-out" id="out1">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a1')"> Rodei o código e troquei o texto pelo meu nome</div>
+    </div>
+
+    <!-- Estação 7 -->
+    <div class="station">
+      <div class="station-head"><div class="station-num">7</div><h3>Erros comuns — e por que eles acontecem</h3></div>
+      <p>Errar faz parte. O importante é reconhecer o erro e saber corrigir. Clique para ver os dois erros
+      mais comuns de quem está começando com <code>print()</code>:</p>
+      <div class="accordion" onclick="this.classList.toggle('open')">
+        <div class="q">⚠️ Print("oi") com P maiúsculo <span class="arrow">▾</span></div>
+        <div class="a">Dá erro do tipo <i>NameError</i>. O Python <b>diferencia maiúsculas de minúsculas</b>
+        (isso se chama <i>case-sensitive</i>): a função é sempre <code>print</code>, tudo minúsculo. Tente
+        digitar <code>Print("oi")</code> no console acima para ver o erro de verdade — e depois corrija.</div>
+      </div>
+      <div class="accordion" onclick="this.classList.toggle('open')">
+        <div class="q">⚠️ print(oi) sem as aspas <span class="arrow">▾</span></div>
+        <div class="a">Sem aspas, o Python pensa que <code>oi</code> é o <b>nome de uma variável</b> (assunto
+        da Aula 2!) — e como essa variável não existe, dá erro <i>NameError</i>. Texto sempre entre aspas.</div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a1')"> Testei os dois erros no console e entendi por que acontecem</div>
+    </div>
+
+    <!-- Estação 8 -->
+    <div class="station">
+      <div class="station-head"><div class="station-num">8</div><h3>Sua vez de praticar sozinha(o)</h3></div>
+      <div class="exercise">
+        <div class="lvl">Básico</div>
+        <p>Escreva um programa que imprima, em 3 linhas separadas, seu nome, sua cidade e sua profissão dos sonhos.</p>
+        <button onclick="toggleAns('e1a')">Ver uma resposta possível</button>
+        <div class="ans" id="e1a"><pre class="code" style="margin:0;">print("Ana")
+print("Rio de Janeiro")
+print("Desenvolvedora Python")</pre></div>
+      </div>
+      <div class="exercise">
+        <div class="lvl">Desafio</div>
+        <p>Uma loja precisa imprimir a mesma etiqueta de promoção 5 vezes. Escreva um programa usando <code>print</code>.</p>
+        <button onclick="toggleAns('e1b')">Ver uma resposta possível</button>
+        <div class="ans" id="e1b"><pre class="code" style="margin:0;">print("PROMOÇÃO: Leve 2 pague 1")
+print("PROMOÇÃO: Leve 2 pague 1")
+print("PROMOÇÃO: Leve 2 pague 1")
+print("PROMOÇÃO: Leve 2 pague 1")
+print("PROMOÇÃO: Leve 2 pague 1")</pre></div>
+      </div>
+      <p>Use o console abaixo (em branco) para tentar os dois exercícios antes de olhar a resposta:</p>
+      <div class="console-box">
+        <div class="console-label"><span>console2.py</span><span>Python (simulado)</span></div>
+        <textarea id="code2" placeholder="Escreva seu código aqui..."></textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(2)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs2"></div>
+        <div class="console-out" id="out2">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a1')"> Tentei os dois exercícios no console</div>
+    </div>
+
+    <!-- Estação 9 -->
+    <div class="station">
+      <div class="station-head"><div class="station-num">9</div><h3>Checkpoint final da Aula 1</h3></div>
+      <div class="checkq">
+        <p class="qtext">1) O que aparece na tela com este código?</p>
+        <pre class="code" style="margin:6px 0;">print("Bem-vindo")
+# print("Escondido")
+print("à JWC Tech")</pre>
+        <div class="quiz-opts" data-q="3">
+          <button class="quiz-opt" data-correct="false">Bem-vindo, Escondido e à JWC Tech</button>
+          <button class="quiz-opt" data-correct="true">Só "Bem-vindo" e "à JWC Tech" (a linha do meio é comentário)</button>
+          <button class="quiz-opt" data-correct="false">Nada, dá erro</button>
+        </div>
+      </div>
+      <div class="checkq">
+        <p class="qtext">2) Texto em Python deve ficar...</p>
+        <div class="quiz-opts" data-q="4">
+          <button class="quiz-opt" data-correct="false">Sem nenhuma marcação especial</button>
+          <button class="quiz-opt" data-correct="true">Sempre entre aspas (simples ou duplas)</button>
+          <button class="quiz-opt" data-correct="false">Sempre em maiúsculas</button>
+        </div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a1')"> Acertei (ou entendi) as duas perguntas do checkpoint</div>
+    </div>
+
+    <div class="summary-box">
+      <h4>✔ Resumo da Aula 1 — o que fica de hoje</h4>
+      Algoritmo = sequência finita e ordenada de passos. Pensamento computacional = decompor + achar padrões +
+      abstrair + montar o algoritmo. Python é simples e interpretado — sempre versão 3. <code>print()</code>
+      exibe; <code>#</code> comenta; texto sempre entre aspas.
+      <p style="margin-top:8px;"><b>Próxima aula:</b> um programa que sempre imprime os mesmos dados fixos é
+      meio sem graça. E se ele pudesse perguntar o seu nome, e guardar a resposta? Isso é o que vem na Aula 2:
+      <b>variáveis</b>.</p>
+    </div>
+  </section>
+
+  <!-- ==================== AULA 2 ==================== -->
+  <section class="panel" id="a2">
+    <div class="aula-head" style="background:linear-gradient(135deg,var(--blue),#3f7fd6);">
+      <div class="tag">Aula 2 · 10 estações</div>
+      <h2>Variáveis, Tipos de Dados e Entrada/Saída</h2>
+      <p>Como o computador guarda informação e conversa com o usuário</p>
+    </div>
+    <div class="progress-wrap">Seu progresso nesta aula: <span id="pctA2">0</span>%
+      <div class="progress-mini"><div class="fill" id="fillA2"></div></div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">1</div><h3>Revisão relâmpago da Aula 1</h3></div>
+      <p>Antes de seguir, vamos relembrar rapidinho — isso ajuda a fixar de verdade (é a chamada "revisão
+      espaçada"):</p>
+      <ul>
+        <li>Algoritmo = sequência finita e ordenada de passos, como uma receita.</li>
+        <li><code>print()</code> mostra algo na tela; <code>#</code> é comentário; texto sempre entre aspas.</li>
+      </ul>
+      <div class="checkq">
+        <p class="qtext">O que este código imprime?</p>
+        <pre class="code" style="margin:6px 0;">print("Bem-vindo")
+# print("Escondido")
+print("à JWC Tech")</pre>
+        <div class="quiz-opts" data-q="5">
+          <button class="quiz-opt" data-correct="true">"Bem-vindo" e "à JWC Tech"</button>
+          <button class="quiz-opt" data-correct="false">As três linhas</button>
+        </div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a2')"> Revisei a Aula 1</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">2</div><h3>A memória do computador</h3></div>
+      <div class="box blue"><b class="title">🗂️ Mesa de trabalho × 🗄️ Armário</b>
+      <b>Mesa de trabalho (RAM):</b> rápida, mas se esvazia quando o programa termina — é onde as variáveis
+      vivem enquanto o programa está rodando.<br><br>
+      <b>Armário (disco / HD-SSD):</b> guarda as coisas de forma permanente, mesmo com o computador desligado.
+      Isso é assunto de aulas futuras — hoje trabalhamos só na "mesa".</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a2')"> Entendi a diferença entre memória (RAM) e disco</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">3</div><h3>O que é uma variável, por dentro</h3></div>
+      <p>Uma variável é um <b>nome (etiqueta) que aponta para um valor guardado na memória</b>. Clique no botão
+      abaixo e acompanhe, passo a passo, exatamente o que o Python faz ao ler <code>nome = "Ana"</code>:</p>
+      <div class="mem-step-btns">
+        <button id="memBtn" onclick="memStep()">▶ Próximo passo</button>
+        <button onclick="memReset()">↺ Reiniciar</button>
+      </div>
+      <div class="mem-visual">
+        <div class="mem-slot" id="memSlot">( vazio )</div>
+        <div class="arrow-connect" id="memArrow">←</div>
+        <div class="label-tag" id="memLabel">nome</div>
+      </div>
+      <p id="memExplain" style="font-size:13.2px; color:var(--grey); min-height:20px;">Clique em "Próximo passo" para começar.</p>
+      <div class="box yellow"><b class="title">⚠️ O = não é o igual da matemática</b>
+      Leia sempre da direita para a esquerda: "pegue o valor da direita e guarde na etiqueta da esquerda".
+      Teste isso no console abaixo:</div>
+      <div class="console-box">
+        <div class="console-label"><span>console3.py</span><span>Python (simulado)</span></div>
+        <textarea id="code3">contador = 0
+contador = contador + 1
+print(contador)</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(3)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs3"></div>
+        <div class="console-out" id="out3">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">Tente mudar o número de vezes que soma 1 e veja o resultado mudar.</p>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a2')"> Entendi que = significa "guarde o valor da direita nesta etiqueta"</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">4</div><h3>Por que os tipos existem</h3></div>
+      <div class="box blue"><b class="title">🧂 Analogia: potes de sal e açúcar</b>
+      Sal e açúcar são dois pós brancos em potes idênticos. Sem o rótulo, você não sabe qual é qual — e se
+      trocar, estraga o prato. O <b>tipo</b> é o rótulo do valor: ele diz ao Python como interpretar aquilo.</div>
+      <p>Outro exemplo: <code>21987654321</code> parece número, mas ninguém soma dois telefones nem tira a
+      média deles — na prática, é <b>texto</b>.</p>
+      <table class="tbl">
+        <tr><th>Tipo</th><th>Python</th><th>Exemplo</th><th>Serve para</th></tr>
+        <tr><td>Texto</td><td><code>str</code></td><td>"João"</td><td>nomes, endereços</td></tr>
+        <tr><td>Inteiro</td><td><code>int</code></td><td>30, -5</td><td>contagens</td></tr>
+        <tr><td>Decimal</td><td><code>float</code></td><td>19.90</td><td>preços, médias</td></tr>
+        <tr><td>Lógico</td><td><code>bool</code></td><td>True/False</td><td>decisões (veremos na Aula 4)</td></tr>
+      </table>
+      <p>Descubra o tipo de qualquer valor com <code>type()</code>. Teste:</p>
+      <div class="console-box">
+        <div class="console-label"><span>console4.py</span><span>Python (simulado)</span></div>
+        <textarea id="code4">x = 10
+y = "10"
+print(type(x))
+print(type(y))</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(4)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs4"></div>
+        <div class="console-out" id="out4">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p>Repare que o mesmo <code>+</code> se comporta diferente dependendo do tipo:</p>
+      <div class="calc-box">
+        <div class="row"><span>Escolha:</span>
+          <select id="typeDemo" onchange="typeDemoRun()">
+            <option value="str">"5" + "3"  (texto)</option>
+            <option value="int">5 + 3  (número)</option>
+          </select>
+        </div>
+        <div class="calc-result"><div class="pill">Resultado<b id="typeDemoResult">"53"</b></div></div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a2')"> Entendi por que os tipos existem e testei type()</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">5</div><h3>input() — a regra de ouro</h3></div>
+      <p>O fluxo de <code>input("Nome: ")</code>, passo a passo: <b>(1)</b> mostra a mensagem na tela,
+      <b>(2)</b> pausa e espera você digitar + Enter, <b>(3)</b> captura o que foi digitado — <b>sempre como
+      texto (str)</b> — e <b>(4)</b> guarda na variável.</p>
+      <div class="box yellow"><b class="title">⚠️ Regra de ouro (o erro nº 1 desta aula)</b>
+      <code>input()</code> SEMPRE devolve texto, mesmo que a pessoa digite um número. Para fazer conta, é
+      preciso converter antes.</div>
+      <div class="teacher-msg"><span class="who">🧑‍🏫 Vamos provocar o erro de propósito, juntos</span>
+      Rode o código abaixo (ele vai pedir uma idade). Digite qualquer número, e observe o que acontece quando
+      tentamos somar 1 a ele sem converter:</div>
+      <div class="console-box">
+        <div class="console-label"><span>console5.py</span><span>Python (simulado)</span></div>
+        <textarea id="code5">idade = input("Idade: ")
+print(idade + 1)</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(5)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs5"></div>
+        <div class="console-out" id="out5">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p>Deu erro <i>TypeError</i>, certo? O <code>input()</code> devolveu o texto "30", não o número 30 — o
+      Python não sabe somar texto com número. Agora vamos corrigir juntos, usando <b>casting</b>:</p>
+      <div class="console-box">
+        <div class="console-label"><span>console6.py</span><span>Python (simulado)</span></div>
+        <textarea id="code6">idade = int(input("Idade: "))
+print(f"Ano que vem: {idade + 1}")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(6)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs6"></div>
+        <div class="console-out" id="out6">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a2')"> Vi o erro acontecer e depois consertei com int()</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">6</div><h3>Casting: convertendo tipos</h3></div>
+      <table class="tbl">
+        <tr><th>Função</th><th>Faz o quê</th><th>Exemplo</th></tr>
+        <tr><td><code>int(x)</code></td><td>transforma em inteiro</td><td>int("30") → 30</td></tr>
+        <tr><td><code>float(x)</code></td><td>transforma em decimal</td><td>float("19.9") → 19.9</td></tr>
+        <tr><td><code>str(x)</code></td><td>transforma em texto</td><td>str(30) → "30"</td></tr>
+      </table>
+      <div class="box blue"><b class="title">Quando usar / evitar</b>
+      Use <code>int()</code>/<code>float()</code> logo após um <code>input()</code> que vai virar conta. Evite
+      converter se o dado é texto de verdade (um nome) — deixe como <code>str</code>.</div>
+      <p>O que acontece se tentarmos converter algo que não é número? Teste:</p>
+      <div class="console-box">
+        <div class="console-label"><span>console7.py</span><span>Python (simulado)</span></div>
+        <textarea id="code7">idade = int("abc")
+print(idade)</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(7)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs7"></div>
+        <div class="console-out" id="out7">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">Isso dá <i>ValueError</i> — "abc" não representa um número. É por isso que, na vida real, sistemas validam a entrada antes de converter (veremos isso na Aula 4, com condicionais).</p>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a2')"> Testei uma conversão que dá erro e entendi por quê</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">7</div><h3>f-string: misturando texto e variáveis</h3></div>
+      <p>O <code>f</code> antes das aspas "liga" o modo f-string. O Python acha tudo entre chaves <code>{ }</code>,
+      calcula, e encaixa no texto. Experimente mudar o nome e a idade abaixo:</p>
+      <div class="calc-box">
+        <div class="row">
+          <span>nome:</span><input id="fsNome" value="Ana">
+          <span>idade:</span><input id="fsIdade" value="30" type="number">
+          <button class="go-btn" onclick="fstringRun()">Gerar f-string</button>
+        </div>
+        <div class="console-out" id="fsOut" style="margin-top:0;">print(f"{nome} tem {idade} anos.")  →  Ana tem 30 anos.</div>
+      </div>
+      <p>E para formatar dinheiro, use <code>:.2f</code> (sempre 2 casas decimais):</p>
+      <div class="console-box">
+        <div class="console-label"><span>console8.py</span><span>Python (simulado)</span></div>
+        <textarea id="code8">preco = 19.9
+print(f"R$ {preco:.2f}")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(8)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs8"></div>
+        <div class="console-out" id="out8">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a2')"> Consigo montar uma f-string sozinha(o)</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">8</div><h3>Erros comuns da Aula 2</h3></div>
+      <div class="accordion" onclick="this.classList.toggle('open')">
+        <div class="q">⚠️ Escrever preço com vírgula: 19,90 <span class="arrow">▾</span></div>
+        <div class="a">Em Python, decimais usam <b>ponto</b>: <code>19.90</code>. Vírgula gera um erro de
+        sintaxe ou um bug silencioso (o Python entende como dois valores separados).</div>
+      </div>
+      <div class="accordion" onclick="this.classList.toggle('open')">
+        <div class="q">⚠️ Esquecer de converter o input() antes de somar <span class="arrow">▾</span></div>
+        <div class="a">É o erro mais comum da aula — vimos ele ao vivo na Estação 5. Sempre que for calcular
+        com um valor vindo de <code>input()</code>, converta primeiro: <code>int(input(...))</code>.</div>
+      </div>
+      <div class="accordion" onclick="this.classList.toggle('open')">
+        <div class="q">⚠️ Esquecer o "f" antes das aspas da f-string <span class="arrow">▾</span></div>
+        <div class="a">Sem o <code>f</code>, o Python trata <code>{nome}</code> como texto puro, e imprime
+        literalmente as chaves em vez do valor da variável.</div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a2')"> Revisei os 3 erros comuns</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">9</div><h3>Sua vez de praticar</h3></div>
+      <div class="exercise">
+        <div class="lvl">Básico</div>
+        <p>Peça o nome e a idade da pessoa (com input) e imprima uma frase usando f-string.</p>
+        <button onclick="toggleAns('e2a')">Ver uma resposta possível</button>
+        <div class="ans" id="e2a"><pre class="code" style="margin:0;">nome = input("Nome: ")
+idade = int(input("Idade: "))
+print(f"{nome} tem {idade} anos.")</pre></div>
+      </div>
+      <div class="exercise">
+        <div class="lvl">Avançado</div>
+        <p>Peça um preço (float) e mostre-o formatado como dinheiro, com <code>:.2f</code>.</p>
+        <button onclick="toggleAns('e2b')">Ver uma resposta possível</button>
+        <div class="ans" id="e2b"><pre class="code" style="margin:0;">preco = float(input("Preço: "))
+print(f"R$ {preco:.2f}")</pre></div>
+      </div>
+      <div class="console-box">
+        <div class="console-label"><span>console9.py</span><span>Python (simulado)</span></div>
+        <textarea id="code9" placeholder="Tente os exercícios aqui..."></textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(9)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs9"></div>
+        <div class="console-out" id="out9">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a2')"> Tentei os exercícios no console</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">10</div><h3>Checkpoint final da Aula 2</h3></div>
+      <div class="checkq">
+        <p class="qtext">1) input() sempre devolve qual tipo de valor?</p>
+        <div class="quiz-opts" data-q="6">
+          <button class="quiz-opt" data-correct="false">int</button>
+          <button class="quiz-opt" data-correct="true">str (texto)</button>
+          <button class="quiz-opt" data-correct="false">float</button>
+        </div>
+      </div>
+      <div class="checkq">
+        <p class="qtext">2) Qual é a forma correta de ler um número inteiro digitado pelo usuário?</p>
+        <div class="quiz-opts" data-q="7">
+          <button class="quiz-opt" data-correct="false">idade = input("Idade: ")</button>
+          <button class="quiz-opt" data-correct="true">idade = int(input("Idade: "))</button>
+          <button class="quiz-opt" data-correct="false">idade = "input(Idade: )"</button>
+        </div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a2')"> Fiz o checkpoint da Aula 2</div>
+    </div>
+
+    <div class="summary-box">
+      <h4>✔ Resumo da Aula 2</h4>
+      Variável = etiqueta que aponta para um valor; <code>=</code> é "receba" (direita → esquerda). Tipos: str,
+      int, float, bool — descubra com <code>type()</code>. <code>input()</code> sempre devolve texto → converta
+      (casting) para calcular. f-string monta mensagens; <code>:.2f</code> formata dinheiro.
+      <p style="margin-top:8px;"><b>Próxima aula:</b> já sabemos guardar e exibir dados, mas só fizemos contas
+      simples. Na Aula 3 vamos dominar todos os operadores aritméticos — incluindo os "estranhos" <code>//</code>
+      e <code>%</code> — e aprender <b>Git</b>, que protege e versiona o seu código.</p>
+    </div>
+  </section>
+
+  <!-- ==================== AULA 3 ==================== -->
+  <section class="panel" id="a3">
+    <div class="aula-head" style="background:linear-gradient(135deg,#8a6d00,var(--yellow)); color:#3a2f00;">
+      <div class="tag" style="color:#3a2f00;">Aula 3 · 10 estações</div>
+      <h2 style="color:#241d00;">Operadores Aritméticos, Expressões e Git</h2>
+      <p style="color:#3a2f00;">Bloco A: calcular · Bloco B: versionar o código</p>
+    </div>
+    <div class="progress-wrap">Seu progresso nesta aula: <span id="pctA3">0</span>%
+      <div class="progress-mini"><div class="fill" id="fillA3"></div></div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">1</div><h3>Revisão relâmpago das Aulas 1 e 2</h3></div>
+      <div class="checkq">
+        <p class="qtext">O que print(5 + 3) mostra? E print("5" + "3")?</p>
+        <div class="quiz-opts" data-q="8">
+          <button class="quiz-opt" data-correct="false">8 e depois 8 também</button>
+          <button class="quiz-opt" data-correct="true">8 (soma) e depois "53" (colou os textos)</button>
+          <button class="quiz-opt" data-correct="false">Erro nos dois casos</button>
+        </div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a3')"> Revisei as aulas anteriores</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">2</div><h3>Como o computador avalia uma expressão</h3></div>
+      <p>Uma <b>expressão</b> é a conta inteira, que vai sendo simplificada até sobrar um único valor.
+      <b>Operando</b> são os valores da conta (2, 3, 4...). <b>Operador</b> é o símbolo da operação (+, *...).</p>
+      <pre class="code">2 + 3 * 4
+2 + 12       # multiplicacao primeiro
+14           # depois a soma</pre>
+      <p>Assim como na matemática da escola, <b>multiplicação e divisão vêm antes de soma e subtração</b>. Na
+      dúvida, use parênteses para deixar claro. Teste você mesma(o):</p>
+      <div class="console-box">
+        <div class="console-label"><span>console10.py</span><span>Python (simulado)</span></div>
+        <textarea id="code10">print(2 + 3 * 4)
+print((2 + 3) * 4)</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(10)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs10"></div>
+        <div class="console-out" id="out10">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">Repare como os parênteses no segundo print mudam a ordem — e o resultado.</p>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a3')"> Entendi a ordem das operações (precedência)</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">3</div><h3>Os 7 operadores aritméticos</h3></div>
+      <table class="tbl">
+        <tr><th>Símbolo</th><th>Nome</th><th>Exemplo</th><th>Resultado</th></tr>
+        <tr><td><code>+</code></td><td>soma</td><td>5 + 3</td><td>8</td></tr>
+        <tr><td><code>-</code></td><td>subtração</td><td>5 - 3</td><td>2</td></tr>
+        <tr><td><code>*</code></td><td>multiplicação</td><td>5 * 3</td><td>15</td></tr>
+        <tr><td><code>/</code></td><td>divisão (sempre float)</td><td>7 / 2</td><td>3.5</td></tr>
+        <tr><td><code>//</code></td><td>divisão inteira</td><td>7 // 2</td><td>3</td></tr>
+        <tr><td><code>%</code></td><td>resto</td><td>7 % 2</td><td>1</td></tr>
+        <tr><td><code>**</code></td><td>potência</td><td>2 ** 3</td><td>8</td></tr>
+      </table>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a3')"> Conheço os 7 operadores</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">4</div><h3>Os dois "estranhos": // e % — calculadora ao vivo</h3></div>
+      <div class="box blue"><b class="title">🥚 Analogia: ovos em caixas</b>
+      Pense em 20 ovos guardados em caixas de 6: <code>20 // 6 = 3</code> (quantas caixas cheias cabem) e
+      <code>20 % 6 = 2</code> (quantos ovos sobram). <code>//</code> responde "quantos cabem";
+      <code>%</code> responde "quanto sobra".</div>
+      <div class="calc-box">
+        <div class="row">
+          <span>Total:</span><input id="calcTotal" type="number" value="27">
+          <span>Tamanho da caixa:</span><input id="calcCaixa" type="number" value="10">
+          <button class="go-btn" onclick="opCalc()">Calcular</button>
+        </div>
+        <div class="calc-result">
+          <div class="pill">total // caixa<b id="calcDiv">2</b>quantas cabem</div>
+          <div class="pill">total % caixa<b id="calcMod">7</b>quanto sobra</div>
+          <div class="pill">total / caixa<b id="calcFloat">2.7</b>divisão exata</div>
+        </div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">Experimente: total = 47, caixa = 10 → é exatamente o problema de troco em notas que vem a seguir!</p>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a3')"> Testei a calculadora com pelo menos 2 combinações diferentes</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">5</div><h3>Exemplo completo, construído juntos: troco em notas</h3></div>
+      <div class="teacher-msg"><span class="who">🧑‍🏫 Vamos seguir o rastro dos números</span>
+      Repare que cada linha usa o resultado da linha anterior. Vamos rodar e depois seguir o "rastro":
+      2 → 7 → 1 → 2.</div>
+      <div class="console-box">
+        <div class="console-label"><span>console11.py</span><span>Python (simulado)</span></div>
+        <textarea id="code11">troco = 27
+n10 = troco // 10      # 27 // 10 = 2   (2 notas de R$10)
+resto = troco % 10     # 27 % 10  = 7   (sobrou 7)
+n5 = resto // 5        # 7 // 5   = 1   (1 nota de R$5)
+moedas = resto % 5     # 7 % 5    = 2   (sobraram R$2 em moedas)
+print(f"{n10} notas de R$10")
+print(f"{n5} nota de R$5")
+print(f"R$ {moedas} em moedas")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(11)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs11"></div>
+        <div class="console-out" id="out11">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p>Agora troque <code>troco = 27</code> por outro valor (por exemplo 83) e rode de novo — confira se o
+      resultado faz sentido antes de continuar.</p>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a3')"> Rodei o exemplo e testei com outro valor de troco</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">6</div><h3>Curiosidades e cuidados</h3></div>
+      <ul>
+        <li><code>**</code> também tira raiz: <code>9 ** 0.5 = 3.0</code> (raiz quadrada de 9).</li>
+        <li>Em Python, inteiros não têm limite de tamanho — diferente de outras linguagens.</li>
+      </ul>
+      <p>E o que acontece se você tentar dividir por zero? Vamos ver ao vivo:</p>
+      <div class="console-box">
+        <div class="console-label"><span>console12.py</span><span>Python (simulado)</span></div>
+        <textarea id="code12">print(5 / 0)</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(12)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs12"></div>
+        <div class="console-out" id="out12">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a3')"> Vi o ZeroDivisionError acontecer</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">7</div><h3>Mini-projeto: Caixa JWC Market</h3></div>
+      <p>Vamos fechar o Bloco A com um mini-projeto que junta tudo: variáveis, tipos, casting, operadores e
+      f-string. Rode, depois mude o preço e a quantidade:</p>
+      <div class="console-box">
+        <div class="console-label"><span>caixa.py</span><span>Python (simulado)</span></div>
+        <textarea id="code13">preco = 25.0
+qtd = 5
+subtotal = preco * qtd
+DESCONTO = 0.10
+total = subtotal * (1 - DESCONTO)
+print(f"Subtotal: R$ {subtotal:.2f}")
+print(f"TOTAL:    R$ {total:.2f}")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(13)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs13"></div>
+        <div class="console-out" id="out13">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a3')"> Rodei o mini-projeto e testei outros valores</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">8</div><h3>Bloco B — Git: o problema que ele resolve</h3></div>
+      <div class="box blue"><b class="title">🗣️ Quem nunca teve arquivos assim?</b>
+      trabalho.docx → trabalho_v2.docx → trabalho_FINAL.docx → trabalho_agora_vai_ESSE.docx<br><br>
+      O <b>Git</b> é como um "save point" de videogame: cada <b>commit</b> é uma "foto" salva do seu código
+      naquele momento. O <b>histórico</b> é a linha do tempo de todas as fotos.</div>
+      <p>Clique nas 3 etapas, <b>na ordem</b>, para simular o fluxo:</p>
+      <div class="git-steps">
+        <div class="git-step" id="git1" onclick="gitStep(1)"><div class="gi">📁</div><div class="gt">git init</div><div class="gd">cria o repositório</div></div>
+        <div class="git-step" id="git2" onclick="gitStep(2)"><div class="gi">📥</div><div class="gt">git add</div><div class="gd">prepara o arquivo (staging)</div></div>
+        <div class="git-step" id="git3" onclick="gitStep(3)"><div class="gi">📸</div><div class="gt">git commit</div><div class="gd">salva a "foto" no histórico</div></div>
+      </div>
+      <div class="term-sim" id="gitTerm">$ _</div>
+      <div class="box yellow"><b class="title">⭐ Dica de mercado</b>
+      Git é praticamente eliminatório em processos seletivos — recrutadores olham o GitHub dos candidatos.
+      Faça commits pequenos e frequentes, com mensagens claras.</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a3')"> Simulei o fluxo init → add → commit</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">9</div><h3>Exercícios da Aula 3</h3></div>
+      <div class="exercise">
+        <div class="lvl">Bloco A</div>
+        <p>Com R$ 47, quantas notas de R$ 10 dá para trocar, e quanto sobra?</p>
+        <button onclick="toggleAns('e3a')">Ver resposta</button>
+        <div class="ans" id="e3a">47 // 10 = 4 notas de R$10, e 47 % 10 = 7 (sobram R$7). Confira na calculadora da Estação 4!</div>
+      </div>
+      <div class="exercise">
+        <div class="lvl">Bloco B</div>
+        <p>Qual é a ordem correta dos comandos Git para salvar sua primeira versão de um arquivo?</p>
+        <button onclick="toggleAns('e3b')">Ver resposta</button>
+        <div class="ans" id="e3b"><code>git init</code> → <code>git add nome_do_arquivo</code> → <code>git commit -m "mensagem"</code></div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a3')"> Fiz os exercícios da Aula 3</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">10</div><h3>Checkpoint final da Aula 3</h3></div>
+      <div class="checkq">
+        <p class="qtext">Qual operador retorna o resto de uma divisão?</p>
+        <div class="quiz-opts" data-q="9">
+          <button class="quiz-opt" data-correct="false">//</button>
+          <button class="quiz-opt" data-correct="true">%</button>
+          <button class="quiz-opt" data-correct="false">**</button>
+        </div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a3')"> Fiz o checkpoint final</div>
+    </div>
+
+    <div class="summary-box">
+      <h4>✔ Resumo da Aula 3</h4>
+      Operadores: + - * / // % ** — <code>/</code> sempre dá float, <code>//</code> dá inteiro (quantos cabem),
+      <code>%</code> é o resto (quanto sobra). Git guarda "fotos" numa linha do tempo:
+      <code>init → add → commit</code>, conferindo sempre com <code>status</code> e <code>log</code>.
+      <p style="margin-top:8px;"><b>Próxima aula:</b> o desconto da nossa loja deveria valer só acima de
+      R$ 100 — o programa precisa <b>decidir</b>. Isso é a Aula 4: condicionais (<code>if / elif / else</code>).</p>
+    </div>
+  </section>
+
+  <!-- ==================== COLA RÁPIDA ==================== -->
+  <section class="panel" id="cola">
+    <div class="aula-head" style="background:linear-gradient(135deg,var(--navy),#333d5c);">
+      <div class="tag">Material de apoio</div>
+      <h2>Cola Rápida — tudo em um lugar</h2>
+      <p>Consulte sempre que precisar, sem culpa nenhuma</p>
+    </div>
+
+    <div class="station">
+      <table class="tbl">
+        <tr><th>Aula</th><th>Conceito</th><th>Regra de ouro</th></tr>
+        <tr><td>1</td><td>print()</td><td>Exibe na tela. Texto sempre entre aspas.</td></tr>
+        <tr><td>1</td><td>#</td><td>Comentário — o Python ignora o resto da linha.</td></tr>
+        <tr><td>2</td><td>Variável</td><td>nome = valor → "guarde valor na etiqueta nome".</td></tr>
+        <tr><td>2</td><td>Tipos</td><td>str · int · float · bool — descubra com type().</td></tr>
+        <tr><td>2</td><td>input()</td><td>SEMPRE devolve texto. Para calcular: int(input(...)).</td></tr>
+        <tr><td>2</td><td>f-string</td><td>f"{var}" mistura texto e variável; :.2f formata dinheiro.</td></tr>
+        <tr><td>3</td><td>/ vs //</td><td>/ dá decimal · // dá inteiro (quantos cabem).</td></tr>
+        <tr><td>3</td><td>%</td><td>resto da divisão (quanto sobra).</td></tr>
+        <tr><td>3</td><td>Git</td><td>init → add → commit, conferindo com status e log.</td></tr>
+      </table>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><h3 style="margin:0;">🚀 Exercício final integrador — vamos fazer juntos</h3></div>
+      <p>Junte tudo o que vimos nas 3 aulas num programa só — a Ficha de Cadastro da JWC Tech. Rode o código,
+      preencha os dados pedidos, e veja tudo funcionando junto:</p>
+      <div class="console-box">
+        <div class="console-label"><span>ficha_jwc.py</span><span>Python (simulado)</span></div>
+        <textarea id="code14">print("=== FICHA JWC ===")
+nome = input("Nome: ")
+idade = int(input("Idade: "))
+cargo = input("Cargo: ")
+pretensao = float(input("Pretensao salarial: "))
+print(f"Nome: {nome}")
+print(f"Cargo: {cargo}")
+print(f"Em 5 anos: {idade + 5} anos")
+print(f"Pretensao: R$ {pretensao:.2f}")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(14)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs14"></div>
+        <div class="console-out" id="out14">▸ Clique em Rodar, preencha os campos de entrada e rode de novo.</div>
+      </div>
+    </div>
+
+    <div class="station">
+      <h3 style="margin:0 0 10px;">🎯 Quiz relâmpago — misture as 3 aulas</h3>
+      <div id="quizArea"></div>
+    </div>
+
+    <div class="final-note">
+      <b>Uma palavra final:</b> ninguém entende tudo de primeira, e tudo bem repetir uma estação (ou uma aula
+      inteira) várias vezes até fazer sentido. Você já tem a base de pensamento computacional, variáveis/tipos
+      e operadores/Git. A próxima aula (condicionais: if/elif/else) vai fazer o programa <b>decidir</b> sozinho
+      — e vai fazer muito mais sentido agora que essa base está sólida. Estou aqui, seguimos juntos.
+    </div>
+  </section>
+
+  <div class="score-bar">
+    <span>Progresso geral</span>
+    <span><b id="scoreText">0 / 4</b> abas visitadas</span>
+  </div>
+
+  <footer class="tiny">SENAC · Programação em Python · Material de Reforço interativo — Aulas 1, 2 e 3</footer>
+</div>
+
+<script>
+/* =====================================================================
+   MINI INTERPRETADOR PYTHON DIDÁTICO
+   ===================================================================== */
+function PyError(msg) { this.message = msg; this.isPyError = true; }
+function makeInt(v) { return { type: "int", value: v }; }
+function makeFloat(v) { return { type: "float", value: v }; }
+function makeStr(v) { return { type: "str", value: v }; }
+
+function pyRepr(val) {
+  if (val.type === "str") return val.value;
+  if (val.type === "int") return String(val.value);
+  if (val.type === "float") {
+    if (Number.isInteger(val.value)) return val.value.toFixed(1);
+    let s = String(Math.round(val.value * 1e10) / 1e10);
+    return s;
+  }
+  return String(val.value);
+}
+
+function tokenize(src) {
+  const tokens = []; let i = 0; const n = src.length;
+  while (i < n) {
+    const c = src[i];
+    if (c === " " || c === "\t") { i++; continue; }
+    if (c === "(") { tokens.push({ t: "LP" }); i++; continue; }
+    if (c === ")") { tokens.push({ t: "RP" }); i++; continue; }
+    if (c === ",") { tokens.push({ t: "COMMA" }); i++; continue; }
+    if (c === "*") { if (src[i+1] === "*") { tokens.push({t:"OP",v:"**"}); i+=2; continue; } tokens.push({t:"OP",v:"*"}); i++; continue; }
+    if (c === "/") { if (src[i+1] === "/") { tokens.push({t:"OP",v:"//"}); i+=2; continue; } tokens.push({t:"OP",v:"/"}); i++; continue; }
+    if ("+-%".includes(c)) { tokens.push({t:"OP",v:c}); i++; continue; }
+    if (c === '"' || c === "'") {
+      const quote = c; let j = i+1; let buf = "";
+      while (j < n && src[j] !== quote) { buf += src[j]; j++; }
+      tokens.push({t:"STR", v:buf}); i = j+1; continue;
+    }
+    if (/[0-9]/.test(c)) {
+      let j = i; let buf = "";
+      while (j < n && /[0-9.]/.test(src[j])) { buf += src[j]; j++; }
+      tokens.push({t:"NUM", v:buf}); i = j; continue;
+    }
+    if (/[a-zA-Z_]/.test(c)) {
+      let j = i; let buf = "";
+      while (j < n && /[a-zA-Z0-9_]/.test(src[j])) { buf += src[j]; j++; }
+      if (buf === "f" && (src[j] === '"' || src[j] === "'")) {
+        const quote = src[j]; let k = j+1; let sbuf = "";
+        while (k < n && src[k] !== quote) { sbuf += src[k]; k++; }
+        tokens.push({t:"FSTR", v:sbuf}); i = k+1; continue;
+      }
+      tokens.push({t:"ID", v:buf}); i = j; continue;
+    }
+    throw new PyError('SyntaxError: não entendi o caractere "' + c + '"');
+  }
+  return tokens;
+}
+
+function parseFString(raw, env) {
+  let out = ""; let i = 0;
+  while (i < raw.length) {
+    if (raw[i] === "{") {
+      let depth = 1; let j = i+1; let buf = "";
+      while (j < raw.length && depth > 0) {
+        if (raw[j] === "{") depth++;
+        else if (raw[j] === "}") { depth--; if (depth === 0) break; }
+        buf += raw[j]; j++;
+      }
+      let expr = buf, spec = null;
+      const colonIdx = buf.indexOf(":");
+      if (colonIdx !== -1) { expr = buf.slice(0, colonIdx); spec = buf.slice(colonIdx+1); }
+      const val = evalExpr(expr, env);
+      if (spec) {
+        const m = spec.match(/^\.(\d+)f$/);
+        if (m) out += Number(val.value).toFixed(Number(m[1]));
+        else out += pyRepr(val);
+      } else out += pyRepr(val);
+      i = j+1;
+    } else { out += raw[i]; i++; }
+  }
+  return out;
+}
+
+function evalExpr(src, env) {
+  const tokens = tokenize(src); let pos = 0;
+  function peek(){ return tokens[pos]; }
+  function next(){ return tokens[pos++]; }
+
+  function parseAtom() {
+    const tok = peek();
+    if (!tok) throw new PyError("SyntaxError: expressão incompleta");
+    if (tok.t === "NUM") { next(); return tok.v.includes(".") ? makeFloat(parseFloat(tok.v)) : makeInt(parseInt(tok.v,10)); }
+    if (tok.t === "STR") { next(); return makeStr(tok.v); }
+    if (tok.t === "FSTR") { next(); return makeStr(parseFString(tok.v, env)); }
+    if (tok.t === "LP") { next(); const v = parseExprBP(); if (!peek()||peek().t!=="RP") throw new PyError("SyntaxError: faltou fechar parêntese )"); next(); return v; }
+    if (tok.t === "ID") {
+      next(); const name = tok.v;
+      if (peek() && peek().t === "LP") {
+        next(); const argVal = parseExprBP();
+        if (!peek()||peek().t!=="RP") throw new PyError("SyntaxError: faltou fechar parêntese )");
+        next(); return callFn(name, argVal);
+      }
+      if (!(name in env)) throw new PyError("NameError: name '" + name + "' is not defined");
+      return env[name];
+    }
+    throw new PyError("SyntaxError: não entendi a expressão");
+  }
+
+  function callFn(name, arg) {
+    if (name === "int") {
+      if (arg.type === "str") { const v = arg.value.trim(); if (!/^-?\d+$/.test(v)) throw new PyError('ValueError: invalid literal for int() with base 10: "' + arg.value + '"'); return makeInt(parseInt(v,10)); }
+      return makeInt(Math.trunc(arg.value));
+    }
+    if (name === "float") {
+      if (arg.type === "str") { const v = arg.value.trim(); if (!/^-?\d+(\.\d+)?$/.test(v)) throw new PyError('ValueError: could not convert string to float: "' + arg.value + '"'); return makeFloat(parseFloat(v)); }
+      return makeFloat(arg.value);
+    }
+    if (name === "str") return makeStr(pyRepr(arg));
+    if (name === "type") return makeStr("<class '" + arg.type + "'>");
+    throw new PyError("NameError: name '" + name + "' is not defined");
+  }
+
+  function parseUnary() {
+    if (peek() && peek().t === "OP" && peek().v === "-") {
+      next(); const v = parseUnary();
+      if (v.type === "str") throw new PyError("TypeError: bad operand type for unary -: 'str'");
+      return v.type === "float" ? makeFloat(-v.value) : makeInt(-v.value);
+    }
+    return parseAtom();
+  }
+
+  function parsePower() {
+    const base = parseUnary();
+    if (peek() && peek().t === "OP" && peek().v === "**") {
+      next(); const exp = parsePower();
+      if (base.type === "str" || exp.type === "str") throw new PyError("TypeError: unsupported operand type(s) for **: 'str'");
+      const r = Math.pow(base.value, exp.value);
+      const bothInt = base.type === "int" && exp.type === "int" && exp.value >= 0;
+      return bothInt ? makeInt(r) : makeFloat(r);
+    }
+    return base;
+  }
+
+  function pyFloorDiv(a,b){ return Math.floor(a/b); }
+  function pyMod(a,b){ return a - Math.floor(a/b)*b; }
+
+  function parseTerm() {
+    let left = parsePower();
+    while (peek() && peek().t === "OP" && ["*","/","//","%"].includes(peek().v)) {
+      const op = next().v; const right = parsePower();
+      if (op === "*") {
+        if (left.type === "str" && right.type === "int") { left = makeStr(left.value.repeat(right.value)); continue; }
+        if (right.type === "str" && left.type === "int") { left = makeStr(right.value.repeat(left.value)); continue; }
+        if (left.type === "str" || right.type === "str") throw new PyError("TypeError: can't multiply sequence by non-int");
+        const r = left.value * right.value;
+        left = (left.type === "int" && right.type === "int") ? makeInt(r) : makeFloat(r);
+        continue;
+      }
+      if (left.type === "str" || right.type === "str") throw new PyError("TypeError: unsupported operand type(s): 'str'");
+      if (right.value === 0 && (op === "/" || op === "//" || op === "%")) throw new PyError("ZeroDivisionError: division by zero");
+      if (op === "/") { left = makeFloat(left.value / right.value); continue; }
+      if (op === "//") { const r = pyFloorDiv(left.value,right.value); left = (left.type==="int"&&right.type==="int")?makeInt(r):makeFloat(r); continue; }
+      if (op === "%") { const r = pyMod(left.value,right.value); left = (left.type==="int"&&right.type==="int")?makeInt(r):makeFloat(r); continue; }
+    }
+    return left;
+  }
+
+  function parseExprBP() {
+    let left = parseTerm();
+    while (peek() && peek().t === "OP" && ["+","-"].includes(peek().v)) {
+      const op = next().v; const right = parseTerm();
+      if (op === "+") {
+        if (left.type === "str" && right.type === "str") { left = makeStr(left.value + right.value); continue; }
+        if (left.type === "str" || right.type === "str") throw new PyError('TypeError: can only concatenate str (not "' + (left.type==="str"?right.type:left.type) + '") to str');
+        const r = left.value + right.value;
+        left = (left.type==="int"&&right.type==="int")?makeInt(r):makeFloat(r);
+        continue;
+      }
+      if (op === "-") {
+        if (left.type === "str" || right.type === "str") throw new PyError("TypeError: unsupported operand type(s) for -: 'str'");
+        const r = left.value - right.value;
+        left = (left.type==="int"&&right.type==="int")?makeInt(r):makeFloat(r);
+        continue;
+      }
+    }
+    return left;
+  }
+
+  const result = parseExprBP();
+  if (pos < tokens.length) throw new PyError("SyntaxError: sobrou algo inesperado na expressão");
+  return result;
+}
+
+function stripComment(line) {
+  let inStr = false, quote = "";
+  for (let i=0;i<line.length;i++){
+    const c = line[i];
+    if (inStr) { if (c === quote) inStr = false; continue; }
+    if (c === '"' || c === "'") { inStr = true; quote = c; continue; }
+    if (c === "#") return line.slice(0,i);
+  }
+  return line;
+}
+
+function runProgram(code) {
+  const env = {}; const outputLines = [];
+  const lines = code.split("\n");
+  for (let rawLine of lines) {
+    let line = stripComment(rawLine).trim();
+    if (line === "") continue;
+    try {
+      const assignMatch = line.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\s*=\s*(.+)$/);
+      const printMatch = line.match(/^print\s*\((.*)\)\s*$/);
+      if (printMatch) {
+        const val = evalExpr(printMatch[1], env);
+        outputLines.push(pyRepr(val));
+      } else if (assignMatch) {
+        const val = evalExpr(assignMatch[2], env);
+        env[assignMatch[1]] = val;
+      } else {
+        throw new PyError("SyntaxError: não entendi esta linha (o simulador só entende print() e variavel = valor)");
+      }
+    } catch (e) {
+      outputLines.push((e && e.message) ? e.message : String(e));
+      break;
+    }
+  }
+  return outputLines.join("\n");
+}
+
+/* =====================================================================
+   CONSOLE UI
+   ===================================================================== */
+function runConsole(id){
+  const ta = document.getElementById('code'+id);
+  const code = ta.value;
+  const out = document.getElementById('out'+id);
+  const inputsWrap = document.getElementById('inputs'+id);
+  const re = /input\(\s*("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*')\s*\)/g;
+  let m; const matches = [];
+  while ((m = re.exec(code))) { matches.push({ full: m[0], prompt: m[1].slice(1,-1) }); }
+
+  if (matches.length) {
+    const needsRender = inputsWrap.dataset.forCode !== code;
+    if (needsRender) {
+      inputsWrap.dataset.forCode = code;
+      inputsWrap.innerHTML = '<div style="font-size:11px;color:#bbb;margin-bottom:6px; width:100%;">📝 Este código pede dados com input() — preencha os valores abaixo (como se você estivesse digitando) e clique em ▶ Rodar de novo:</div>' +
+        matches.map((mt,i)=>`<div class="inp-field">${(mt.prompt||'valor')}<input data-idx="${i}"></div>`).join('');
+      out.textContent = "▸ Preencha os campos de entrada acima e clique em ▶ Rodar novamente.";
+      return;
+    }
+    const fields = inputsWrap.querySelectorAll('input');
+    let finalCode = code;
+    matches.forEach((mt,i)=>{
+      const val = fields[i] ? fields[i].value : "";
+      finalCode = finalCode.replace(mt.full, JSON.stringify(val));
+    });
+    try { out.textContent = runProgram(finalCode) || "(nenhuma saída — use print() para mostrar algo)"; }
+    catch(e){ out.textContent = "Erro: " + e.message; }
+    return;
+  }
+  inputsWrap.innerHTML = ""; inputsWrap.dataset.forCode = "";
+  try { out.textContent = runProgram(code) || "(nenhuma saída — use print() para mostrar algo)"; }
+  catch(e){ out.textContent = "Erro: " + e.message; }
+}
+
+function resetConsole(id, original){
+  document.getElementById('code'+id).value = original;
+  document.getElementById('out'+id).textContent = "▸ Clique em Rodar para ver a saída aqui.";
+  document.getElementById('inputs'+id).innerHTML = "";
+  document.getElementById('inputs'+id).dataset.forCode = "";
+}
+
+/* =====================================================================
+   TABS
+   ===================================================================== */
+const tabBtns = document.querySelectorAll('.tab-btn');
+const panels = document.querySelectorAll('.panel');
+const visited = new Set(['a1']);
+function updateScore(){ document.getElementById('scoreText').textContent = visited.size + ' / 4'; }
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabBtns.forEach(b => b.classList.remove('active'));
+    panels.forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+    visited.add(btn.dataset.tab);
+    updateScore();
+  });
+});
+updateScore();
+
+function toggleOutput(id){ document.getElementById(id).classList.toggle('shown'); }
+function toggleAns(id){ document.getElementById(id).classList.toggle('shown'); }
+
+/* progresso por aula (checkboxes "já entendi") */
+const doneCounts = { a1:0, a2:0, a3:0 };
+const totalStations = { a1:9, a2:10, a3:10 };
+function markDone(el, aula){
+  doneCounts[aula] += el.checked ? 1 : -1;
+  if (doneCounts[aula] < 0) doneCounts[aula] = 0;
+  const pct = Math.min(100, Math.round((doneCounts[aula] / totalStations[aula]) * 100));
+  document.getElementById('pct'+aula.toUpperCase()).textContent = pct;
+  document.getElementById('fill'+aula.toUpperCase()).style.width = pct + '%';
+}
+
+/* ---------- PILARES (Aula 1) ---------- */
+const pilares = [
+  {t:"1 · Decomposição", d:"Quebrar um problema grande em partes menores. Ex: \"fazer o jantar\" → comprar, cortar, cozinhar, servir."},
+  {t:"2 · Padrões", d:"Perceber o que se repete. Ex: toda nota fiscal tem item, preço e quantidade."},
+  {t:"3 · Abstração", d:"Ignorar detalhes irrelevantes agora. Ex: para somar preços, a cor do produto não importa."},
+  {t:"4 · Algoritmo", d:"O passo a passo final, pronto para executar. Ex: 1) some os preços 2) aplique desconto 3) mostre o total."},
+];
+const pilaresDiv = document.getElementById('pilares');
+pilares.forEach((p) => {
+  const el = document.createElement('div');
+  el.style.cssText = "flex:1 1 200px; background:#F7FAFF; border:1px solid #DCE6F5; border-radius:10px; padding:12px 14px; cursor:pointer;";
+  el.innerHTML = `<div style="font-weight:700; color:var(--navy); font-size:13.3px;">${p.t}</div><div class="pdesc" style="font-size:12.6px; color:#555; margin-top:6px; display:none;">${p.d}</div>`;
+  el.addEventListener('click', () => {
+    const d = el.querySelector('.pdesc');
+    d.style.display = d.style.display === 'none' ? 'block' : 'none';
+  });
+  pilaresDiv.appendChild(el);
+});
+
+/* ---------- MEMÓRIA (Aula 2) ---------- */
+let memStepN = 0;
+function memStep(){
+  memStepN++;
+  const slot = document.getElementById('memSlot');
+  const label = document.getElementById('memLabel');
+  const arrow = document.getElementById('memArrow');
+  const explain = document.getElementById('memExplain');
+  if (memStepN === 1) { slot.textContent = '"Ana"'; slot.classList.add('on'); explain.textContent = 'Passo 1: o Python avalia o lado direito ("Ana") e guarda numa parte livre da memória.'; }
+  else if (memStepN === 2) { label.classList.add('on'); explain.textContent = 'Passo 2: o Python cria a etiqueta "nome".'; }
+  else if (memStepN === 3) { arrow.classList.add('on'); explain.textContent = 'Passo 3: a etiqueta é ligada à memória. A partir daí, nome significa "vá lá e traga Ana".'; document.getElementById('memBtn').disabled = true; }
+}
+function memReset(){
+  memStepN = 0;
+  document.getElementById('memSlot').textContent = '( vazio )';
+  document.getElementById('memSlot').classList.remove('on');
+  document.getElementById('memLabel').classList.remove('on');
+  document.getElementById('memArrow').classList.remove('on');
+  document.getElementById('memExplain').textContent = 'Clique em "Próximo passo" para começar.';
+  document.getElementById('memBtn').disabled = false;
+}
+
+/* ---------- TYPE DEMO (Aula 2) ---------- */
+function typeDemoRun(){
+  const v = document.getElementById('typeDemo').value;
+  document.getElementById('typeDemoResult').textContent = v === 'str' ? '"53"  (colou os textos)' : '8  (somou os números)';
+}
+
+/* ---------- F-STRING (Aula 2) ---------- */
+function fstringRun(){
+  const nome = document.getElementById('fsNome').value || 'Ana';
+  const idade = document.getElementById('fsIdade').value || '30';
+  document.getElementById('fsOut').textContent = `print(f"{nome} tem {idade} anos.")  →  ${nome} tem ${idade} anos.`;
+}
+
+/* ---------- OPERATOR CALC (Aula 3) ---------- */
+function opCalc(){
+  const total = parseInt(document.getElementById('calcTotal').value) || 0;
+  const caixa = parseInt(document.getElementById('calcCaixa').value) || 1;
+  document.getElementById('calcDiv').textContent = Math.floor(total / caixa);
+  document.getElementById('calcMod').textContent = total % caixa;
+  document.getElementById('calcFloat').textContent = (total / caixa).toFixed(2).replace(/\.00$/, '.0');
+}
+
+/* ---------- GIT STEPS (Aula 3) ---------- */
+let gitDone = 0;
+const gitMsgs = {
+  1: '$ git init\nInitialized empty Git repository.\n\n→ cria o repositório vazio nesta pasta.',
+  2: '$ git add caixa.py\n$ git status\n  modified: caixa.py (em verde)\n\n→ o arquivo vai para a área de staging (preparação).',
+  3: '$ git commit -m "Cria caixa"\n[main (root-commit)] Cria caixa\n\n→ salva a "foto" no histórico. Rode git log para ver a linha do tempo!'
+};
+function gitStep(n){
+  const term = document.getElementById('gitTerm');
+  if (n !== gitDone + 1) { term.textContent = '$ ops! siga a ordem certa: init → add → commit.'; return; }
+  gitDone = n;
+  document.getElementById('git'+n).classList.add('on');
+  term.textContent = gitMsgs[n];
+}
+
+/* ---------- QUIZ (checkq genérico, usado em várias estações) ---------- */
+document.querySelectorAll('.quiz-opts').forEach(div => {
+  div.querySelectorAll('.quiz-opt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (div.dataset.answered) return;
+      div.dataset.answered = "1";
+      div.querySelectorAll('.quiz-opt').forEach(b => {
+        if (b.dataset.correct === "true") b.classList.add('correct');
+        else if (b === btn) b.classList.add('wrong');
+      });
+    });
+  });
+});
+
+/* ---------- QUIZ FINAL (Cola Rápida) ---------- */
+const quiz = [
+  {q:"O que print(\"5\" + \"3\") mostra na tela?", opts:["8","53","erro"], correct:1},
+  {q:"input() sempre devolve qual tipo?", opts:["int","str (texto)","float"], correct:1},
+  {q:"Qual operador retorna o resto de uma divisão?", opts:["//","%","**"], correct:1},
+  {q:"Qual é o comando que salva uma \"foto\" do código no histórico do Git?", opts:["git add","git init","git commit"], correct:2},
+];
+const quizArea = document.getElementById('quizArea');
+quiz.forEach((item, qi) => {
+  const div = document.createElement('div');
+  div.className = 'checkq';
+  div.style.marginBottom = '10px';
+  const optsHtml = item.opts.map((o,oi) => `<button class="quiz-opt" data-oi="${oi}">${o}</button>`).join('');
+  div.innerHTML = `<p class="qtext">${qi+1}. ${item.q}</p><div class="quiz-opts">${optsHtml}</div>`;
+  quizArea.appendChild(div);
+  div.querySelectorAll('.quiz-opt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (div.dataset.answered) return;
+      div.dataset.answered = "1";
+      const oi = parseInt(btn.dataset.oi);
+      div.querySelectorAll('.quiz-opt').forEach((b,i) => {
+        if (i === item.correct) b.classList.add('correct');
+        else if (i === oi) b.classList.add('wrong');
+      });
+    });
+  });
+});
+</script>
+</body>
+</html>
