@@ -163,6 +163,7 @@
     <button class="tab-btn active" data-tab="a1">① Aula 1</button>
     <button class="tab-btn" data-tab="a2">② Aula 2</button>
     <button class="tab-btn" data-tab="a3">③ Aula 3</button>
+    <button class="tab-btn" data-tab="a4">④ Aula 4</button>
     <button class="tab-btn" data-tab="cola">★ Cola Rápida</button>
   </nav>
 
@@ -856,6 +857,438 @@ print(f"TOTAL:    R$ {total:.2f}")</textarea>
     </div>
   </section>
 
+  <!-- ==================== AULA 4 ==================== -->
+  <section class="panel" id="a4">
+    <div class="aula-head" style="background:linear-gradient(135deg,#5a1e8a,#8a3fd6);">
+      <div class="tag">Aula 4 · Bloco A: decidir · Bloco B: publicar na nuvem</div>
+      <h2>Estruturas Condicionais e Git Remoto</h2>
+      <p>Ensinando o programa a escolher caminhos diferentes</p>
+    </div>
+    <div class="progress-wrap">Seu progresso nesta aula: <span id="pctA4">0</span>%
+      <div class="progress-mini"><div class="fill" id="fillA4"></div></div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">1</div><h3>Revisão relâmpago das Aulas 1, 2 e 3</h3></div>
+      <div class="checkq">
+        <p class="qtext">O que este código imprime?</p>
+        <pre class="code" style="margin:6px 0;">subtotal = 150
+total = subtotal * 0.90
+print(total)</pre>
+        <div class="quiz-opts" data-q="10">
+          <button class="quiz-opt" data-correct="false">150</button>
+          <button class="quiz-opt" data-correct="true">135.0</button>
+          <button class="quiz-opt" data-correct="false">erro</button>
+        </div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">E se o desconto valesse SÓ para compras acima de R$ 100? O programa precisa <b>decidir</b> — é exatamente isso que vamos aprender agora.</p>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a4')"> Revisei as aulas anteriores</div>
+    </div>
+
+    <p style="font-weight:700; color:var(--navy); font-size:13px; text-transform:uppercase; letter-spacing:.4px; margin:18px 0 4px;">Bloco A — Estruturas Condicionais</p>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">2</div><h3>O programa que decide</h3></div>
+      <div class="box blue"><b class="title">🏧 Analogia: o caixa eletrônico</b>
+      Um caixa eletrônico só libera o dinheiro <b>SE</b> a senha estiver certa <b>E SE</b> houver saldo. No dia a dia
+      pensamos assim o tempo todo: <i>"SE chover, levo guarda-chuva; SENÃO, levo óculos de sol."</i></p>
+      Até agora, nossos programas seguiam sempre a mesma linha reta, de cima a baixo. Uma <b>estrutura
+      condicional</b> permite que o programa escolha entre caminhos diferentes, dependendo de uma pergunta cuja
+      resposta é <b>sim (True)</b> ou <b>não (False)</b>.</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a4')"> Entendi a ideia de "escolher um caminho"</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">3</div><h3>Operadores relacionais — comparando valores</h3></div>
+      <p>Esses operadores <b>comparam</b> dois valores e sempre devolvem <code>True</code> ou <code>False</code>
+      (o tipo <code>bool</code>, que vimos rapidamente na Aula 2):</p>
+      <table class="tbl">
+        <tr><th>Símbolo</th><th>Significado</th><th>Exemplo</th><th>Resultado</th></tr>
+        <tr><td><code>==</code></td><td>igual a</td><td>5 == 5</td><td>True</td></tr>
+        <tr><td><code>!=</code></td><td>diferente de</td><td>5 != 3</td><td>True</td></tr>
+        <tr><td><code>&gt;</code></td><td>maior que</td><td>5 &gt; 3</td><td>True</td></tr>
+        <tr><td><code>&lt;</code></td><td>menor que</td><td>5 &lt; 3</td><td>False</td></tr>
+        <tr><td><code>&gt;=</code></td><td>maior ou igual</td><td>5 &gt;= 5</td><td>True</td></tr>
+        <tr><td><code>&lt;=</code></td><td>menor ou igual</td><td>4 &lt;= 3</td><td>False</td></tr>
+      </table>
+      <div class="box yellow"><b class="title">⚠️ O erro nº 1 desta aula</b>
+      <code>=</code> <b>atribui</b> um valor (<code>x = 5</code> guarda 5 em x). <code>==</code> <b>compara</b> dois
+      valores (<code>x == 5</code> pergunta "x é igual a 5?"). Trocar um pelo outro é o erro mais comum de quem
+      está aprendendo condicionais.</div>
+      <p>Experimente a calculadora de comparação:</p>
+      <div class="calc-box">
+        <div class="row">
+          <input id="cmpA" value="5">
+          <select id="cmpOp" onchange="cmpCalc()">
+            <option value="==">==</option>
+            <option value="!=">!=</option>
+            <option value=">">&gt;</option>
+            <option value="<">&lt;</option>
+            <option value=">=">&gt;=</option>
+            <option value="<=">&lt;=</option>
+          </select>
+          <input id="cmpB" value="3">
+          <button class="go-btn" onclick="cmpCalc()">Comparar</button>
+        </div>
+        <div class="calc-result"><div class="pill">Resultado<b id="cmpResult">True</b></div></div>
+      </div>
+      <div class="checkq">
+        <p class="qtext">Uma comparação (como 5 == 3) sempre devolve um valor de que tipo?</p>
+        <div class="quiz-opts" data-q="11">
+          <button class="quiz-opt" data-correct="false">int</button>
+          <button class="quiz-opt" data-correct="true">bool (True ou False)</button>
+          <button class="quiz-opt" data-correct="false">str</button>
+        </div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a4')"> Sei a diferença entre = e == e testei a calculadora</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">4</div><h3>O comando if — dois-pontos e indentação</h3></div>
+      <p>Toda estrutura condicional em Python segue duas regras que não podem ser quebradas:</p>
+      <ul>
+        <li>A linha do <code>if</code> termina com <b>dois-pontos</b> (<code>:</code>).</li>
+        <li>A linha (ou linhas) que pertence ao <code>if</code> fica <b>indentada</b> — recuada, geralmente com
+        4 espaços. É essa indentação que diz ao Python "isso pertence a esse if".</li>
+      </ul>
+      <p>Rode e veja como o Python decide, passo a passo:</p>
+      <div class="console-box">
+        <div class="console-label"><span>console15.py</span><span>Python (simulado)</span></div>
+        <textarea id="code15">saldo = 1000
+valor = 200
+if valor <= saldo:
+    print("Saque liberado")
+print("Obrigado!")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(15)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs15"></div>
+        <div class="console-out" id="out15">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">Troque <code>valor = 200</code> por <code>valor = 2000</code> e rode de novo — repare que "Saque liberado" some, mas "Obrigado!" continua aparecendo (ele está fora do if, roda sempre).</p>
+      <div class="accordion" onclick="this.classList.toggle('open')">
+        <div class="q">⚠️ Erros comuns aqui <span class="arrow">▾</span></div>
+        <div class="a">Esquecer os dois-pontos → <i>SyntaxError</i>. Esquecer de indentar a linha de baixo (ou
+        indentar errado, misturando espaços) → <i>IndentationError</i>. O Python é bem rígido com isso.</div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a4')"> Rodei o exemplo e testei mudar o valor</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">5</div><h3>if / elif / else — vários caminhos</h3></div>
+      <p><code>elif</code> (uma abreviação de "senão se") permite testar vários caminhos em sequência.
+      <code>else</code> ("senão") é o caminho que sobra se nenhuma condição anterior for verdadeira.</p>
+      <div class="console-box">
+        <div class="console-label"><span>console16.py</span><span>Python (simulado)</span></div>
+        <textarea id="code16">nota = 8
+if nota >= 7:
+    print("APROVADO")
+elif nota >= 5:
+    print("RECUPERACAO")
+else:
+    print("REPROVADO")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(16)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs16"></div>
+        <div class="console-out" id="out16">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p>Troque <code>nota = 8</code> por <code>nota = 6</code> e depois por <code>nota = 3</code>, rodando de
+      novo a cada troca. O Python testa <b>de cima para baixo</b> e <b>para no primeiro True</b> que encontrar.</p>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a4')"> Testei os 3 casos (aprovado, recuperação, reprovado)</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">6</div><h3>⚡ A ordem dos elif importa — o bug que roda sem dar erro</h3></div>
+      <div class="teacher-msg"><span class="who">🧑‍🏫 Este é o bug mais traiçoeiro da aula</span>
+      Ele não gera nenhum erro — o programa roda "normalmente", só que dá a resposta errada. Vamos ver ao vivo:</div>
+      <p><b>Versão com bug</b> (ordem errada — do mais amplo para o mais restritivo):</p>
+      <div class="console-box">
+        <div class="console-label"><span>console17_bug.py</span><span>Python (simulado)</span></div>
+        <textarea id="code17">nota = 8
+if nota >= 5:
+    print("RECUPERACAO")
+elif nota >= 7:
+    print("APROVADO")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(17)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs17"></div>
+        <div class="console-out" id="out17">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:13px;">Rodou e imprimiu "RECUPERACAO" — errado! Uma nota 8 deveria ser aprovada. Por
+      quê? <b>8 &gt;= 5 já é True</b>, então o Python para ali mesmo e nem chega a olhar o <code>elif</code> de
+      baixo.</p>
+      <p><b>Versão corrigida</b> (do mais restritivo para o mais amplo):</p>
+      <div class="console-box">
+        <div class="console-label"><span>console18_certo.py</span><span>Python (simulado)</span></div>
+        <textarea id="code18">nota = 8
+if nota >= 7:
+    print("APROVADO")
+elif nota >= 5:
+    print("RECUPERACAO")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(18)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs18"></div>
+        <div class="console-out" id="out18">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="box yellow"><b class="title">✓ Regra de ouro</b>Sempre ordene as condições do <b>mais
+      restritivo para o mais amplo</b>.</div>
+      <div class="checkq">
+        <p class="qtext">Por que a "versão com bug" imprime RECUPERACAO para uma nota 8?</p>
+        <div class="quiz-opts" data-q="12">
+          <button class="quiz-opt" data-correct="false">Porque 8 não é maior que 7</button>
+          <button class="quiz-opt" data-correct="true">Porque o Python para no primeiro True (nota >= 5) e nem olha o elif de baixo</button>
+          <button class="quiz-opt" data-correct="false">Porque há um erro de sintaxe</button>
+        </div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a4')"> Entendi por que a ordem dos elif importa</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">7</div><h3>Demonstração: a caixa que decide (desconto)</h3></div>
+      <p>Vamos resolver o problema que abriu a aula: desconto de 10% só para compras <b>acima de R$ 100</b>.
+      Rode com 150, depois com 50:</p>
+      <div class="console-box">
+        <div class="console-label"><span>caixa_decide.py</span><span>Python (simulado)</span></div>
+        <textarea id="code19">subtotal = float(input("Valor: "))
+if subtotal > 100:
+    total = subtotal * 0.90
+    print("10% de desconto!")
+else:
+    total = subtotal
+print(f"Total: R$ {total:.2f}")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(19)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs19"></div>
+        <div class="console-out" id="out19">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="box blue"><b class="title">🗣️ Ponto-chave: por que "total" funciona nos dois caminhos?</b>
+      Porque o <code>print</code> final está <b>fora</b> do if/else, no mesmo nível de indentação — ele roda
+      sempre, e usa o valor de <code>total</code> que foi definido em QUALQUER um dos dois caminhos. Se
+      <code>total</code> só existisse dentro do <code>if</code>, o caminho do <code>else</code> daria
+      <i>NameError</i> ao tentar usá-la depois.</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a4')"> Rodei com valores acima e abaixo de 100</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">8</div><h3>Exemplos práticos e erros comuns</h3></div>
+      <table class="tbl">
+        <tr><th>Situação</th><th>Condição</th></tr>
+        <tr><td>Maioridade</td><td><code>idade >= 18</code></td></tr>
+        <tr><td>Frete grátis</td><td><code>valor >= 200</code></td></tr>
+        <tr><td>Par ou ímpar</td><td><code>n % 2 == 0</code></td></tr>
+        <tr><td>Alerta de estoque</td><td><code>qtd == 0</code></td></tr>
+        <tr><td>Senha</td><td><code>senha == SENHA</code></td></tr>
+        <tr><td>Faixas de IMC</td><td><code>elif</code> encadeado</td></tr>
+      </table>
+      <div class="accordion" onclick="this.classList.toggle('open')">
+        <div class="q">⚠️ "Esqueci de definir a variável nos dois caminhos" <span class="arrow">▾</span></div>
+        <div class="a">Se uma variável só é criada dentro do <code>if</code>, e você tenta usá-la depois (fora
+        do if/else) num caso em que o <code>else</code> rodou, dá <i>NameError</i> — a variável nunca existiu
+        nesse caminho. Sempre garanta que toda variável usada depois do bloco condicional seja definida em
+        <b>todos</b> os caminhos possíveis (vimos isso na Estação 7, com a variável <code>total</code>).</div>
+      </div>
+      <div class="box yellow"><b class="title">⭐ Curiosidade</b>
+      <code>elif</code> é uma palavra exclusiva do Python — outras linguagens usam "else if". E valores como
+      <code>0</code>, <code>""</code> (texto vazio) e <code>None</code> contam como "falso" em uma condição,
+      mesmo sem serem <code>True</code>/<code>False</code> explicitamente.</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a4')"> Revisei os exemplos e o erro comum</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">9</div><h3>Mini-projeto: Caixa Eletrônico JWC Bank</h3></div>
+      <p>Vamos fechar o Bloco A com um projeto que junta tudo: variáveis, casting, <code>if</code> aninhado
+      dentro de outro <code>if</code>, e vários <code>elif</code> em sequência. Rode com a senha certa e um
+      valor de saque válido, depois teste com a senha errada, um valor negativo e um valor que não é múltiplo
+      de 10:</p>
+      <div class="console-box">
+        <div class="console-label"><span>banco.py</span><span>Python (simulado)</span></div>
+        <textarea id="code20">SALDO = 1000.00
+SENHA = "senac2026"
+senha = input("Senha: ")
+if senha == SENHA:
+    valor = float(input("Saque: "))
+    if valor <= 0:
+        print("Valor invalido.")
+    elif valor > SALDO:
+        print("Saldo insuficiente.")
+    elif valor % 10 != 0:
+        print("So notas de R$10.")
+    else:
+        print("Saque realizado!")
+else:
+    print("Senha incorreta.")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(20)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs20"></div>
+        <div class="console-out" id="out20">▸ Clique em Rodar, preencha a senha/valor e rode de novo.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">Dica: a senha correta é <code>senac2026</code>. Repare como cada <code>elif</code> supõe que o de cima já não era verdadeiro — a ordem, de novo, importa.</p>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a4')"> Testei o banco.py com senha certa, senha errada e valores inválidos</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">10</div><h3>Exercícios do Bloco A</h3></div>
+      <div class="exercise">
+        <div class="lvl">Básico</div>
+        <p>Peça a idade do usuário. Se for maior ou igual a 18 anos, exiba "Maior de idade". Caso contrário, "Menor de idade".</p>
+        <button onclick="toggleAns('e4a')">Ver uma resposta possível</button>
+        <div class="ans" id="e4a"><pre class="code" style="margin:0;">idade = int(input("Idade: "))
+if idade >= 18:
+    print("Maior de idade")
+else:
+    print("Menor de idade")</pre></div>
+      </div>
+      <div class="exercise">
+        <div class="lvl">Intermediário</div>
+        <p>Peça duas notas de um aluno e calcule a média. Se a média for menor que 6, exiba "Reprovado". Caso contrário, "Aprovado".</p>
+        <button onclick="toggleAns('e4b')">Ver uma resposta possível</button>
+        <div class="ans" id="e4b"><pre class="code" style="margin:0;">n1 = float(input("Nota 1: "))
+n2 = float(input("Nota 2: "))
+media = (n1 + n2) / 2
+if media < 6:
+    print("Reprovado")
+else:
+    print("Aprovado")</pre></div>
+      </div>
+      <div class="exercise">
+        <div class="lvl">Desafio</div>
+        <p>Calculadora de IMC: peso / (altura ** 2). Exiba "Abaixo do peso" se IMC &lt; 18.5; "Peso ideal" se
+        entre 18.5 e 24.9; "Acima do peso" se 25 ou mais.</p>
+        <button onclick="toggleAns('e4c')">Ver uma resposta possível</button>
+        <div class="ans" id="e4c"><pre class="code" style="margin:0;">peso = float(input("Peso: "))
+altura = float(input("Altura: "))
+imc = peso / (altura ** 2)
+if imc < 18.5:
+    print("Abaixo do peso")
+elif imc < 25:
+    print("Peso ideal")
+else:
+    print("Acima do peso")</pre></div>
+      </div>
+      <div class="console-box">
+        <div class="console-label"><span>console21.py</span><span>Python (simulado)</span></div>
+        <textarea id="code21" placeholder="Tente os exercícios aqui..."></textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(21)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs21"></div>
+        <div class="console-out" id="out21">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a4')"> Fiz pelo menos 2 dos 3 exercícios</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">11</div><h3>Checkpoint — fecha o Bloco A</h3></div>
+      <div class="checkq">
+        <p class="qtext">Para comparar dois valores em Python, usamos:</p>
+        <div class="quiz-opts" data-q="13">
+          <button class="quiz-opt" data-correct="false">=</button>
+          <button class="quiz-opt" data-correct="true">==</button>
+          <button class="quiz-opt" data-correct="false">=></button>
+        </div>
+      </div>
+      <div class="checkq">
+        <p class="qtext">O que define se uma linha "pertence" a um if em Python?</p>
+        <div class="quiz-opts" data-q="14">
+          <button class="quiz-opt" data-correct="false">A cor do texto</button>
+          <button class="quiz-opt" data-correct="true">A indentação (o recuo no início da linha)</button>
+          <button class="quiz-opt" data-correct="false">O tamanho da linha</button>
+        </div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a4')"> Fechei o Bloco A — agora só Git remoto</div>
+    </div>
+
+    <p style="font-weight:700; color:var(--navy); font-size:13px; text-transform:uppercase; letter-spacing:.4px; margin:18px 0 4px;">Bloco B — Git Remoto</p>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">12</div><h3>Local × Remoto: e se o seu PC quebrar hoje à noite?</h3></div>
+      <div class="box blue"><b class="title">🗂️ Repositório local × repositório remoto</b>
+      Até a Aula 3, seus commits ficavam só na sua máquina (o repositório <b>local</b> — pense nele como seu
+      caderno pessoal). O repositório <b>remoto</b> é uma cópia na nuvem, no <b>GitHub</b> — pense nele como o
+      Drive compartilhado do time.</div>
+      <p>Por que isso importa: <b>backup</b> (se o PC quebrar, o código continua seguro), <b>colaboração</b>
+      (várias pessoas trabalham sem sobrescrever o trabalho uma da outra) e <b>portfólio</b> — seu GitHub é
+      basicamente um currículo vivo que recrutadores olham.</p>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a4')"> Entendi a diferença entre repositório local e remoto</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">13</div><h3>Os 3 comandos novos: push, clone e pull</h3></div>
+      <table class="tbl">
+        <tr><th>Comando</th><th>O que faz</th><th>Analogia</th></tr>
+        <tr><td><code>git push</code></td><td>envia seus commits para a nuvem</td><td>subir os arquivos para o Drive</td></tr>
+        <tr><td><code>git clone</code></td><td>copia o repositório inteiro (1ª vez)</td><td>baixar a pasta pela primeira vez</td></tr>
+        <tr><td><code>git pull</code></td><td>traz as atualizações mais recentes</td><td>atualizar sua cópia local</td></tr>
+      </table>
+      <div class="box yellow"><b class="title">⭐ Regra de ouro do time</b>
+      <code>git pull</code> <b>antes</b> de começar a trabalhar · <code>git push</code> <b>ao terminar</b>. Isso
+      evita que o seu trabalho entre em conflito com o de um colega.</div>
+      <p>Clique nas 3 etapas, na ordem, para simular a publicação do <code>banco.py</code> no GitHub:</p>
+      <div class="git-steps">
+        <div class="git-step" id="git4_1" onclick="gitStepB(1)"><div class="gi">🔗</div><div class="gt">remote add</div><div class="gd">registra a nuvem</div></div>
+        <div class="git-step" id="git4_2" onclick="gitStepB(2)"><div class="gi">🌿</div><div class="gt">branch -M main</div><div class="gd">nomeia o ramo principal</div></div>
+        <div class="git-step" id="git4_3" onclick="gitStepB(3)"><div class="gi">☁️</div><div class="gt">push</div><div class="gd">envia para o GitHub</div></div>
+      </div>
+      <div class="term-sim" id="gitTermB">$ _</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a4')"> Simulei o fluxo de publicação no GitHub</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">14</div><h3>Dicas de mercado e curiosidades</h3></div>
+      <div class="box blue"><b class="title">💼 No mercado</b>
+      <code>push</code> / <code>pull</code> / <code>clone</code> são o dia a dia de qualquer equipe de
+      desenvolvimento. Recrutadores olham o seu GitHub — ter repositórios organizados, com commits e um bom
+      <code>README.md</code>, conta muito em processos seletivos.</p>
+      <ul style="margin-top:6px;">
+        <li><b>Nunca</b> versione senhas ou dados sensíveis.</li>
+        <li>Escreva um <code>README.md</code> explicando o que o projeto faz.</li>
+        <li><code>pull</code> antes, <code>push</code> depois — sempre.</li>
+      </ul></div>
+      <div class="box yellow"><b class="title">🧪 Curiosidades</b>
+      O GitHub foi comprado pela Microsoft em 2018 por US$ 7,5 bilhões. <code>origin</code> é só um apelido que
+      o Git dá para a URL do repositório remoto — você poderia chamá-lo de outro nome. Alternativas ao GitHub
+      incluem GitLab e Bitbucket.</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a4')"> Revisei as dicas e curiosidades</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">15</div><h3>Exercícios do Bloco B</h3></div>
+      <div class="exercise">
+        <div class="lvl">Juntos</div>
+        <p>Publicar o <code>banco.py</code> no GitHub e confirmar no site que o arquivo apareceu.</p>
+        <button onclick="toggleAns('e4d')">Ver os comandos</button>
+        <div class="ans" id="e4d"><pre class="code" style="margin:0;">$ git remote add origin &lt;URL&gt;
+$ git branch -M main
+$ git push -u origin main</pre></div>
+      </div>
+      <div class="exercise">
+        <div class="lvl">Sozinho</div>
+        <p>Crie uma conta e um repositório no GitHub, envie o <code>banco.py</code> com <code>push</code>,
+        melhore o código e faça um novo commit + push. Em dupla: peça para um colega fazer <code>clone</code>
+        do seu repositório.</p>
+        <button onclick="toggleAns('e4e')">Ver resposta</button>
+        <div class="ans" id="e4e">Depois de melhorar o arquivo: <code>git add banco.py</code> → <code>git commit -m "Melhora validacao"</code> → <code>git push</code>. Seu colega usa <code>git clone &lt;URL do seu repo&gt;</code> para baixar uma cópia completa.</div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a4')"> Fiz os exercícios do Bloco B</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">16</div><h3>Checkpoint final da Aula 4</h3></div>
+      <div class="checkq">
+        <p class="qtext">Qual comando você usa para baixar um repositório do GitHub pela primeira vez?</p>
+        <div class="quiz-opts" data-q="15">
+          <button class="quiz-opt" data-correct="false">git push</button>
+          <button class="quiz-opt" data-correct="true">git clone</button>
+          <button class="quiz-opt" data-correct="false">git pull</button>
+        </div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a4')"> Fiz o checkpoint final</div>
+    </div>
+
+    <div class="summary-box">
+      <h4>✔ Resumo da Aula 4</h4>
+      Operadores relacionais (<code>== != > < >= <=</code>) sempre devolvem <code>bool</code>.
+      <code>if</code>/<code>elif</code>/<code>else</code> escolhem caminhos — o Python testa de cima para baixo
+      e para no primeiro <code>True</code>, então a <b>ordem importa</b>. Dois-pontos e indentação são
+      obrigatórios; <code>==</code> não é <code>=</code>. Git: repositório <b>local</b> (sua máquina) ×
+      <b>remoto</b> (GitHub) — <code>push</code> envia, <code>clone</code> copia, <code>pull</code> atualiza.
+      <p style="margin-top:8px;"><b>Próxima aula:</b> hoje cada regra foi checada isoladamente. E se
+      precisarmos de "senha correta <b>E</b> saldo suficiente <b>E</b> valor válido" numa decisão só? Aula 5:
+      operadores lógicos (<code>and</code> · <code>or</code> · <code>not</code>) e condições aninhadas.</p>
+    </div>
+  </section>
+
   <!-- ==================== COLA RÁPIDA ==================== -->
   <section class="panel" id="cola">
     <div class="aula-head" style="background:linear-gradient(135deg,var(--navy),#333d5c);">
@@ -876,6 +1309,9 @@ print(f"TOTAL:    R$ {total:.2f}")</textarea>
         <tr><td>3</td><td>/ vs //</td><td>/ dá decimal · // dá inteiro (quantos cabem).</td></tr>
         <tr><td>3</td><td>%</td><td>resto da divisão (quanto sobra).</td></tr>
         <tr><td>3</td><td>Git</td><td>init → add → commit, conferindo com status e log.</td></tr>
+        <tr><td>4</td><td>Relacionais</td><td>== != > < >= <= sempre devolvem bool (True/False).</td></tr>
+        <tr><td>4</td><td>if/elif/else</td><td>Testa de cima pra baixo, para no 1º True — a ordem importa.</td></tr>
+        <tr><td>4</td><td>Git remoto</td><td>push envia · clone copia · pull atualiza.</td></tr>
       </table>
     </div>
 
@@ -907,9 +1343,10 @@ print(f"Pretensao: R$ {pretensao:.2f}")</textarea>
 
     <div class="final-note">
       <b>Uma palavra final:</b> ninguém entende tudo de primeira, e tudo bem repetir uma estação (ou uma aula
-      inteira) várias vezes até fazer sentido. Você já tem a base de pensamento computacional, variáveis/tipos
-      e operadores/Git. A próxima aula (condicionais: if/elif/else) vai fazer o programa <b>decidir</b> sozinho
-      — e vai fazer muito mais sentido agora que essa base está sólida. Estou aqui, seguimos juntos.
+      inteira) várias vezes até fazer sentido. Você já tem a base de pensamento computacional, variáveis/tipos,
+      operadores/Git e agora também condicionais (if/elif/else) e Git remoto. A próxima aula (operadores
+      lógicos: and/or/not) vai deixar suas decisões ainda mais poderosas — e vai fazer muito mais sentido agora
+      que essa base está sólida. Estou aqui, seguimos juntos.
     </div>
   </section>
 
@@ -929,9 +1366,11 @@ function PyError(msg) { this.message = msg; this.isPyError = true; }
 function makeInt(v) { return { type: "int", value: v }; }
 function makeFloat(v) { return { type: "float", value: v }; }
 function makeStr(v) { return { type: "str", value: v }; }
+function makeBool(v) { return { type: "bool", value: v }; }
 
 function pyRepr(val) {
   if (val.type === "str") return val.value;
+  if (val.type === "bool") return val.value ? "True" : "False";
   if (val.type === "int") return String(val.value);
   if (val.type === "float") {
     if (Number.isInteger(val.value)) return val.value.toFixed(1);
@@ -951,6 +1390,10 @@ function tokenize(src) {
     if (c === ",") { tokens.push({ t: "COMMA" }); i++; continue; }
     if (c === "*") { if (src[i+1] === "*") { tokens.push({t:"OP",v:"**"}); i+=2; continue; } tokens.push({t:"OP",v:"*"}); i++; continue; }
     if (c === "/") { if (src[i+1] === "/") { tokens.push({t:"OP",v:"//"}); i+=2; continue; } tokens.push({t:"OP",v:"/"}); i++; continue; }
+    if (c === "=") { if (src[i+1] === "=") { tokens.push({t:"OP",v:"=="}); i+=2; continue; } throw new PyError("SyntaxError: '=' não é permitido dentro de uma expressão (você quis dizer '=='?)"); }
+    if (c === "!") { if (src[i+1] === "=") { tokens.push({t:"OP",v:"!="}); i+=2; continue; } throw new PyError('SyntaxError: caractere "!" inesperado'); }
+    if (c === "<") { if (src[i+1] === "=") { tokens.push({t:"OP",v:"<="}); i+=2; continue; } tokens.push({t:"OP",v:"<"}); i++; continue; }
+    if (c === ">") { if (src[i+1] === "=") { tokens.push({t:"OP",v:">="}); i+=2; continue; } tokens.push({t:"OP",v:">"}); i++; continue; }
     if ("+-%".includes(c)) { tokens.push({t:"OP",v:c}); i++; continue; }
     if (c === '"' || c === "'") {
       const quote = c; let j = i+1; let buf = "";
@@ -1013,11 +1456,13 @@ function evalExpr(src, env) {
     if (tok.t === "NUM") { next(); return tok.v.includes(".") ? makeFloat(parseFloat(tok.v)) : makeInt(parseInt(tok.v,10)); }
     if (tok.t === "STR") { next(); return makeStr(tok.v); }
     if (tok.t === "FSTR") { next(); return makeStr(parseFString(tok.v, env)); }
-    if (tok.t === "LP") { next(); const v = parseExprBP(); if (!peek()||peek().t!=="RP") throw new PyError("SyntaxError: faltou fechar parêntese )"); next(); return v; }
+    if (tok.t === "LP") { next(); const v = parseComparison(); if (!peek()||peek().t!=="RP") throw new PyError("SyntaxError: faltou fechar parêntese )"); next(); return v; }
     if (tok.t === "ID") {
       next(); const name = tok.v;
+      if (name === "True") return makeBool(true);
+      if (name === "False") return makeBool(false);
       if (peek() && peek().t === "LP") {
-        next(); const argVal = parseExprBP();
+        next(); const argVal = parseComparison();
         if (!peek()||peek().t!=="RP") throw new PyError("SyntaxError: faltou fechar parêntese )");
         next(); return callFn(name, argVal);
       }
@@ -1030,10 +1475,12 @@ function evalExpr(src, env) {
   function callFn(name, arg) {
     if (name === "int") {
       if (arg.type === "str") { const v = arg.value.trim(); if (!/^-?\d+$/.test(v)) throw new PyError('ValueError: invalid literal for int() with base 10: "' + arg.value + '"'); return makeInt(parseInt(v,10)); }
+      if (arg.type === "bool") return makeInt(arg.value ? 1 : 0);
       return makeInt(Math.trunc(arg.value));
     }
     if (name === "float") {
       if (arg.type === "str") { const v = arg.value.trim(); if (!/^-?\d+(\.\d+)?$/.test(v)) throw new PyError('ValueError: could not convert string to float: "' + arg.value + '"'); return makeFloat(parseFloat(v)); }
+      if (arg.type === "bool") return makeFloat(arg.value ? 1 : 0);
       return makeFloat(arg.value);
     }
     if (name === "str") return makeStr(pyRepr(arg));
@@ -1086,7 +1533,7 @@ function evalExpr(src, env) {
     return left;
   }
 
-  function parseExprBP() {
+  function parseAddSub() {
     let left = parseTerm();
     while (peek() && peek().t === "OP" && ["+","-"].includes(peek().v)) {
       const op = next().v; const right = parseTerm();
@@ -1107,7 +1554,33 @@ function evalExpr(src, env) {
     return left;
   }
 
-  const result = parseExprBP();
+  function parseComparison() {
+    const left = parseAddSub();
+    if (peek() && peek().t === "OP" && ["==","!=","<",">","<=",">="].includes(peek().v)) {
+      const op = next().v;
+      const right = parseAddSub();
+      let result;
+      const bothStr = left.type === "str" && right.type === "str";
+      const mixedStrOther = (left.type === "str") !== (right.type === "str");
+      if (mixedStrOther) {
+        if (op === "==") result = false;
+        else if (op === "!=") result = true;
+        else throw new PyError("TypeError: '" + op + "' not supported between instances of '" + left.type + "' and '" + right.type + "'");
+      } else {
+        const a = left.value, b = right.value;
+        if (op === "==") result = a === b;
+        else if (op === "!=") result = a !== b;
+        else if (op === "<") result = a < b;
+        else if (op === ">") result = a > b;
+        else if (op === "<=") result = a <= b;
+        else if (op === ">=") result = a >= b;
+      }
+      return makeBool(result);
+    }
+    return left;
+  }
+
+  const result = parseComparison();
   if (pos < tokens.length) throw new PyError("SyntaxError: sobrou algo inesperado na expressão");
   return result;
 }
@@ -1123,31 +1596,98 @@ function stripComment(line) {
   return line;
 }
 
+function toBool(val) {
+  if (val.type === "bool") return val.value;
+  if (val.type === "str") return val.value.length > 0;
+  return val.value !== 0;
+}
+
+function parseSimpleStmt(line) {
+  const printMatch = line.match(/^print\s*\((.*)\)\s*$/);
+  if (printMatch) return { type: "print", expr: printMatch[1] };
+  const assignMatch = line.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\s*=\s*(.+)$/);
+  if (assignMatch) return { type: "assign", name: assignMatch[1], expr: assignMatch[2] };
+  throw new PyError('SyntaxError: não entendi a linha "' + line + '" (o simulador entende print(), variavel = valor, e if/elif/else)');
+}
+
+function parseChildBlock(lines, idx, parentIndent) {
+  if (idx.i >= lines.length || lines[idx.i].indent <= parentIndent) {
+    throw new PyError("IndentationError: esperava uma linha indentada depois de ':'");
+  }
+  const childIndent = lines[idx.i].indent;
+  return parseBlock(lines, idx, childIndent);
+}
+
+function parseBlock(lines, idx, blockIndent) {
+  const stmts = [];
+  while (idx.i < lines.length) {
+    const cur = lines[idx.i];
+    if (cur.indent < blockIndent) break;
+    if (cur.indent > blockIndent) throw new PyError('IndentationError: indentação inesperada em "' + cur.text + '"');
+    const line = cur.text;
+    let m;
+    if ((m = line.match(/^if\s+(.+):$/))) {
+      idx.i++;
+      const branches = [{ cond: m[1], body: parseChildBlock(lines, idx, blockIndent) }];
+      let elseBody = null;
+      while (idx.i < lines.length && lines[idx.i].indent === blockIndent && /^elif\s+.+:$/.test(lines[idx.i].text)) {
+        const em = lines[idx.i].text.match(/^elif\s+(.+):$/);
+        idx.i++;
+        branches.push({ cond: em[1], body: parseChildBlock(lines, idx, blockIndent) });
+      }
+      if (idx.i < lines.length && lines[idx.i].indent === blockIndent && /^else\s*:$/.test(lines[idx.i].text)) {
+        idx.i++;
+        elseBody = parseChildBlock(lines, idx, blockIndent);
+      }
+      stmts.push({ type: "if", branches, elseBody });
+    } else if (/^elif\s+.+:$/.test(line) || /^else\s*:$/.test(line)) {
+      throw new PyError('SyntaxError: "' + line + '" sem um if correspondente antes');
+    } else {
+      idx.i++;
+      stmts.push(parseSimpleStmt(line));
+    }
+  }
+  return stmts;
+}
+
+function execBlock(stmts, env, out) {
+  for (const s of stmts) {
+    if (s.type === "assign") {
+      env[s.name] = evalExpr(s.expr, env);
+    } else if (s.type === "print") {
+      out.push(pyRepr(evalExpr(s.expr, env)));
+    } else if (s.type === "if") {
+      let done = false;
+      for (const br of s.branches) {
+        const condVal = evalExpr(br.cond, env);
+        if (toBool(condVal)) { execBlock(br.body, env, out); done = true; break; }
+      }
+      if (!done && s.elseBody) execBlock(s.elseBody, env, out);
+    }
+  }
+}
+
 function runProgram(code) {
   const env = {}; const outputLines = [];
-  const lines = code.split("\n");
-  for (let rawLine of lines) {
-    let line = stripComment(rawLine).trim();
-    if (line === "") continue;
-    try {
-      const assignMatch = line.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\s*=\s*(.+)$/);
-      const printMatch = line.match(/^print\s*\((.*)\)\s*$/);
-      if (printMatch) {
-        const val = evalExpr(printMatch[1], env);
-        outputLines.push(pyRepr(val));
-      } else if (assignMatch) {
-        const val = evalExpr(assignMatch[2], env);
-        env[assignMatch[1]] = val;
-      } else {
-        throw new PyError("SyntaxError: não entendi esta linha (o simulador só entende print() e variavel = valor)");
-      }
-    } catch (e) {
-      outputLines.push((e && e.message) ? e.message : String(e));
-      break;
+  try {
+    const rawLines = code.split("\n");
+    const lines = [];
+    for (const rawLine of rawLines) {
+      const stripped = stripComment(rawLine);
+      if (stripped.trim() === "") continue;
+      const indent = stripped.length - stripped.trimStart().length;
+      lines.push({ indent, text: stripped.trim() });
     }
+    const idx = { i: 0 };
+    const stmts = parseBlock(lines, idx, lines.length ? lines[0].indent : 0);
+    if (idx.i < lines.length) throw new PyError('IndentationError: indentação inconsistente perto de "' + lines[idx.i].text + '"');
+    execBlock(stmts, env, outputLines);
+  } catch (e) {
+    outputLines.push((e && e.message) ? e.message : String(e));
   }
   return outputLines.join("\n");
 }
+
 
 /* =====================================================================
    CONSOLE UI
@@ -1216,7 +1756,7 @@ function toggleAns(id){ document.getElementById(id).classList.toggle('shown'); }
 
 /* progresso por aula (checkboxes "já entendi") */
 const doneCounts = { a1:0, a2:0, a3:0 };
-const totalStations = { a1:9, a2:10, a3:10 };
+const totalStations = { a1:9, a2:10, a3:10, a4:16 };
 function markDone(el, aula){
   doneCounts[aula] += el.checked ? 1 : -1;
   if (doneCounts[aula] < 0) doneCounts[aula] = 0;
@@ -1303,6 +1843,37 @@ function gitStep(n){
   term.textContent = gitMsgs[n];
 }
 
+/* ---------- COMPARISON CALC (Aula 4) ---------- */
+function cmpCalc(){
+  const rawA = document.getElementById('cmpA').value;
+  const rawB = document.getElementById('cmpB').value;
+  const op = document.getElementById('cmpOp').value;
+  const a = parseFloat(rawA); const b = parseFloat(rawB);
+  let result;
+  if (op === "==") result = a === b;
+  else if (op === "!=") result = a !== b;
+  else if (op === ">") result = a > b;
+  else if (op === "<") result = a < b;
+  else if (op === ">=") result = a >= b;
+  else if (op === "<=") result = a <= b;
+  document.getElementById('cmpResult').textContent = result ? 'True' : 'False';
+}
+
+/* ---------- GIT REMOTO STEPS (Aula 4) ---------- */
+let gitDoneB = 0;
+const gitMsgsB = {
+  1: '$ git remote add origin https://github.com/voce/banco.git\n\n→ registra o endereco da nuvem (o "apelido" origin aponta pra essa URL).',
+  2: '$ git branch -M main\n\n→ garante que o ramo principal se chama "main" (padrao atual do GitHub).',
+  3: '$ git push -u origin main\nEnumerating objects... done.\nTo github.com:voce/banco.git\n * [new branch]      main -> main\n\n→ enviou todos os commits para o GitHub. Confira no site: o arquivo apareceu!'
+};
+function gitStepB(n){
+  const term = document.getElementById('gitTermB');
+  if (n !== gitDoneB + 1) { term.textContent = '$ ops! siga a ordem certa: remote add → branch -M → push.'; return; }
+  gitDoneB = n;
+  document.getElementById('git4_'+n).classList.add('on');
+  term.textContent = gitMsgsB[n];
+}
+
 /* ---------- QUIZ (checkq genérico, usado em várias estações) ---------- */
 document.querySelectorAll('.quiz-opts').forEach(div => {
   div.querySelectorAll('.quiz-opt').forEach(btn => {
@@ -1323,6 +1894,8 @@ const quiz = [
   {q:"input() sempre devolve qual tipo?", opts:["int","str (texto)","float"], correct:1},
   {q:"Qual operador retorna o resto de uma divisão?", opts:["//","%","**"], correct:1},
   {q:"Qual é o comando que salva uma \"foto\" do código no histórico do Git?", opts:["git add","git init","git commit"], correct:2},
+  {q:"Se nota = 8, o que este código imprime? if nota >= 5: print(\"RECUPERACAO\") elif nota >= 7: print(\"APROVADO\")", opts:["APROVADO","RECUPERACAO (o bug da ordem!)","REPROVADO"], correct:1},
+  {q:"Qual comando envia seus commits para o GitHub?", opts:["git clone","git pull","git push"], correct:2},
 ];
 const quizArea = document.getElementById('quizArea');
 quiz.forEach((item, qi) => {
