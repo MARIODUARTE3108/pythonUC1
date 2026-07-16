@@ -164,6 +164,7 @@
     <button class="tab-btn" data-tab="a2">② Aula 2</button>
     <button class="tab-btn" data-tab="a3">③ Aula 3</button>
     <button class="tab-btn" data-tab="a4">④ Aula 4</button>
+    <button class="tab-btn" data-tab="a5">⑤ Aula 5</button>
     <button class="tab-btn" data-tab="cola">★ Cola Rápida</button>
   </nav>
 
@@ -1289,6 +1290,629 @@ $ git push -u origin main</pre></div>
     </div>
   </section>
 
+  <!-- ==================== AULA 5 ==================== -->
+  <section class="panel" id="a5">
+    <div class="aula-head" style="background:linear-gradient(135deg,#0d5c4a,#12967a);">
+      <div class="tag">Aula 5 · Bloco 0: pendências · Parte 1: combinar · Parte 2: organizar</div>
+      <h2>Switch Case, Operadores Lógicos e Condições Aninhadas</h2>
+      <p>Combinando várias perguntas numa única decisão</p>
+    </div>
+    <div class="progress-wrap">Seu progresso nesta aula: <span id="pctA5">0</span>%
+      <div class="progress-mini"><div class="fill" id="fillA5"></div></div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">1</div><h3>Revisão e o gancho de hoje</h3></div>
+      <div class="checkq">
+        <p class="qtext">O que este código imprime?</p>
+        <pre class="code" style="margin:6px 0;">senha = "1234"
+if senha == "1234":
+    print("Acesso liberado")
+else:
+    print("Senha incorreta")</pre>
+        <div class="quiz-opts" data-q="16">
+          <button class="quiz-opt" data-correct="true">Acesso liberado</button>
+          <button class="quiz-opt" data-correct="false">Senha incorreta</button>
+        </div>
+      </div>
+      <div class="teacher-msg"><span class="who">🧑‍🏫 O problema que abre a aula</span>
+      Esse caixa eletrônico libera o acesso só com a senha certa. Mas, na vida real, para <b>sacar</b>, basta a
+      senha estar correta? Não — precisa ter <b>saldo suficiente</b> também! Um caixa real precisa checar
+      <b>senha correta E saldo suficiente E valor válido</b> — tudo ao mesmo tempo, numa decisão só. Até agora
+      só sabíamos testar <b>uma</b> condição por vez. Hoje aprendemos a <b>combinar</b> condições.</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a5')"> Entendi o gancho da aula</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">2</div><h3>Switch Case → em Python, match/case</h3></div>
+      <div class="box blue"><b class="title">🏢 Analogia: a portaria do prédio</b>
+      Apto 101 → chama o 101 · Apto 102 → chama o 102 · Senão → "não existe". Repare: não é uma faixa (não é
+      "maior que 100?"), é uma comparação contra <b>opções fixas</b>. É para isso que serve o <code>switch</code>
+      em outras linguagens (C, Java, JavaScript).</div>
+      <div class="box yellow"><b class="title">⚠️ O fato mais importante desta seção</b>
+      Por quase 30 anos, o <b>Python não teve switch/case</b>! A filosofia da linguagem era: "o if/elif/else já
+      resolve, e com mais clareza". Só a partir do <b>Python 3.10 (2021)</b> surgiu um equivalente — e ele nem se
+      chama switch. Chama-se <code>match</code> / <code>case</code>.</div>
+      <p>Veja como se escreve, e rode você mesma(o) trocando a opção:</p>
+      <div class="console-box">
+        <div class="console-label"><span>console22.py</span><span>Python (simulado)</span></div>
+        <textarea id="code22">opcao = "2"
+match opcao:
+    case "1":
+        print("Depositar")
+    case "2":
+        print("Sacar")
+    case "3":
+        print("Sair")
+    case _:
+        print("Opcao invalida")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(22)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs22"></div>
+        <div class="console-out" id="out22">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <ul>
+        <li><code>match opcao:</code> → "vamos comparar o valor de <code>opcao</code> contra os casos abaixo".</li>
+        <li><code>case "1":</code> → "caso o valor seja <code>"1"</code>, execute este bloco".</li>
+        <li><code>case _:</code> → o <b>curinga</b> — pega qualquer valor que não bateu com nada acima. É o
+        <code>else</code> do <code>match</code>.</li>
+        <li><b>Não precisa de <code>break</code></b>! Diferente de C/Java, o Python não "escorrega" para o
+        próximo caso (o bug do <i>fall-through</i>). Um problema a menos.</li>
+      </ul>
+      <p>Um mesmo <code>case</code> pode aceitar vários valores com <code>|</code> (lê-se "ou"):</p>
+      <div class="console-box">
+        <div class="console-label"><span>console23.py</span><span>Python (simulado)</span></div>
+        <textarea id="code23">dia = "sabado"
+match dia:
+    case "sabado" | "domingo":
+        print("Fim de semana!")
+    case _:
+        print("Dia util")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(23)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs23"></div>
+        <div class="console-out" id="out23">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a5')"> Rodei os dois exemplos de match/case</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">3</div><h3>Quando usar if/elif × match/case</h3></div>
+      <table class="tbl">
+        <tr><th></th><th>if / elif / else</th><th>match / case</th></tr>
+        <tr><td>Versão do Python</td><td>qualquer</td><td>3.10+</td></tr>
+        <tr><td>Serve para</td><td>faixas (&gt;, &lt;, and, or)</td><td>um valor × casos fixos</td></tr>
+        <tr><td>Uso clássico</td><td>regras com intervalos</td><td>menus, comandos, status</td></tr>
+      </table>
+      <div class="box yellow"><b class="title">💡 Regra prática</b>
+      Testando <b>intervalos</b> (nota ≥ 7, saldo &gt; 100)? Use <code>if/elif</code>. Comparando <b>um valor
+      contra uma lista de opções fixas</b> (um menu, um comando)? O <code>match/case</code> fica mais limpo.
+      <br><br><b>Honestidade de mercado:</b> como o match/case é recente (2021), muito código Python por aí
+      ainda não usa. <b>O if/elif continua sendo o feijão com arroz.</b> Conheça o match, mas domine o if/elif.</div>
+      <p>Exercício guiado — menu do JWC Bank com match/case:</p>
+      <div class="console-box">
+        <div class="console-label"><span>menu_banco.py</span><span>Python (simulado)</span></div>
+        <textarea id="code24">opcao = "3"
+match opcao:
+    case "1":
+        print("Operacao: DEPOSITO")
+    case "2":
+        print("Operacao: SAQUE")
+    case "3":
+        print("Seu saldo e R$ 1000,00")
+    case "4":
+        print("Ate logo!")
+    case _:
+        print("Opcao invalida.")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(24)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs24"></div>
+        <div class="console-out" id="out24">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a5')"> Sei quando escolher if/elif ou match/case</div>
+    </div>
+
+    <p style="font-weight:700; color:var(--navy); font-size:13px; text-transform:uppercase; letter-spacing:.4px; margin:18px 0 4px;">Parte 1 — Combinar Condições (and, or, not)</p>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">4</div><h3>O "E" exigente e o "OU" flexível</h3></div>
+      <div class="box blue"><b class="title">✈️ E (and) — embarcar no avião</b>
+      Passaporte <b>E</b> passagem <b>E</b> estar no horário. Falhou um item? Não embarca. O <b>E</b> é
+      <b>exigente</b>: exige que <b>tudo</b> esteja certo.</div>
+      <div class="box blue"><b class="title">🎟️ OU (or) — meia-entrada no cinema</b>
+      Estudante <b>OU</b> ter mais de 60 anos. Qualquer um dos dois já resolve. O <b>OU</b> é <b>flexível</b>:
+      basta <b>um</b> item estar certo.</div>
+      <ul>
+        <li><b>E (and)</b> → TODAS as condições precisam ser verdadeiras.</li>
+        <li><b>OU (or)</b> → PELO MENOS UMA precisa ser verdadeira.</li>
+        <li><b>NÃO (not)</b> → INVERTE: True vira False e vice-versa.</li>
+      </ul>
+      <div class="checkq">
+        <p class="qtext">Para dirigir legalmente, você precisa de idade mínima E carteira, ou idade OU carteira?</p>
+        <div class="quiz-opts" data-q="17">
+          <button class="quiz-opt" data-correct="true">E — os dois são obrigatórios</button>
+          <button class="quiz-opt" data-correct="false">OU — basta um dos dois</button>
+        </div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a5')"> Entendi a diferença entre E (exigente) e OU (flexível)</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">5</div><h3>Os 3 operadores lógicos e as tabelas-verdade</h3></div>
+      <p>Python usa <b>palavras</b> (<code>and</code>, <code>or</code>, <code>not</code>), diferente de C/Java
+      que usam símbolos (<code>&&</code>, <code>||</code>, <code>!</code>) — proposital, para ficar mais
+      legível.</p>
+      <table class="tbl">
+        <tr><th>A</th><th>B</th><th>A and B</th><th>A or B</th></tr>
+        <tr><td>True</td><td>True</td><td><b>True</b></td><td><b>True</b></td></tr>
+        <tr><td>True</td><td>False</td><td>False</td><td><b>True</b></td></tr>
+        <tr><td>False</td><td>True</td><td>False</td><td><b>True</b></td></tr>
+        <tr><td>False</td><td>False</td><td>False</td><td>False</td></tr>
+      </table>
+      <p style="font-size:12.8px; color:var(--grey);"><code>and</code>: só 1 linha dá True (difícil de agradar) · <code>or</code>: 3 linhas dão True (só reprova quando tudo é falso). E <code>not True</code> → False · <code>not False</code> → True.</p>
+      <p>Teste você mesma(o), linha por linha, antes de olhar a tabela:</p>
+      <div class="console-box">
+        <div class="console-label"><span>console26.py</span><span>Python (simulado)</span></div>
+        <textarea id="code26">print(True and True)
+print(True and False)
+print(False or True)
+print(False or False)
+print(not True)</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(26)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs26"></div>
+        <div class="console-out" id="out26">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a5')"> Decorei (ou revisei) as tabelas-verdade</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">6</div><h3>Usando and/or/not em condições reais</h3></div>
+      <div class="console-box">
+        <div class="console-label"><span>console27.py</span><span>Python (simulado)</span></div>
+        <textarea id="code27">idade = 20
+tem_carteira = True
+if idade >= 18 and tem_carteira:
+    print("Pode dirigir")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(27)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs27"></div>
+        <div class="console-out" id="out27">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p>Leia em voz alta: <i>"se a idade for maior ou igual a 18 E tiver carteira, então pode dirigir"</i> — o
+      código quase vira uma frase. Para verificar uma <b>faixa</b>, Python permite uma forma encadeada elegante:</p>
+      <div class="console-box">
+        <div class="console-label"><span>console28.py</span><span>Python (simulado)</span></div>
+        <textarea id="code28">nota = 6
+if nota >= 5 and nota < 7:
+    print("Recuperacao (forma 1)")
+if 5 <= nota < 7:
+    print("Recuperacao (forma 2 - elegante)")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(28)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs28"></div>
+        <div class="console-out" id="out28">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p>As duas fazem a mesma coisa — a segunda é só mais bonita. E o <code>not</code> na prática:</p>
+      <div class="console-box">
+        <div class="console-label"><span>console29.py</span><span>Python (simulado)</span></div>
+        <textarea id="code29">tem_pendencia = False
+if not tem_pendencia:
+    print("Cliente liberado para nova compra")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(29)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs29"></div>
+        <div class="console-out" id="out29">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="box yellow"><b class="title">💡 Boa prática</b>
+      Nomeie booleanos como <b>perguntas</b>: <code>tem_saldo</code>, <code>eh_estudante</code>,
+      <code>esta_ativo</code>. Assim o <code>not</code> fica natural de ler.</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a5')"> Rodei os 3 exemplos e testei a forma encadeada</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">7</div><h3>Precedência e curto-circuito</h3></div>
+      <p>Assim como na aritmética (Aula 3), há uma ordem: <code>not</code> (mais forte) → <code>and</code> →
+      <code>or</code> (mais fraco). Ou seja, <code>A or B and C</code> é lido como <code>A or (B and C)</code>.</p>
+      <div class="teacher-msg"><span class="who">⚡ Desafio relâmpago — arrisque antes de rodar</span>
+      O que este código imprime?</div>
+      <div class="console-box">
+        <div class="console-label"><span>console30.py</span><span>Python (simulado)</span></div>
+        <textarea id="code30">if True or False and False:
+    print("entrou")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(30)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs30"></div>
+        <div class="console-out" id="out30">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:13px;">A maioria acha que "não entra" — mas <b>entra</b>! O <code>and</code> é avaliado
+      primeiro (<code>False and False</code> → <code>False</code>), e depois <code>True or False</code> →
+      <code>True</code>. <b>Misturou and e or? Use parênteses</b> para deixar sua intenção explícita.</p>
+      <div class="box blue"><b class="title">⚡ Curto-circuito: o Python é "preguiçoso"</b>
+      Ele para de avaliar assim que já sabe a resposta. Em <code>A and B</code>: se A é False, nem olha o B.
+      Em <code>A or B</code>: se A é True, nem olha o B. Veja isso <b>protegendo</b> seu código de um erro:</div>
+      <div class="console-box">
+        <div class="console-label"><span>console31.py</span><span>Python (simulado)</span></div>
+        <textarea id="code31">divisor = 0
+if divisor != 0 and 10 / divisor > 2:
+    print("ok")
+else:
+    print("protegido, sem ZeroDivisionError")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(31)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs31"></div>
+        <div class="console-out" id="out31">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">Se <code>divisor</code> fosse 0 e o Python <b>não</b> tivesse curto-circuito, essa linha daria erro de divisão por zero. Como <code>divisor != 0</code> já é False, o Python nem tenta a divisão.</p>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a5')"> Entendi a precedência e vi o curto-circuito protegendo o código</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">8</div><h3>Demonstração: login (and) — teste os 4 casos</h3></div>
+      <p>A tabela-verdade do <code>and</code> acontecendo na tela. Rode e teste: usuário/senha certos, usuário
+      certo com senha errada, usuário errado com senha certa, e os dois errados:</p>
+      <div class="console-box">
+        <div class="console-label"><span>login.py</span><span>Python (simulado)</span></div>
+        <textarea id="code32">USUARIO = "admin"
+SENHA = "senac2026"
+usuario = input("Usuario: ")
+senha = input("Senha: ")
+if usuario == USUARIO and senha == SENHA:
+    print("Login bem-sucedido!")
+else:
+    print("Usuario ou senha invalidos.")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(32)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs32"></div>
+        <div class="console-out" id="out32">▸ Clique em Rodar, preencha usuário/senha e rode de novo.</div>
+      </div>
+      <div class="box blue"><b class="title">🗣️ Ponto de segurança</b>
+      Por que a mensagem diz "usuário <b>ou</b> senha inválidos", sem dizer qual dos dois errou? Para não
+      entregar a um invasor a informação de que aquele usuário existe. É boa prática real de segurança.</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a5')"> Testei os 4 casos do login</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">9</div><h3>Demonstração: meia-entrada (or) e triagem (and + or)</h3></div>
+      <div class="console-box">
+        <div class="console-label"><span>meia_entrada.py</span><span>Python (simulado)</span></div>
+        <textarea id="code33">eh_estudante = input("Estudante? (s/n): ") == "s"
+idade = int(input("Idade: "))
+if eh_estudante or idade >= 60:
+    print("Voce tem direito a meia-entrada!")
+else:
+    print("Ingresso inteiro.")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(33)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs33"></div>
+        <div class="console-out" id="out33">▸ Clique em Rodar, preencha os dados e rode de novo.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">Repare: <code>== "s"</code> já cria um booleano (True/False) e guarda direto na variável — uma comparação já É um valor lógico!</p>
+      <p>Agora a triagem de hospital, combinando <code>and</code> <b>e</b> <code>or</code> num só <code>if/elif</code>:</p>
+      <div class="console-box">
+        <div class="console-label"><span>triagem.py</span><span>Python (simulado)</span></div>
+        <textarea id="code34">febre = input("Tem febre? (s/n): ") == "s"
+dor = input("Tem dor no peito? (s/n): ") == "s"
+if febre and dor:
+    print("PRIORIDADE ALTA - atendimento imediato")
+elif febre or dor:
+    print("Prioridade media")
+else:
+    print("Prioridade baixa")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(34)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs34"></div>
+        <div class="console-out" id="out34">▸ Clique em Rodar, preencha os sintomas e rode de novo.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">Por que o <code>and</code> vem <b>antes</b> do <code>or</code> na cadeia de elif? Porque é o caso mais restritivo — mesma regra da Aula 4 (do mais restritivo pro mais amplo). Se o <code>or</code> viesse primeiro, quem tem os dois sintomas cairia errado em "prioridade média"!</p>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a5')"> Testei a meia-entrada e a triagem com vários casos</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">10</div><h3>Ano bissexto — a joia didática</h3></div>
+      <p>Este exemplo usa <b>operador aritmético</b> (<code>%</code>, Aula 3), <b>relacional</b> (<code>==</code>,
+      <code>!=</code>, Aula 4) e <b>lógico</b> (<code>and</code>, <code>or</code>, hoje) — tudo numa linha só:</p>
+      <div class="console-box">
+        <div class="console-label"><span>bissexto.py</span><span>Python (simulado)</span></div>
+        <textarea id="code35">ano = int(input("Ano: "))
+if (ano % 4 == 0 and ano % 100 != 0) or (ano % 400 == 0):
+    print("Ano bissexto")
+else:
+    print("Ano comum")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(35)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs35"></div>
+        <div class="console-out" id="out35">▸ Teste com 2024, 1900 e 2000.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">Previsão antes de rodar: 2024 (bissexto) · 1900 (não — divisível por 100 e não por 400) · 2000 (bissexto — divisível por 400). Por que os parênteses são essenciais aqui? Sem eles, a precedência mudaria o sentido da regra inteira.</p>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a5')"> Testei os 3 anos (2024, 1900, 2000)</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">11</div><h3>Erros comuns com and/or</h3></div>
+      <div class="accordion" onclick="this.classList.toggle('open')">
+        <div class="q">⚠️ idade >= 18 and <= 60 <span class="arrow">▾</span></div>
+        <div class="a">Cada lado do <code>and</code>/<code>or</code> precisa ser uma condição <b>completa</b>.
+        O certo é: <code>idade >= 18 and idade <= 60</code> (repetindo a variável dos dois lados).</div>
+      </div>
+      <div class="accordion" onclick="this.classList.toggle('open')">
+        <div class="q">⚠️ Usar && ou || <span class="arrow">▾</span></div>
+        <div class="a">Isso vem de outras linguagens (C, Java, JS) e dá <i>SyntaxError</i> em Python. Aqui é
+        sempre <code>and</code> e <code>or</code>, por extenso.</div>
+      </div>
+      <div class="accordion" onclick="this.classList.toggle('open')">
+        <div class="q">⚠️ if x == True: <span class="arrow">▾</span></div>
+        <div class="a">Funciona, mas é feio e redundante. Escreva simplesmente <code>if x:</code></div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a5')"> Revisei os 3 erros comuns</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">12</div><h3>Exemplos práticos e dicas de mercado</h3></div>
+      <table class="tbl">
+        <tr><th>Situação</th><th>Condição</th></tr>
+        <tr><td>Aprovação de crédito (fintech)</td><td><code>renda >= 2000 and score >= 600</code></td></tr>
+        <tr><td>Promoção (RH)</td><td><code>tempo_casa >= 2 and avaliacao >= 8</code></td></tr>
+        <tr><td>Frete grátis (e-commerce)</td><td><code>valor >= 200 or eh_premium</code></td></tr>
+        <tr><td>Brinquedo do parque</td><td><code>altura >= 1.40 and (idade >= 12 or acompanhado)</code></td></tr>
+        <tr><td>Cliente ativo</td><td><code>not inadimplente</code></td></tr>
+      </table>
+      <div class="box blue"><b class="title">💼 Regras de negócio reais quase nunca dependem de uma só condição</b>
+      Fintechs: renda E score E sem restrição. Cibersegurança: senha E 2º fator E dispositivo confiável.
+      Antifraude/IA: motores de regras combinam <b>centenas</b> de and/or — árvores de decisão são exatamente
+      isso.</div>
+      <div class="box yellow"><b class="title">🧪 Curiosidade</b>
+      Os operadores lógicos vêm da <b>Álgebra Booleana</b>, criada por George Boole em <b>1854</b> — 80 anos
+      antes do primeiro computador! Claude Shannon mostrou, em 1937, que ela descreve circuitos elétricos: os
+      bilhões de transistores do seu celular funcionam com E, OU e NÃO.</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a5')"> Revisei os exemplos de mercado</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">13</div><h3>Exercícios da Parte 1</h3></div>
+      <div class="exercise">
+        <div class="lvl">Básico</div>
+        <p>Peça dois números e diga se ambos são positivos (use and).</p>
+        <button onclick="toggleAns('e5a')">Ver uma resposta possível</button>
+        <div class="ans" id="e5a"><pre class="code" style="margin:0;">a = float(input("Numero 1: "))
+b = float(input("Numero 2: "))
+if a > 0 and b > 0:
+    print("Ambos positivos")
+else:
+    print("Nem sempre positivos")</pre></div>
+      </div>
+      <div class="exercise">
+        <div class="lvl">Intermediário</div>
+        <p>Peça um número e diga se ele é múltiplo de 3 OU de 5.</p>
+        <button onclick="toggleAns('e5b')">Ver uma resposta possível</button>
+        <div class="ans" id="e5b"><pre class="code" style="margin:0;">n = int(input("Numero: "))
+if n % 3 == 0 or n % 5 == 0:
+    print("Multiplo de 3 ou 5")
+else:
+    print("Nenhum dos dois")</pre></div>
+      </div>
+      <div class="exercise">
+        <div class="lvl">Desafio</div>
+        <p>Parque de diversões: libera o brinquedo se altura &gt; 1,40m E (idade &gt; 12 OU acompanhado de adulto).</p>
+        <button onclick="toggleAns('e5c')">Ver uma resposta possível</button>
+        <div class="ans" id="e5c"><pre class="code" style="margin:0;">altura = float(input("Altura: "))
+idade = int(input("Idade: "))
+acompanhado = input("Com adulto? (s/n): ") == "s"
+if altura > 1.40 and (idade > 12 or acompanhado):
+    print("Pode entrar!")
+else:
+    print("Nao pode entrar.")</pre></div>
+      </div>
+      <div class="console-box">
+        <div class="console-label"><span>console36.py</span><span>Python (simulado)</span></div>
+        <textarea id="code36" placeholder="Tente os exercícios aqui..."></textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(36)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs36"></div>
+        <div class="console-out" id="out36">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a5')"> Fiz pelo menos 2 exercícios</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">14</div><h3>Checkpoint — fecha a Parte 1</h3></div>
+      <div class="checkq">
+        <p class="qtext">True and False = ?</p>
+        <div class="quiz-opts" data-q="18">
+          <button class="quiz-opt" data-correct="true">False</button>
+          <button class="quiz-opt" data-correct="false">True</button>
+        </div>
+      </div>
+      <div class="checkq">
+        <p class="qtext">Misturou and e or na mesma linha? Use...</p>
+        <div class="quiz-opts" data-q="19">
+          <button class="quiz-opt" data-correct="false">Colchetes</button>
+          <button class="quiz-opt" data-correct="true">Parênteses</button>
+          <button class="quiz-opt" data-correct="false">Chaves</button>
+        </div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a5')"> Já sei combinar condições — vamos organizá-las</div>
+    </div>
+
+    <p style="font-weight:700; color:var(--navy); font-size:13px; text-transform:uppercase; letter-spacing:.4px; margin:18px 0 4px;">Parte 2 — Organizar Condições (aninhadas × achatadas)</p>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">15</div><h3>Condições aninhadas — um if dentro de outro if</h3></div>
+      <p>Às vezes uma decisão só faz sentido <b>depois de outra</b>. No caixa eletrônico: não adianta perguntar
+      "tem saldo?" se a senha estiver errada — primeiro valida a senha, <b>só então</b> verifica o saldo.</p>
+      <div class="console-box">
+        <div class="console-label"><span>console37.py</span><span>Python (simulado)</span></div>
+        <textarea id="code37">senha_correta = True
+saldo = 500.0
+valor = 300.0
+if senha_correta:
+    if saldo >= valor:
+        print("Saque liberado")
+    else:
+        print("Saldo insuficiente")
+else:
+    print("Senha incorreta")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(37)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs37"></div>
+        <div class="console-out" id="out37">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">Repare na <b>indentação dupla</b>: o if de dentro está recuado 4 espaços a mais. É o recuo que mostra a hierarquia — quem está dentro de quem. Troque <code>senha_correta</code> para <code>False</code> e rode de novo.</p>
+      <div class="box blue"><b class="title">🗣️ Por que não testar o saldo primeiro?</b>
+      Porque, se a senha está errada, a pessoa nem deveria ter acesso à informação de saldo — a ordem tem
+      sentido de <b>negócio</b>, não só técnico.</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a5')"> Rodei o exemplo aninhado e testei os 3 caminhos</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">16</div><h3>Aninhar × achatar — o pulo do gato</h3></div>
+      <p><b>✅ ANINHE</b> quando as decisões são <b>etapas dependentes</b> (a segunda só faz sentido se a
+      primeira passou) e você quer <b>mensagens diferentes</b> para cada etapa. <b>✅ ACHATE (com and)</b>
+      quando as condições são <b>independentes</b> e checadas juntas. Compare:</p>
+      <div class="console-box">
+        <div class="console-label"><span>aninhado.py (3 níveis)</span><span>Python (simulado)</span></div>
+        <textarea id="code38">idade = 20
+tem_carteira = True
+esta_bebado = False
+if idade >= 18:
+    if tem_carteira:
+        if not esta_bebado:
+            print("Pode dirigir")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(38)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs38"></div>
+        <div class="console-out" id="out38">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="console-box">
+        <div class="console-label"><span>achatado.py (1 linha)</span><span>Python (simulado)</span></div>
+        <textarea id="code39">idade = 20
+tem_carteira = True
+esta_bebado = False
+if idade >= 18 and tem_carteira and not esta_bebado:
+    print("Pode dirigir")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(39)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs39"></div>
+        <div class="console-out" id="out39">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:13px;">Os dois fazem <b>exatamente a mesma coisa</b> — o segundo é bem mais fácil de
+      ler. Cada nível de aninhamento a mais empurra o código para a direita e nasce o famoso "código escada".</p>
+      <div class="box yellow"><b class="title">💡 Regra prática do mercado</b>
+      Passou de <b>2 ou 3 níveis</b> de aninhamento? Pare e pergunte: "dá para achatar isso com and?" Na maioria
+      das vezes, dá.</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a5')"> Rodei as duas versões e vi que dão o mesmo resultado</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">17</div><h3>Exercício guiado: de aninhado para achatado</h3></div>
+      <p>Refatore junto: quantas vezes o "Negado" se repete na versão aninhada?</p>
+      <div class="console-box">
+        <div class="console-label"><span>antes.py</span><span>Python (simulado)</span></div>
+        <textarea id="code40">renda = 2500.0
+score = 650
+tem_restricao = False
+if renda >= 2000:
+    if score >= 600:
+        if not tem_restricao:
+            print("Aprovado")
+        else:
+            print("Negado")
+    else:
+        print("Negado")
+else:
+    print("Negado")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(40)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs40"></div>
+        <div class="console-out" id="out40">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="console-box">
+        <div class="console-label"><span>depois.py</span><span>Python (simulado)</span></div>
+        <textarea id="code41">renda = 2500.0
+score = 650
+tem_restricao = False
+if renda >= 2000 and score >= 600 and not tem_restricao:
+    print("Aprovado")
+else:
+    print("Negado")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(41)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs41"></div>
+        <div class="console-out" id="out41">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">Escrevemos "Negado" <b>três vezes</b> na versão aninhada — repetição desnecessária. Ganhamos: menos linhas, menos repetição, mais legibilidade.</p>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a5')"> Comparei as duas versões e entendi o ganho</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">18</div><h3>Checkpoint — fecha a Parte 2</h3></div>
+      <div class="checkq">
+        <p class="qtext">Aninhar condições é sempre ruim?</p>
+        <div class="quiz-opts" data-q="20">
+          <button class="quiz-opt" data-correct="false">Sim, sempre deveria achatar tudo</button>
+          <button class="quiz-opt" data-correct="true">Não — é ruim sem necessidade; quando as etapas dependem umas das outras e precisam de mensagens diferentes, aninhar é o certo</button>
+        </div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a5')"> Sei quando aninhar e quando achatar</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">19</div><h3>🔗 Projeto da aula: Motor de Aprovação de Crédito JWC Bank</h3></div>
+      <p>Junta as duas partes: <b>combinar</b> condições (and/or/not) e <b>organizar</b> (aninhar só onde faz
+      sentido). Rode com renda 3000, score 700, sem restrição e pedido 20000:</p>
+      <div class="console-box">
+        <div class="console-label"><span>motor_credito.py</span><span>Python (simulado)</span></div>
+        <textarea id="code42">print("===== ANALISE DE CREDITO - JWC BANK =====")
+renda = float(input("Renda mensal: R$ "))
+score = int(input("Score de credito (0-1000): "))
+tem_restricao = input("Tem nome negativado? (s/n): ") == "s"
+valor_pedido = float(input("Valor solicitado: R$ "))
+LIMITE_MULTIPLICADOR = 10
+limite = renda * LIMITE_MULTIPLICADOR
+if tem_restricao:
+    print("NEGADO: cliente com restricao no nome.")
+else:
+    if renda >= 1500 and score >= 500 and valor_pedido <= limite:
+        print(f"APROVADO: R$ {valor_pedido:.2f}")
+        print(f"(seu limite e de R$ {limite:.2f})")
+    else:
+        print("NEGADO: renda, score ou valor fora dos criterios.")
+        print(f"Seu limite maximo seria R$ {limite:.2f}")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(42)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs42"></div>
+        <div class="console-out" id="out42">▸ Clique em Rodar, preencha os dados e rode de novo.</div>
+      </div>
+      <div class="box blue"><b class="title">Explicação das escolhas de design</b>
+      A <b>restrição</b> ficou <b>aninhada</b> (fora do and) de propósito: ela é eliminatória e merece uma
+      mensagem específica. As outras três condições são <b>independentes</b> e foram <b>achatadas</b> com
+      <code>and</code> — mais legível. Usamos uma <b>constante</b> (<code>LIMITE_MULTIPLICADOR</code>) e
+      formatação <code>:.2f</code> (Aulas 2 e 3) — tudo o que aprendemos até agora, junto.</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a5')"> Rodei o motor de crédito com pelo menos 2 cenários diferentes</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">20</div><h3>Checkpoint final da Aula 5</h3></div>
+      <div class="checkq">
+        <p class="qtext">O que este código imprime? nota = 8; if 5 <= nota < 7: print("Recuperação")</p>
+        <div class="quiz-opts" data-q="21">
+          <button class="quiz-opt" data-correct="false">Recuperação</button>
+          <button class="quiz-opt" data-correct="true">Nada (8 não está entre 5 e 7)</button>
+        </div>
+      </div>
+      <div class="checkq">
+        <p class="qtext">match/case funciona a partir de qual versão do Python?</p>
+        <div class="quiz-opts" data-q="22">
+          <button class="quiz-opt" data-correct="false">Qualquer versão</button>
+          <button class="quiz-opt" data-correct="true">3.10 ou superior</button>
+          <button class="quiz-opt" data-correct="false">2.7</button>
+        </div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a5')"> Fiz o checkpoint final da Aula 5</div>
+    </div>
+
+    <div class="summary-box">
+      <h4>✔ Resumo da Aula 5</h4>
+      <b>Bloco 0:</b> match/case compara um valor contra casos fixos (Python 3.10+); git restore recupera
+      arquivos apagados a partir do último commit; Python é fortemente tipado (recusa misturar tipos sem
+      conversão). <b>Parte 1:</b> and = E (exige tudo) · or = OU (basta um) · not = inverte. Precedência:
+      not → and → or; use parênteses ao misturar. Curto-circuito evita erros (ex.: checar divisor != 0 antes
+      de dividir). <b>Parte 2:</b> aninhe quando as etapas dependem umas das outras (mensagens diferentes);
+      achate com and quando são independentes.
+      <p style="margin-top:8px;"><b>Próxima aula:</b> nosso motor de crédito analisa um cliente e encerra. E se
+      precisássemos analisar 50 clientes seguidos, ou dar 3 tentativas de senha, ou manter um menu aberto até
+      escolher "sair"? Aula 6: estruturas de repetição (<code>for</code>, <code>while</code>, <code>break</code>,
+      <code>continue</code>) — e é <b>avaliativa</b>!</p>
+    </div>
+
+    <div class="box yellow">
+      <b class="title">📢 Avisos finais — não esqueça</b>
+      A lista de atividades da <b>Aula 6 é AVALIATIVA</b> (as avaliações da UC1 são as listas das Aulas 6, 10 e
+      12). O <b>Desafio 1</b> (pesquisa de 3 vagas Full Stack) é tarefa para a próxima aula — vai ser usado
+      numa reflexão sobre sua própria evolução. E não esqueça de instalar o <b>indent-rainbow</b> no VS Code.
+    </div>
+  </section>
+
   <!-- ==================== COLA RÁPIDA ==================== -->
   <section class="panel" id="cola">
     <div class="aula-head" style="background:linear-gradient(135deg,var(--navy),#333d5c);">
@@ -1312,6 +1936,10 @@ $ git push -u origin main</pre></div>
         <tr><td>4</td><td>Relacionais</td><td>== != > < >= <= sempre devolvem bool (True/False).</td></tr>
         <tr><td>4</td><td>if/elif/else</td><td>Testa de cima pra baixo, para no 1º True — a ordem importa.</td></tr>
         <tr><td>4</td><td>Git remoto</td><td>push envia · clone copia · pull atualiza.</td></tr>
+        <tr><td>5</td><td>match/case</td><td>Alternativa ao if/elif para comparar 1 valor com várias opções (use _ como "senão").</td></tr>
+        <tr><td>5</td><td>and / or / not</td><td>and: TUDO precisa ser True · or: BASTA 1 ser True · not: inverte o valor.</td></tr>
+        <tr><td>5</td><td>Curto-circuito</td><td>Em "and", se o 1º for False o Python nem olha o resto — economiza trabalho.</td></tr>
+        <tr><td>5</td><td>Aninhar × achatar</td><td>if dentro de if (aninhado) x and/or no mesmo if (achatado) — achatado costuma ser mais legível.</td></tr>
       </table>
     </div>
 
@@ -1344,15 +1972,16 @@ print(f"Pretensao: R$ {pretensao:.2f}")</textarea>
     <div class="final-note">
       <b>Uma palavra final:</b> ninguém entende tudo de primeira, e tudo bem repetir uma estação (ou uma aula
       inteira) várias vezes até fazer sentido. Você já tem a base de pensamento computacional, variáveis/tipos,
-      operadores/Git e agora também condicionais (if/elif/else) e Git remoto. A próxima aula (operadores
-      lógicos: and/or/not) vai deixar suas decisões ainda mais poderosas — e vai fazer muito mais sentido agora
-      que essa base está sólida. Estou aqui, seguimos juntos.
+      operadores/Git, condicionais (if/elif/else), Git remoto e agora também operadores lógicos (and/or/not),
+      match/case e a diferença entre condições aninhadas e achatadas. A próxima aula (repetição: for/while) vai
+      ensinar o computador a repetir tarefas sozinho — e vai usar tudo que você já construiu até aqui. Estou
+      aqui, seguimos juntos.
     </div>
   </section>
 
   <div class="score-bar">
     <span>Progresso geral</span>
-    <span><b id="scoreText">0 / 4</b> abas visitadas</span>
+    <span><b id="scoreText">0 / 6</b> abas visitadas</span>
   </div>
 
   <footer class="tiny">SENAC · Programação em Python · Material de Reforço interativo — Aulas 1, 2 e 3</footer>
@@ -1380,6 +2009,13 @@ function pyRepr(val) {
   return String(val.value);
 }
 
+function toBool(val) {
+  if (val.type === "bool") return val.value;
+  if (val.type === "str") return val.value.length > 0;
+  return val.value !== 0;
+}
+
+// ---------------- Tokenizer ----------------
 function tokenize(src) {
   const tokens = []; let i = 0; const n = src.length;
   while (i < n) {
@@ -1394,6 +2030,7 @@ function tokenize(src) {
     if (c === "!") { if (src[i+1] === "=") { tokens.push({t:"OP",v:"!="}); i+=2; continue; } throw new PyError('SyntaxError: caractere "!" inesperado'); }
     if (c === "<") { if (src[i+1] === "=") { tokens.push({t:"OP",v:"<="}); i+=2; continue; } tokens.push({t:"OP",v:"<"}); i++; continue; }
     if (c === ">") { if (src[i+1] === "=") { tokens.push({t:"OP",v:">="}); i+=2; continue; } tokens.push({t:"OP",v:">"}); i++; continue; }
+    if (c === "|") { tokens.push({t:"OP", v:"|"}); i++; continue; }
     if ("+-%".includes(c)) { tokens.push({t:"OP",v:c}); i++; continue; }
     if (c === '"' || c === "'") {
       const quote = c; let j = i+1; let buf = "";
@@ -1420,7 +2057,110 @@ function tokenize(src) {
   return tokens;
 }
 
-function parseFString(raw, env) {
+// ---------------- Parser (produz AST, não avalia) ----------------
+function parseExprToAst(src) {
+  const tokens = tokenize(src); let pos = 0;
+  function peek(){ return tokens[pos]; }
+  function next(){ return tokens[pos++]; }
+  function isKw(tok, kw){ return tok && tok.t === "ID" && tok.v === kw; }
+
+  function parseAtom() {
+    const tok = peek();
+    if (!tok) throw new PyError("SyntaxError: expressão incompleta");
+    if (tok.t === "NUM") { next(); return { k: "num", isFloat: tok.v.includes("."), v: tok.v }; }
+    if (tok.t === "STR") { next(); return { k: "str", v: tok.v }; }
+    if (tok.t === "FSTR") { next(); return { k: "fstr", raw: tok.v }; }
+    if (tok.t === "LP") { next(); const v = parseOr(); if (!peek()||peek().t!=="RP") throw new PyError("SyntaxError: faltou fechar parêntese )"); next(); return v; }
+    if (tok.t === "ID") {
+      next(); const name = tok.v;
+      if (name === "True") return { k: "bool", v: true };
+      if (name === "False") return { k: "bool", v: false };
+      if (peek() && peek().t === "LP") {
+        next(); const argNode = parseOr();
+        if (!peek()||peek().t!=="RP") throw new PyError("SyntaxError: faltou fechar parêntese )");
+        next(); return { k: "call", name, arg: argNode };
+      }
+      return { k: "id", name };
+    }
+    throw new PyError("SyntaxError: não entendi a expressão");
+  }
+
+  function parseUnaryMinus() {
+    if (peek() && peek().t === "OP" && peek().v === "-") {
+      next(); return { k: "neg", arg: parseUnaryMinus() };
+    }
+    return parseAtom();
+  }
+
+  function parsePower() {
+    const base = parseUnaryMinus();
+    if (peek() && peek().t === "OP" && peek().v === "**") {
+      next(); const exp = parsePower();
+      return { k: "pow", base, exp };
+    }
+    return base;
+  }
+
+  function parseTerm() {
+    let left = parsePower();
+    while (peek() && peek().t === "OP" && ["*","/","//","%"].includes(peek().v)) {
+      const op = next().v; const right = parsePower();
+      left = { k: "binop", op, left, right };
+    }
+    return left;
+  }
+
+  function parseAddSub() {
+    let left = parseTerm();
+    while (peek() && peek().t === "OP" && ["+","-"].includes(peek().v)) {
+      const op = next().v; const right = parseTerm();
+      left = { k: "binop", op, left, right };
+    }
+    return left;
+  }
+
+  function parseComparison() {
+    let left = parseAddSub();
+    const chain = [];
+    while (peek() && peek().t === "OP" && ["==","!=","<",">","<=",">="].includes(peek().v)) {
+      const op = next().v; const right = parseAddSub();
+      chain.push({ op, left, right });
+      left = right;
+    }
+    if (chain.length === 0) return left;
+    if (chain.length === 1) return { k: "cmp", op: chain[0].op, left: chain[0].left, right: chain[0].right };
+    let node = { k: "cmp", op: chain[0].op, left: chain[0].left, right: chain[0].right };
+    for (let i = 1; i < chain.length; i++) {
+      const nextCmp = { k: "cmp", op: chain[i].op, left: chain[i].left, right: chain[i].right };
+      node = { k: "and", left: node, right: nextCmp };
+    }
+    return node;
+  }
+
+  function parseNot() {
+    if (isKw(peek(), "not")) { next(); return { k: "not", arg: parseNot() }; }
+    return parseComparison();
+  }
+
+  function parseAnd() {
+    let left = parseNot();
+    while (isKw(peek(), "and")) { next(); const right = parseNot(); left = { k: "and", left, right }; }
+    return left;
+  }
+
+  function parseOr() {
+    let left = parseAnd();
+    while (isKw(peek(), "or")) { next(); const right = parseAnd(); left = { k: "or", left, right }; }
+    return left;
+  }
+
+  const result = parseOr();
+  if (pos < tokens.length) throw new PyError("SyntaxError: sobrou algo inesperado na expressão");
+  return result;
+}
+
+// ---------------- Avaliador do AST ----------------
+function parseFStringRaw(raw, env) {
   let out = ""; let i = 0;
   while (i < raw.length) {
     if (raw[i] === "{") {
@@ -1432,174 +2172,124 @@ function parseFString(raw, env) {
       }
       let expr = buf, spec = null;
       const colonIdx = buf.indexOf(":");
-      if (colonIdx !== -1) { expr = buf.slice(0, colonIdx); spec = buf.slice(colonIdx+1); }
-      const val = evalExpr(expr, env);
+      if (colonIdx !== -1) { expr = buf.slice(0, colonIdx); spec = buf.slice(colonIdx + 1); }
+      const val = evalAst(parseExprToAst(expr), env);
       if (spec) {
         const m = spec.match(/^\.(\d+)f$/);
         if (m) out += Number(val.value).toFixed(Number(m[1]));
         else out += pyRepr(val);
       } else out += pyRepr(val);
-      i = j+1;
+      i = j + 1;
     } else { out += raw[i]; i++; }
   }
   return out;
 }
 
-function evalExpr(src, env) {
-  const tokens = tokenize(src); let pos = 0;
-  function peek(){ return tokens[pos]; }
-  function next(){ return tokens[pos++]; }
-
-  function parseAtom() {
-    const tok = peek();
-    if (!tok) throw new PyError("SyntaxError: expressão incompleta");
-    if (tok.t === "NUM") { next(); return tok.v.includes(".") ? makeFloat(parseFloat(tok.v)) : makeInt(parseInt(tok.v,10)); }
-    if (tok.t === "STR") { next(); return makeStr(tok.v); }
-    if (tok.t === "FSTR") { next(); return makeStr(parseFString(tok.v, env)); }
-    if (tok.t === "LP") { next(); const v = parseComparison(); if (!peek()||peek().t!=="RP") throw new PyError("SyntaxError: faltou fechar parêntese )"); next(); return v; }
-    if (tok.t === "ID") {
-      next(); const name = tok.v;
-      if (name === "True") return makeBool(true);
-      if (name === "False") return makeBool(false);
-      if (peek() && peek().t === "LP") {
-        next(); const argVal = parseComparison();
-        if (!peek()||peek().t!=="RP") throw new PyError("SyntaxError: faltou fechar parêntese )");
-        next(); return callFn(name, argVal);
-      }
-      if (!(name in env)) throw new PyError("NameError: name '" + name + "' is not defined");
-      return env[name];
-    }
-    throw new PyError("SyntaxError: não entendi a expressão");
+function callFn(name, argNode, env) {
+  const arg = evalAst(argNode, env);
+  if (name === "int") {
+    if (arg.type === "str") { const v = arg.value.trim(); if (!/^-?\d+$/.test(v)) throw new PyError('ValueError: invalid literal for int() with base 10: "' + arg.value + '"'); return makeInt(parseInt(v,10)); }
+    if (arg.type === "bool") return makeInt(arg.value ? 1 : 0);
+    return makeInt(Math.trunc(arg.value));
   }
-
-  function callFn(name, arg) {
-    if (name === "int") {
-      if (arg.type === "str") { const v = arg.value.trim(); if (!/^-?\d+$/.test(v)) throw new PyError('ValueError: invalid literal for int() with base 10: "' + arg.value + '"'); return makeInt(parseInt(v,10)); }
-      if (arg.type === "bool") return makeInt(arg.value ? 1 : 0);
-      return makeInt(Math.trunc(arg.value));
-    }
-    if (name === "float") {
-      if (arg.type === "str") { const v = arg.value.trim(); if (!/^-?\d+(\.\d+)?$/.test(v)) throw new PyError('ValueError: could not convert string to float: "' + arg.value + '"'); return makeFloat(parseFloat(v)); }
-      if (arg.type === "bool") return makeFloat(arg.value ? 1 : 0);
-      return makeFloat(arg.value);
-    }
-    if (name === "str") return makeStr(pyRepr(arg));
-    if (name === "type") return makeStr("<class '" + arg.type + "'>");
-    throw new PyError("NameError: name '" + name + "' is not defined");
+  if (name === "float") {
+    if (arg.type === "str") { const v = arg.value.trim(); if (!/^-?\d+(\.\d+)?$/.test(v)) throw new PyError('ValueError: could not convert string to float: "' + arg.value + '"'); return makeFloat(parseFloat(v)); }
+    if (arg.type === "bool") return makeFloat(arg.value ? 1 : 0);
+    return makeFloat(arg.value);
   }
+  if (name === "str") return makeStr(pyRepr(arg));
+  if (name === "type") return makeStr("<class '" + arg.type + "'>");
+  throw new PyError("NameError: name '" + name + "' is not defined");
+}
 
-  function parseUnary() {
-    if (peek() && peek().t === "OP" && peek().v === "-") {
-      next(); const v = parseUnary();
+function pyFloorDiv(a,b){ return Math.floor(a/b); }
+function pyMod(a,b){ return a - Math.floor(a/b)*b; }
+
+function evalAst(node, env) {
+  switch (node.k) {
+    case "num": return node.isFloat ? makeFloat(parseFloat(node.v)) : makeInt(parseInt(node.v, 10));
+    case "str": return makeStr(node.v);
+    case "bool": return makeBool(node.v);
+    case "fstr": return makeStr(parseFStringRaw(node.raw, env));
+    case "id":
+      if (!(node.name in env)) throw new PyError("NameError: name '" + node.name + "' is not defined");
+      return env[node.name];
+    case "call": return callFn(node.name, node.arg, env);
+    case "neg": {
+      const v = evalAst(node.arg, env);
       if (v.type === "str") throw new PyError("TypeError: bad operand type for unary -: 'str'");
       return v.type === "float" ? makeFloat(-v.value) : makeInt(-v.value);
     }
-    return parseAtom();
-  }
-
-  function parsePower() {
-    const base = parseUnary();
-    if (peek() && peek().t === "OP" && peek().v === "**") {
-      next(); const exp = parsePower();
+    case "pow": {
+      const base = evalAst(node.base, env), exp = evalAst(node.exp, env);
       if (base.type === "str" || exp.type === "str") throw new PyError("TypeError: unsupported operand type(s) for **: 'str'");
       const r = Math.pow(base.value, exp.value);
       const bothInt = base.type === "int" && exp.type === "int" && exp.value >= 0;
       return bothInt ? makeInt(r) : makeFloat(r);
     }
-    return base;
-  }
-
-  function pyFloorDiv(a,b){ return Math.floor(a/b); }
-  function pyMod(a,b){ return a - Math.floor(a/b)*b; }
-
-  function parseTerm() {
-    let left = parsePower();
-    while (peek() && peek().t === "OP" && ["*","/","//","%"].includes(peek().v)) {
-      const op = next().v; const right = parsePower();
+    case "binop": {
+      const left = evalAst(node.left, env), right = evalAst(node.right, env);
+      const op = node.op;
       if (op === "*") {
-        if (left.type === "str" && right.type === "int") { left = makeStr(left.value.repeat(right.value)); continue; }
-        if (right.type === "str" && left.type === "int") { left = makeStr(right.value.repeat(left.value)); continue; }
+        if (left.type === "str" && right.type === "int") return makeStr(left.value.repeat(right.value));
+        if (right.type === "str" && left.type === "int") return makeStr(right.value.repeat(left.value));
         if (left.type === "str" || right.type === "str") throw new PyError("TypeError: can't multiply sequence by non-int");
         const r = left.value * right.value;
-        left = (left.type === "int" && right.type === "int") ? makeInt(r) : makeFloat(r);
-        continue;
+        return (left.type === "int" && right.type === "int") ? makeInt(r) : makeFloat(r);
+      }
+      if (op === "+") {
+        if (left.type === "str" && right.type === "str") return makeStr(left.value + right.value);
+        if (left.type === "str" || right.type === "str") throw new PyError('TypeError: can only concatenate str (not "' + (left.type === "str" ? right.type : left.type) + '") to str');
+        const r = left.value + right.value;
+        return (left.type === "int" && right.type === "int") ? makeInt(r) : makeFloat(r);
       }
       if (left.type === "str" || right.type === "str") throw new PyError("TypeError: unsupported operand type(s): 'str'");
+      if (op === "-") { const r = left.value - right.value; return (left.type==="int"&&right.type==="int")?makeInt(r):makeFloat(r); }
       if (right.value === 0 && (op === "/" || op === "//" || op === "%")) throw new PyError("ZeroDivisionError: division by zero");
-      if (op === "/") { left = makeFloat(left.value / right.value); continue; }
-      if (op === "//") { const r = pyFloorDiv(left.value,right.value); left = (left.type==="int"&&right.type==="int")?makeInt(r):makeFloat(r); continue; }
-      if (op === "%") { const r = pyMod(left.value,right.value); left = (left.type==="int"&&right.type==="int")?makeInt(r):makeFloat(r); continue; }
+      if (op === "/") return makeFloat(left.value / right.value);
+      if (op === "//") { const r = pyFloorDiv(left.value, right.value); return (left.type==="int"&&right.type==="int")?makeInt(r):makeFloat(r); }
+      if (op === "%") { const r = pyMod(left.value, right.value); return (left.type==="int"&&right.type==="int")?makeInt(r):makeFloat(r); }
+      throw new PyError("SyntaxError: operador desconhecido " + op);
     }
-    return left;
-  }
-
-  function parseAddSub() {
-    let left = parseTerm();
-    while (peek() && peek().t === "OP" && ["+","-"].includes(peek().v)) {
-      const op = next().v; const right = parseTerm();
-      if (op === "+") {
-        if (left.type === "str" && right.type === "str") { left = makeStr(left.value + right.value); continue; }
-        if (left.type === "str" || right.type === "str") throw new PyError('TypeError: can only concatenate str (not "' + (left.type==="str"?right.type:left.type) + '") to str');
-        const r = left.value + right.value;
-        left = (left.type==="int"&&right.type==="int")?makeInt(r):makeFloat(r);
-        continue;
-      }
-      if (op === "-") {
-        if (left.type === "str" || right.type === "str") throw new PyError("TypeError: unsupported operand type(s) for -: 'str'");
-        const r = left.value - right.value;
-        left = (left.type==="int"&&right.type==="int")?makeInt(r):makeFloat(r);
-        continue;
-      }
-    }
-    return left;
-  }
-
-  function parseComparison() {
-    const left = parseAddSub();
-    if (peek() && peek().t === "OP" && ["==","!=","<",">","<=",">="].includes(peek().v)) {
-      const op = next().v;
-      const right = parseAddSub();
-      let result;
-      const bothStr = left.type === "str" && right.type === "str";
+    case "cmp": {
+      const left = evalAst(node.left, env), right = evalAst(node.right, env);
+      const op = node.op;
       const mixedStrOther = (left.type === "str") !== (right.type === "str");
       if (mixedStrOther) {
-        if (op === "==") result = false;
-        else if (op === "!=") result = true;
-        else throw new PyError("TypeError: '" + op + "' not supported between instances of '" + left.type + "' and '" + right.type + "'");
-      } else {
-        const a = left.value, b = right.value;
-        if (op === "==") result = a === b;
-        else if (op === "!=") result = a !== b;
-        else if (op === "<") result = a < b;
-        else if (op === ">") result = a > b;
-        else if (op === "<=") result = a <= b;
-        else if (op === ">=") result = a >= b;
+        if (op === "==") return makeBool(false);
+        if (op === "!=") return makeBool(true);
+        throw new PyError("TypeError: '" + op + "' not supported between instances of '" + left.type + "' and '" + right.type + "'");
       }
+      const a = left.value, b = right.value; let result;
+      if (op === "==") result = a === b;
+      else if (op === "!=") result = a !== b;
+      else if (op === "<") result = a < b;
+      else if (op === ">") result = a > b;
+      else if (op === "<=") result = a <= b;
+      else if (op === ">=") result = a >= b;
       return makeBool(result);
     }
-    return left;
+    case "not": return makeBool(!toBool(evalAst(node.arg, env)));
+    case "and": { const l = evalAst(node.left, env); if (!toBool(l)) return l; return evalAst(node.right, env); }
+    case "or": { const l = evalAst(node.left, env); if (toBool(l)) return l; return evalAst(node.right, env); }
+    default: throw new PyError("SyntaxError: nó desconhecido");
   }
-
-  const result = parseComparison();
-  if (pos < tokens.length) throw new PyError("SyntaxError: sobrou algo inesperado na expressão");
-  return result;
 }
 
+function evalExpr(src, env) {
+  return evalAst(parseExprToAst(src), env);
+}
+
+// ---------------- Statements / blocos (if/elif/else, match/case) ----------------
 function stripComment(line) {
   let inStr = false, quote = "";
-  for (let i=0;i<line.length;i++){
+  for (let i = 0; i < line.length; i++) {
     const c = line[i];
     if (inStr) { if (c === quote) inStr = false; continue; }
     if (c === '"' || c === "'") { inStr = true; quote = c; continue; }
-    if (c === "#") return line.slice(0,i);
+    if (c === "#") return line.slice(0, i);
   }
   return line;
-}
-
-function toBool(val) {
-  if (val.type === "bool") return val.value;
-  if (val.type === "str") return val.value.length > 0;
-  return val.value !== 0;
 }
 
 function parseSimpleStmt(line) {
@@ -1607,7 +2297,7 @@ function parseSimpleStmt(line) {
   if (printMatch) return { type: "print", expr: printMatch[1] };
   const assignMatch = line.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\s*=\s*(.+)$/);
   if (assignMatch) return { type: "assign", name: assignMatch[1], expr: assignMatch[2] };
-  throw new PyError('SyntaxError: não entendi a linha "' + line + '" (o simulador entende print(), variavel = valor, e if/elif/else)');
+  throw new PyError('SyntaxError: não entendi a linha "' + line + '" (o simulador entende print(), variavel = valor, if/elif/else e match/case)');
 }
 
 function parseChildBlock(lines, idx, parentIndent) {
@@ -1640,8 +2330,23 @@ function parseBlock(lines, idx, blockIndent) {
         elseBody = parseChildBlock(lines, idx, blockIndent);
       }
       stmts.push({ type: "if", branches, elseBody });
+    } else if ((m = line.match(/^match\s+(.+):$/))) {
+      idx.i++;
+      const subjExpr = m[1];
+      if (idx.i >= lines.length || lines[idx.i].indent <= blockIndent) throw new PyError("IndentationError: esperava 'case' indentado depois do match");
+      const caseIndent = lines[idx.i].indent;
+      const cases = [];
+      while (idx.i < lines.length && lines[idx.i].indent === caseIndent && /^case\s+.+:$/.test(lines[idx.i].text)) {
+        const cm = lines[idx.i].text.match(/^case\s+(.+):$/);
+        idx.i++;
+        const body = parseChildBlock(lines, idx, caseIndent);
+        cases.push({ pattern: cm[1], body });
+      }
+      stmts.push({ type: "match", subjExpr, cases });
     } else if (/^elif\s+.+:$/.test(line) || /^else\s*:$/.test(line)) {
       throw new PyError('SyntaxError: "' + line + '" sem um if correspondente antes');
+    } else if (/^case\s+.+:$/.test(line)) {
+      throw new PyError('SyntaxError: "case" fora de um bloco match');
     } else {
       idx.i++;
       stmts.push(parseSimpleStmt(line));
@@ -1659,10 +2364,22 @@ function execBlock(stmts, env, out) {
     } else if (s.type === "if") {
       let done = false;
       for (const br of s.branches) {
-        const condVal = evalExpr(br.cond, env);
-        if (toBool(condVal)) { execBlock(br.body, env, out); done = true; break; }
+        if (toBool(evalExpr(br.cond, env))) { execBlock(br.body, env, out); done = true; break; }
       }
       if (!done && s.elseBody) execBlock(s.elseBody, env, out);
+    } else if (s.type === "match") {
+      const subjVal = evalExpr(s.subjExpr, env);
+      for (const c of s.cases) {
+        const patt = c.pattern.trim();
+        if (patt === "_") { execBlock(c.body, env, out); break; }
+        const alts = patt.split("|").map(p => p.trim());
+        let hit = false;
+        for (const alt of alts) {
+          const altVal = evalExpr(alt, env);
+          if (altVal.type === subjVal.type && altVal.value === subjVal.value) { hit = true; break; }
+        }
+        if (hit) { execBlock(c.body, env, out); break; }
+      }
     }
   }
 }
@@ -1687,6 +2404,7 @@ function runProgram(code) {
   }
   return outputLines.join("\n");
 }
+
 
 
 /* =====================================================================
@@ -1738,7 +2456,7 @@ function resetConsole(id, original){
 const tabBtns = document.querySelectorAll('.tab-btn');
 const panels = document.querySelectorAll('.panel');
 const visited = new Set(['a1']);
-function updateScore(){ document.getElementById('scoreText').textContent = visited.size + ' / 4'; }
+function updateScore(){ document.getElementById('scoreText').textContent = visited.size + ' / 6'; }
 tabBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     tabBtns.forEach(b => b.classList.remove('active'));
@@ -1756,7 +2474,7 @@ function toggleAns(id){ document.getElementById(id).classList.toggle('shown'); }
 
 /* progresso por aula (checkboxes "já entendi") */
 const doneCounts = { a1:0, a2:0, a3:0 };
-const totalStations = { a1:9, a2:10, a3:10, a4:16 };
+const totalStations = { a1:9, a2:10, a3:10, a4:16, a5:23 };
 function markDone(el, aula){
   doneCounts[aula] += el.checked ? 1 : -1;
   if (doneCounts[aula] < 0) doneCounts[aula] = 0;
@@ -1874,6 +2592,21 @@ function gitStepB(n){
   term.textContent = gitMsgsB[n];
 }
 
+/* ---------- GIT RECUPERACAO STEPS (Aula 5) ---------- */
+let gitDoneC = 0;
+const gitMsgsC = {
+  1: '$ rm banco.py\n$ ls\nbanco.py sumiu da pasta!\n\n→ apagamos o arquivo de proposito (no Windows: del banco.py).',
+  2: '$ git status\ndeleted:    banco.py\n\n→ o Git percebeu que o arquivo sumiu, mas ainda sabe que ele existe no historico.',
+  3: '$ git restore banco.py\n$ ls\nbanco.py\n\n→ o arquivo VOLTOU! Ele veio do ultimo commit salvo no repositorio.'
+};
+function gitStepC(n){
+  const term = document.getElementById('gitTermC');
+  if (n !== gitDoneC + 1) { term.textContent = '$ ops! siga a ordem certa: rm → status → restore.'; return; }
+  gitDoneC = n;
+  document.getElementById('git5_'+n).classList.add('on');
+  term.textContent = gitMsgsC[n];
+}
+
 /* ---------- QUIZ (checkq genérico, usado em várias estações) ---------- */
 document.querySelectorAll('.quiz-opts').forEach(div => {
   div.querySelectorAll('.quiz-opt').forEach(btn => {
@@ -1896,6 +2629,9 @@ const quiz = [
   {q:"Qual é o comando que salva uma \"foto\" do código no histórico do Git?", opts:["git add","git init","git commit"], correct:2},
   {q:"Se nota = 8, o que este código imprime? if nota >= 5: print(\"RECUPERACAO\") elif nota >= 7: print(\"APROVADO\")", opts:["APROVADO","RECUPERACAO (o bug da ordem!)","REPROVADO"], correct:1},
   {q:"Qual comando envia seus commits para o GitHub?", opts:["git clone","git pull","git push"], correct:2},
+  {q:"idade = 20 and possui_cnh = True. Qual expressão decide se a pessoa PODE dirigir?", opts:["idade >= 18 or possui_cnh","idade >= 18 and possui_cnh","not idade >= 18"], correct:1},
+  {q:"Em \"False and print('oi')\", o print roda?", opts:["Sim, sempre roda","Não — curto-circuito: nem avalia o resto","Só se a variável for True"], correct:1},
+  {q:"Qual das duas formas abaixo é a \"achatada\" (flat) para checar nota >= 7 and presenca >= 75?", opts:["if nota>=7:\n  if presenca>=75:\n    print('Aprovado')","if nota>=7 and presenca>=75:\n  print('Aprovado')","if nota>=7 or presenca>=75:\n  print('Aprovado')"], correct:1},
 ];
 const quizArea = document.getElementById('quizArea');
 quiz.forEach((item, qi) => {
