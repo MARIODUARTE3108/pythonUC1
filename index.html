@@ -165,6 +165,7 @@
     <button class="tab-btn" data-tab="a3">③ Aula 3</button>
     <button class="tab-btn" data-tab="a4">④ Aula 4</button>
     <button class="tab-btn" data-tab="a5">⑤ Aula 5</button>
+    <button class="tab-btn" data-tab="a6">⑥ Aula 6</button>
     <button class="tab-btn" data-tab="cola">★ Cola Rápida</button>
   </nav>
 
@@ -1913,6 +1914,695 @@ else:
     </div>
   </section>
 
+  <section class="panel" id="a6">
+    <div class="aula-head" style="background:linear-gradient(135deg,#5c3d0d,#96721a);">
+      <div class="tag">Aula 6 · for · while · break · continue</div>
+      <h2>Estruturas de Repetição</h2>
+      <p>Ensinando o computador a repetir tarefas por você</p>
+    </div>
+    <div class="progress-wrap">Seu progresso nesta aula: <span id="pctA6">0</span>%
+      <div class="progress-mini"><div class="fill" id="fillA6"></div></div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">1</div><h3>Revisão da Aula 5 + o gancho de hoje</h3></div>
+      <div class="checkq">
+        <p class="qtext">Relembrando: em "and", quantas condições precisam ser True para o resultado ser True?</p>
+        <div class="quiz-opts" data-q="23">
+          <button class="quiz-opt" data-correct="false">Basta 1</button>
+          <button class="quiz-opt" data-correct="true">Todas</button>
+        </div>
+      </div>
+      <div class="teacher-msg"><span class="who">🧑‍🏫 O problema que abre a aula</span>
+      Lembra do menu com <code>match/case</code> da Aula 5 — o caixa eletrônico com Depositar/Sacar/Saldo/Sair?
+      Ele abria, o usuário escolhia <b>uma</b> opção, e o programa <b>acabava</b>. Um caixa eletrônico de
+      verdade fica <b>repetindo</b> o menu até você escolher "Sair". E se precisássemos processar 50 produtos
+      no caixa de um mercado? Ou dar 3 tentativas de senha? Copiar e colar o código 50 vezes é inviável.
+      Hoje aprendemos a fazer o programa <b>repetir</b> — sem copiar e colar nada.</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Entendi o gancho da aula</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">2</div><h3>Por que os loops existem — contador e acumulador</h3></div>
+      <p><b>O problema:</b> imagine imprimir "Bem-vindo" 100 vezes. Sem repetição, seriam 100 linhas de
+      <code>print</code>. Com repetição (um <b>loop</b>, ou "laço de repetição"), são duas linhas — não importa
+      se é 100 ou 100 mil vezes.</p>
+      <div class="box blue"><b class="title">🏭 Analogia: a linha de produção</b>
+      Numa fábrica, o operário não reescreve o manual a cada peça — ele repete a mesma operação
+      ("aparafusar") centenas de vezes. O loop é a linha de produção do código: a <b>mesma instrução</b>,
+      executada muitas vezes, sem reescrever nada.</div>
+      <div class="box yellow"><b class="title">🚪 Analogia 2: contar quem entra na loja</b>
+      Você fica na porta e, a cada pessoa que entra, soma 1. Repetir "somar 1" é um loop; a variável que
+      acumula a contagem é um <b>contador</b>.</div>
+      <p>🗣️ <i>Que tarefas repetitivas você faz que um computador poderia fazer por você?</i> (renomear 200
+      fotos, enviar o mesmo e-mail para 50 pessoas, somar uma coluna de planilha…). Tudo isso é loop — é onde
+      o computador mais brilha, porque ele nunca cansa nem erra por tédio.</p>
+      <p><b>Dois padrões que vão aparecer o tempo todo:</b></p>
+      <div class="console-box">
+        <div class="console-label"><span>padroes.py</span><span>Python (simulado)</span></div>
+        <textarea id="code43">contador = 0
+contador = contador + 1
+total = 0
+total = total + 10
+print(f"contador: {contador}")
+print(f"total: {total}")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(43)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs43"></div>
+        <div class="console-out" id="out43">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="teacher-msg"><span class="who">🧑‍🏫 Regra de ouro</span>
+      <b>Contador</b> — conta ocorrências. <b>Acumulador</b> — soma valores. Os dois <b>começam ANTES do
+      loop</b> (geralmente em 0) e são <b>atualizados DENTRO dele</b>. Esquecer de inicializar antes do loop
+      é um erro clássico de iniciante.</div>
+      <p><b>A ideia central — os dois tipos de loop:</b></p>
+      <table class="tbl">
+        <tr><th>Você sabe...</th><th>Use</th><th>Exemplo</th></tr>
+        <tr><td>SEI quantas vezes repetir</td><td><code>for</code></td><td>"para cada um dos 10 produtos"</td></tr>
+        <tr><td>Repito ENQUANTO algo for verdade</td><td><code>while</code></td><td>"enquanto a senha estiver errada"</td></tr>
+      </table>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Entendi contador × acumulador</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">3</div><h3>for + range — quando você SABE quantas vezes repetir</h3></div>
+      <p>O <code>for</code> percorre uma sequência de valores, executando o bloco uma vez para cada valor.
+      Rode o código abaixo — e antes de rodar, arrisque: <b>vai de 0 a 5, ou de 0 a 4?</b></p>
+      <div class="console-box">
+        <div class="console-label"><span>console44.py</span><span>Python (simulado)</span></div>
+        <textarea id="code44">for i in range(5):
+    print(f"Repeticao numero {i}")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(44)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs44"></div>
+        <div class="console-out" id="out44">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="teacher-msg"><span class="who">🧑‍🏫 O ponto de ensino</span>
+      A turma quase sempre erra essa pergunta — e é por isso que ela é ótima! <code>range(5)</code> gera
+      <b>0, 1, 2, 3, 4</b> — começa no 0 e para <b>ANTES</b> do 5. São 5 números, mas o último é o 4. Diga em
+      voz alta: <b>"o range para um antes do número."</b></div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Rodei e entendi o range(5)</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">4</div><h3>As formas do range — start, stop, step</h3></div>
+      <table class="tbl">
+        <tr><th>Chamada</th><th>Gera</th></tr>
+        <tr><td><code>range(5)</code></td><td>0, 1, 2, 3, 4</td></tr>
+        <tr><td><code>range(1, 6)</code></td><td>1, 2, 3, 4, 5</td></tr>
+        <tr><td><code>range(0, 10, 2)</code></td><td>0, 2, 4, 6, 8 (de 2 em 2)</td></tr>
+        <tr><td><code>range(10, 0, -1)</code></td><td>10, 9, 8 … 1 (regressiva)</td></tr>
+      </table>
+      <p>Teste você mesmo — mude os 3 valores e clique em Gerar (o 3º valor, o "passo", tem <code>1</code>
+      como padrão se você deixar em branco):</p>
+      <div class="calc-box">
+        <div class="row">
+          range( <input id="rgStart" value="0" style="width:55px;"> ,
+          <input id="rgStop" value="10" style="width:55px;"> ,
+          <input id="rgStep" value="2" style="width:55px;"> )
+          <button class="go-btn" onclick="rangeCalc()">Gerar</button>
+        </div>
+        <div class="calc-result"><div class="pill">Gera<b id="rgResult">0, 2, 4, 6, 8</b></div></div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">💻 Faça ao vivo com a turma: peça previsão de cada
+      forma antes de clicar em "Gerar". O <code>range(10, 0, -1)</code> (contagem regressiva) costuma
+      impressionar quem está vendo pela primeira vez.</p>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Testei as 4 formas do range</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">5</div><h3>for com acumulador — o padrão mais importante da aula</h3></div>
+      <p>Registre 3 vendas e veja o total sendo acumulado a cada volta do loop:</p>
+      <div class="console-box">
+        <div class="console-label"><span>console45.py</span><span>Python (simulado)</span></div>
+        <textarea id="code45">total = 0
+for i in range(3):
+    venda = float(input("Venda: R$ "))
+    total = total + venda
+print(f"Total: R$ {total:.2f}")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(45)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs45"></div>
+        <div class="console-out" id="out45">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">💡 Este console pede <code>input()</code> dentro de um
+      loop de 3 voltas. Preencha o campo com <b>3 valores separados por vírgula</b> (ex.: <code>10, 20,
+      30</code>) para simular uma venda diferente a cada volta — se digitar só um valor, ele se repete nas
+      3 voltas.</p>
+      <div class="teacher-msg"><span class="who">🧑‍🏫 Ponto de ensino</span>
+      Repare que <code>total = 0</code> precisa existir <b>antes</b> do <code>for</code>. Se você apagar essa
+      linha e rodar de novo, o simulador mostra <code>NameError: name 'total' is not defined</code> — porque
+      a linha <code>total = total + venda</code> tenta usar uma variável que ainda não existe.</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Rodei com 3 valores diferentes e vi o total acumular</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">6</div><h3>for percorrendo uma lista direta</h3></div>
+      <p>O <code>for</code> também percorre uma lista de valores diretamente, sem precisar de
+      <code>range()</code> (uma prévia do que vem na Aula 9, sobre listas):</p>
+      <div class="console-box">
+        <div class="console-label"><span>console46.py</span><span>Python (simulado)</span></div>
+        <textarea id="code46">for preco in [10, 20, 30]:
+    print(f"Preco: R$ {preco}")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(46)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs46"></div>
+        <div class="console-out" id="out46">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">Troque os valores da lista <code>[10, 20, 30]</code>
+      por outros preços e rode de novo — o <code>for</code> se adapta ao tamanho da lista sozinho.</p>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Testei o for com uma lista</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">7</div><h3>Em duplas — tabuada do 7</h3></div>
+      <p>👥 Escrevam um <code>for</code> que imprima a tabuada do 7 (de 7×1 a 7×10):</p>
+      <div class="console-box">
+        <div class="console-label"><span>console47.py</span><span>Python (simulado)</span></div>
+        <textarea id="code47">for i in range(1, 11):
+    print(f"7 x {i} = {7 * i}")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(47)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs47"></div>
+        <div class="console-out" id="out47">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">✅ Checagem: por que <code>range(1, 11)</code> e não
+      <code>range(1, 10)</code>? Porque para ir de 1 a 10 preciso parar em 11 — lembre, "o range para um
+      antes".</p>
+      <p>⚡ Desafio relâmpago: como imprimir os números pares de 2 a 10 usando só o <code>range</code>?</p>
+      <div class="console-box">
+        <div class="console-label"><span>console48.py</span><span>Python (simulado)</span></div>
+        <textarea id="code48">for i in range(2, 11, 2):
+    print(i)</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(48)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs48"></div>
+        <div class="console-out" id="out48">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Escrevi a tabuada e o desafio dos pares</div>
+    </div>
+
+    <div class="summary-box">
+      <h4>📋 Checkpoint — for e range</h4>
+      <p><code>for</code> repete um número <b>conhecido</b> de vezes. <code>range(stop)</code> vai de 0 até
+      "um antes de stop". <code>range(start, stop)</code> começa em start. <code>range(start, stop,
+      step)</code> pula de <code>step</code> em <code>step</code> (pode ser negativo, para contar ao
+      contrário). <code>for</code> também percorre listas diretamente. Contador e acumulador começam
+      <b>antes</b> do loop.</p>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">8</div><h3>while — quando você repete ENQUANTO uma condição for verdadeira</h3></div>
+      <p>Aqui os operadores lógicos da Aula 5 voltam com força — a condição do <code>while</code> é do
+      <b>mesmo tipo</b> que a condição de um <code>if</code>.</p>
+      <div class="console-box">
+        <div class="console-label"><span>console49.py</span><span>Python (simulado)</span></div>
+        <textarea id="code49">senha = ""
+while senha != "1234":
+    senha = input("Digite a senha: ")
+print("Acesso liberado!")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(49)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs49"></div>
+        <div class="console-out" id="out49">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">💡 Tente digitar uma senha errada primeiro: no campo,
+      coloque <code>0000, 1111, 1234</code> (separado por vírgula) para simular 2 tentativas erradas antes de
+      acertar na 3ª. Repare que o programa só termina quando a senha certa aparece.</p>
+      <div class="teacher-msg"><span class="who">🧑‍🏫 A diferença central</span>
+      🗣️ <i>Quantas vezes esse loop vai rodar?</i> Não dá para saber! Depende do usuário — pode acertar de
+      primeira ou errar 10 vezes. No <code>for</code> você <b>sabe</b> o número de repetições; no
+      <code>while</code>, <b>não</b> — depende de uma condição.</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Testei o while com senha errada e certa</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">9</div><h3>Como o Python executa o while, passo a passo</h3></div>
+      <pre class="code" style="margin:6px 0;">   avalia a condicao ──► True? ── SIM ──► executa o bloco ──┐
+        ▲                             │                       │
+        │                             └── NAO ──► sai do loop │
+        └───────────────────────────────────────────────────────┘
+                      (volta a testar a condicao)</pre>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Entendi o passo a passo do while</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">10</div><h3>⚠️ O grande perigo: o loop infinito</h3></div>
+      <p><b>Versão com bug</b> (esqueceram de aumentar o contador):</p>
+      <div class="console-box">
+        <div class="console-label"><span>console50_bug.py</span><span>Python (simulado)</span></div>
+        <textarea id="code50">contador = 1
+while contador <= 5:
+    print(contador)</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(50)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs50"></div>
+        <div class="console-out" id="out50">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="teacher-msg"><span class="who">🧑‍🏫 O que vai acontecer</span>
+      O <code>contador</code> fica sempre 1, a condição é <b>sempre verdadeira</b>, e o programa tentaria
+      imprimir 1 para sempre. No Python de verdade, isso trava o programa até você apertar <b>Ctrl + C</b> no
+      terminal — ensine isso agora, os alunos vão precisar. Aqui no simulador, coloquei um limite de
+      segurança: ele para sozinho depois de muitas repetições e avisa com um <code>RuntimeError</code>,
+      exatamente para você ver o sintoma sem travar a página.</div>
+      <p><b>A correção</b> (agora o contador cresce, e a condição um dia fica falsa):</p>
+      <div class="console-box">
+        <div class="console-label"><span>console51_correcao.py</span><span>Python (simulado)</span></div>
+        <textarea id="code51">contador = 1
+while contador <= 5:
+    print(contador)
+    contador = contador + 1</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(51)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs51"></div>
+        <div class="console-out" id="out51">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="box yellow"><b class="title">💡 Regra de ouro do while</b>
+      Todo <code>while</code> precisa de algo que, eventualmente, torne a condição falsa: um contador que
+      cresce, uma resposta do usuário, ou um <code>break</code>. Sem isso = loop infinito.</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Rodei a versão com bug e a corrigida</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">11</div><h3>while com contador — o menu que roda até "Sair"</h3></div>
+      <p>Este é o esqueleto de quase todo sistema de terminal — e resolve o problema que abriu a aula:</p>
+      <div class="console-box">
+        <div class="console-label"><span>console52.py</span><span>Python (simulado)</span></div>
+        <textarea id="code52">opcao = ""
+while opcao != "4":
+    print("1-Depositar 2-Sacar 3-Saldo 4-Sair")
+    opcao = input("Escolha: ")
+    if opcao == "1":
+        print("Deposito realizado.")
+    elif opcao == "2":
+        print("Saque realizado.")
+    elif opcao == "3":
+        print("Saldo: R$ 1000,00")
+    elif opcao == "4":
+        print("Ate logo!")
+    else:
+        print("Opcao invalida.")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(52)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs52"></div>
+        <div class="console-out" id="out52">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">💡 Preencha o campo com uma sequência de opções
+      separadas por vírgula, ex.: <code>1, 3, 2, 4</code> — o menu vai processar uma por volta, até você
+      "escolher" 4. Sem o 4 no final, o simulador vai parar sozinho no limite de segurança (é o loop infinito
+      da estação anterior!).</p>
+      <div class="teacher-msg"><span class="who">🧑‍🏫 Conectando com a Aula 5</span>
+      Lembra do menu com <code>match/case</code> que rodava só uma vez? Agora ele fica <b>aberto</b> — é o
+      <code>while</code> por fora dele. Como desafio, tente trocar o <code>if/elif</code> deste código por
+      <code>match/case</code> — o comportamento deve continuar idêntico.</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Rodei o menu com uma sequência de opções</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">12</div><h3>while para validação — repete até o dado ser válido</h3></div>
+      <div class="console-box">
+        <div class="console-label"><span>console53.py</span><span>Python (simulado)</span></div>
+        <textarea id="code53">idade = -1
+while idade < 0:
+    idade = int(input("Idade (numero positivo): "))
+print(f"Idade registrada: {idade}")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(53)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs53"></div>
+        <div class="console-out" id="out53">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">Tente <code>-5, -1, 20</code> no campo — o programa
+      só aceita e segue em frente quando o valor deixa de ser negativo.</p>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Testei a validação com valores inválidos e válidos</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">13</div><h3>do...while — o que é, e por que Python não tem</h3></div>
+      <p>O PTD do curso pede <code>do...while</code>. Vamos ser honestos e claros, como fizemos com o
+      <code>switch</code> na Aula 5: <b>o Python nunca teve <code>do...while</code></b> — pela mesma
+      filosofia de simplicidade.</p>
+      <div class="box blue"><b class="title">☕ Analogia: a máquina de café</b>
+      O <code>while</code> é: "se você quiser café, faça um". O <code>do...while</code> é: "faça um café e
+      depois pergunte se quer outro". No segundo caso, você <b>sempre toma pelo menos um</b> — o bloco roda
+      pelo menos uma vez, mesmo que a condição já comece falsa.</p></div>
+      <p>Como se escreve em outras linguagens (JavaScript / C / Java — só para reconhecer, não para
+      decorar):</p>
+      <pre class="code" style="margin:6px 0;">do {
+    opcao = pedirOpcao();
+} while (opcao != "sair");</pre>
+      <p><b>O equivalente em Python:</b> <code>while True</code> + <code>break</code>.</p>
+      <div class="console-box">
+        <div class="console-label"><span>console54.py</span><span>Python (simulado)</span></div>
+        <textarea id="code54">while True:
+    opcao = input("Opcao (ou 'sair'): ")
+    if opcao == "sair":
+        break
+print("Programa encerrado apos escolher sair.")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(54)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs54"></div>
+        <div class="console-out" id="out54">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">Preencha com <code>a, b, sair</code> — repare que o
+      bloco roda pelo menos uma vez (para "a"), mesmo sem nenhuma condição ter sido testada antes.</p>
+      <div class="teacher-msg"><span class="who">🧑‍🏫 Por que isso garante "rodar pelo menos uma vez"?</span>
+      Porque o <code>while True</code> <b>sempre</b> entra no bloco; a saída só acontece no <code>break</code>,
+      que está <b>depois</b> do <code>input</code>. Esse padrão (<code>while True</code> + <code>break</code>)
+      é muitíssimo usado em Python de verdade — para menus, validações e "repetir até dar certo".</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Entendi o equivalente do do...while</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">14</div><h3>Checagem — a diferença que importa</h3></div>
+      <table class="tbl">
+        <tr><th></th><th>Executa o bloco...</th><th>Testa a condição...</th></tr>
+        <tr><td><code>while</code></td><td>se a condição já for verdadeira (pode não rodar nenhuma vez)</td><td>antes</td></tr>
+        <tr><td><code>do...while</code> (via <code>while True</code>+<code>break</code>)</td><td>sempre pelo menos 1 vez</td><td>depois</td></tr>
+      </table>
+      <div class="checkq">
+        <p class="qtext">Se a condição de um while já começar False, quantas vezes o bloco roda?</p>
+        <div class="quiz-opts" data-q="24">
+          <button class="quiz-opt" data-correct="true">Zero vezes</button>
+          <button class="quiz-opt" data-correct="false">Pelo menos uma vez</button>
+        </div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Entendi a diferença while × do-while</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">15</div><h3>break e continue — controlando o loop por dentro</h3></div>
+      <p><code>break</code> → quebra o loop imediatamente e sai fora. <code>continue</code> → pula o resto do
+      bloco e vai direto para a próxima volta.</p>
+      <div class="box blue"><b class="title">🚶 Analogias</b>
+      <code>break</code> = sair da fila (você vai embora). <code>continue</code> = deixar passar a sua vez
+      (você continua na fila, mas pula esta rodada).</div>
+      <p><b>break — parar quando encontrar:</b></p>
+      <div class="console-box">
+        <div class="console-label"><span>console55.py</span><span>Python (simulado)</span></div>
+        <textarea id="code55">while True:
+    num = int(input("Numero (0 para sair): "))
+    if num == 0:
+        break
+    print(f"O dobro e {num * 2}")
+print("Programa encerrado.")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(55)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs55"></div>
+        <div class="console-out" id="out55">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">Preencha com <code>5, 3, 0</code> — o loop calcula o
+      dobro de 5 e de 3, e para assim que aparece o 0.</p>
+      <p>✍️ Previsão: o que este código imprime? Tente adivinhar antes de rodar:</p>
+      <div class="console-box">
+        <div class="console-label"><span>console56.py</span><span>Python (simulado)</span></div>
+        <textarea id="code56">for n in range(1, 11):
+    if n % 2 != 0:
+        continue
+    print(n)</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(56)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs56"></div>
+        <div class="console-out" id="out56">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="accordion" onclick="this.classList.toggle('open')">
+        <div class="q">💡 Como o continue está filtrando aqui <span class="arrow">▾</span></div>
+        <div class="a">Para cada <code>n</code> de 1 a 10: se <code>n</code> é ímpar (<code>n % 2 != 0</code>),
+        o <code>continue</code> pula direto para a próxima volta — o <code>print(n)</code> nunca roda para
+        ímpares. Só os pares (2, 4, 6, 8, 10) chegam até o <code>print</code>.</div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Rodei os exemplos de break e continue</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">16</div><h3>⚡ Desafio relâmpago — soma até digitar 0</h3></div>
+      <p>Peça números ao usuário e some-os, parando quando ele digitar 0. Este exemplo junta <b>tudo</b> da
+      aula: <code>while True</code> + <code>break</code> + acumulador + <code>+=</code> (atalho para
+      <code>total = total + n</code>):</p>
+      <div class="console-box">
+        <div class="console-label"><span>console57.py</span><span>Python (simulado)</span></div>
+        <textarea id="code57">total = 0
+while True:
+    n = int(input("Numero (0 para fechar): "))
+    if n == 0:
+        break
+    total += n
+print(f"Soma: {total}")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(57)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs57"></div>
+        <div class="console-out" id="out57">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">Preencha com <code>5, 8, 3, 0</code> e confira: a soma
+      deve dar 16.</p>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Rodei o desafio da soma até 0</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">17</div><h3>Demonstração integradora — Caixa com loop</h3></div>
+      <p>Junta tudo: <code>while</code>, condição de parada, acumulador e contador — o esqueleto de um caixa
+      de mercado de verdade:</p>
+      <div class="console-box">
+        <div class="console-label"><span>console58.py</span><span>Python (simulado)</span></div>
+        <textarea id="code58">print("===== CAIXA JWC MARKET =====")
+total = 0
+qtd_itens = 0
+while True:
+    entrada = input("Preco do item (ou 'fim' para fechar): R$ ")
+    if entrada == "fim":
+        break
+    preco = float(entrada)
+    total += preco
+    qtd_itens += 1
+    print(f"  Item {qtd_itens} registrado. Subtotal: R$ {total:.2f}")
+print("")
+print("----- CUPOM FISCAL -----")
+print(f"Itens: {qtd_itens}")
+print(f"Total: R$ {total:.2f}")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(58)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs58"></div>
+        <div class="console-out" id="out58">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">💡 Preencha com 3 ou 4 preços e termine com
+      <code>fim</code> (ex.: <code>10, 20, 25, fim</code>). Observe o contador (<code>qtd_itens</code>) e o
+      acumulador (<code>total</code>) crescendo a cada volta.</p>
+      <div class="teacher-msg"><span class="who">🧑‍🏫 Por que total e qtd_itens começam em 0 ANTES do while?</span>
+      Porque, se estivessem <b>dentro</b> do loop, seriam zerados a cada volta — nunca acumulariam nada!
+      Essa é exatamente a "regra de ouro" da Estação 2, agora em ação num programa completo.</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Rodei o caixa com 3+ itens e vi o cupom final</div>
+    </div>
+
+    <div class="summary-box">
+      <h4>📋 Checkpoint — while, do-while, break e continue</h4>
+      <p><code>while</code> repete enquanto a condição for True (número de voltas desconhecido). Todo
+      <code>while</code> precisa de algo que eventualmente torne a condição falsa. Python não tem
+      <code>do...while</code> — o equivalente é <code>while True</code> + <code>break</code>.
+      <code>break</code> sai do loop; <code>continue</code> pula para a próxima volta. Contador e acumulador
+      continuam valendo dentro do <code>while</code>, exatamente como no <code>for</code>.</p>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">18</div><h3>Mercado de trabalho, dicas e curiosidades</h3></div>
+      <p><b>Mercado de trabalho.</b> Loops estão em todo processamento de dados em volume:</p>
+      <table class="tbl">
+        <tr><th>Área</th><th>Onde o loop aparece</th></tr>
+        <tr><td>Ciência de dados / ETL</td><td>Percorrer milhares de linhas de uma planilha ou banco</td></tr>
+        <tr><td>Automação (RPA)</td><td>Repetir uma tarefa — enviar 500 e-mails, renomear 1000 arquivos</td></tr>
+        <tr><td>Web scraping</td><td>Percorrer páginas coletando informações</td></tr>
+        <tr><td>Bancos</td><td>Gerar a folha de pagamento de milhares de funcionários; processar lotes de transações</td></tr>
+        <tr><td>IoT / indústria</td><td>Ler sensores continuamente (<code>while True</code>)</td></tr>
+        <tr><td>Jogos</td><td>O "game loop" é um <code>while</code> que roda a cada frame</td></tr>
+      </table>
+      <div class="box yellow"><b class="title">💼 Dicas profissionais</b>
+      Use <code>for</code> quando souber o número de repetições; <code>while</code> quando depender de uma
+      condição. Todo <code>while</code> precisa de uma saída (contador que muda, ou <code>break</code>).
+      Inicialize contadores/acumuladores antes do loop. <code>+=</code>, <code>-=</code>, <code>*=</code> são
+      atalhos — <code>total += x</code> é <code>total = total + x</code>. Evite <code>while True</code> sem
+      <code>break</code> — travamento garantido.</div>
+      <div class="accordion" onclick="this.classList.toggle('open')">
+        <div class="q">🐛 Curiosidade: de onde vem a palavra "bug"? <span class="arrow">▾</span></div>
+        <div class="a">Em 1947, a engenheira Grace Hopper encontrou uma mariposa (em inglês, "moth", mas o
+        termo "bug" já existia informalmente) presa num relé do computador Harvard Mark II, e a colou no
+        relatório com a nota "primeiro caso real de bug encontrado". Depurar um programa = "tirar o inseto".</div>
+      </div>
+      <div class="accordion" onclick="this.classList.toggle('open')">
+        <div class="q">⚙️ Curiosidade: o range() não guarda tudo na memória de uma vez <span class="arrow">▾</span></div>
+        <div class="a">Diferente do que parece, <code>range(1000000)</code> não cria um milhão de números na
+        memória imediatamente — ele os gera <b>sob demanda</b>, um de cada vez. Isso economiza muita memória
+        em loops gigantes.</div>
+      </div>
+      <div class="accordion" onclick="this.classList.toggle('open')">
+        <div class="q">🐍 Curiosidade: Python tem um for...else raro <span class="arrow">▾</span></div>
+        <div class="a">Poucas linguagens têm isso: o bloco <code>else</code> de um <code>for</code> roda se o
+        loop terminar <b>sem</b> ter usado <code>break</code>. É pouco usado no dia a dia, mas vale saber que
+        existe.</div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Li o mercado, as dicas e as curiosidades</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">19</div><h3>Comparações</h3></div>
+      <table class="tbl">
+        <tr><th></th><th>for</th><th>while</th></tr>
+        <tr><td>Quando usar</td><td>Nº de repetições conhecido</td><td>Repetir por condição</td></tr>
+        <tr><td>Exemplo</td><td>Percorrer 10 produtos</td><td>Menu até escolher "Sair"</td></tr>
+        <tr><td>Risco de loop infinito</td><td>Baixo</td><td>Alto (exige cuidado)</td></tr>
+      </table>
+      <table class="tbl">
+        <tr><th></th><th>break</th><th>continue</th></tr>
+        <tr><td>Efeito</td><td>Sai do loop</td><td>Pula para a próxima volta</td></tr>
+        <tr><td>Analogia</td><td>Sair da fila</td><td>Deixar passar a vez</td></tr>
+      </table>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Revisei as tabelas comparativas</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">20</div><h3>Exercícios — Lista Avaliativa (guiados + individuais)</h3></div>
+      <div class="box yellow"><b class="title">⚠️ Atenção</b> Esta lista é <b>avaliativa</b> — reserve o
+      tempo previsto e resolva com calma. Depois de tentar sozinho(a), compare com a resposta.</div>
+      <p><b>Para fazer JUNTOS (guiados):</b></p>
+      <div class="exercise">
+        <div class="lvl">Básico</div>
+        <p>Guiado 1 — Contagem. Imprima os números de 1 a 20 com <code>for</code>.</p>
+        <button onclick="toggleAns('e6a')">Ver uma resposta possível</button>
+        <div class="ans" id="e6a"><pre class="code" style="margin:0;">for i in range(1, 21):
+    print(i)</pre></div>
+      </div>
+      <div class="exercise">
+        <div class="lvl">Intermediário</div>
+        <p>Guiado 2 — Some todos os números de 1 a 100 (spoiler: dá 5050 — a mesma conta que o matemático
+        Gauss fez de cabeça aos 9 anos).</p>
+        <button onclick="toggleAns('e6b')">Ver uma resposta possível</button>
+        <div class="ans" id="e6b"><pre class="code" style="margin:0;">soma = 0
+for i in range(1, 101):
+    soma += i
+print(f"Soma de 1 a 100: {soma}")</pre></div>
+      </div>
+      <p><b>Para fazer SOZINHO (individuais — valem para avaliação):</b></p>
+      <div class="exercise">
+        <div class="lvl">Básico</div>
+        <p>1. Imprima a tabuada de um número escolhido pelo usuário.</p>
+        <button onclick="toggleAns('e6c')">Ver uma resposta possível</button>
+        <div class="ans" id="e6c"><pre class="code" style="margin:0;">n = int(input("Numero: "))
+for i in range(1, 11):
+    print(f"{n} x {i} = {n * i}")</pre></div>
+      </div>
+      <div class="exercise">
+        <div class="lvl">Básico</div>
+        <p>2. Imprima os números de 10 a 1 (contagem regressiva) e depois "Fim!".</p>
+        <button onclick="toggleAns('e6d')">Ver uma resposta possível</button>
+        <div class="ans" id="e6d"><pre class="code" style="margin:0;">for i in range(10, 0, -1):
+    print(i)
+print("Fim!")</pre></div>
+      </div>
+      <div class="exercise">
+        <div class="lvl">Intermediário</div>
+        <p>3. Conte quantos números pares e quantos ímpares existem de 1 a 50.</p>
+        <button onclick="toggleAns('e6e')">Ver uma resposta possível</button>
+        <div class="ans" id="e6e"><pre class="code" style="margin:0;">pares = 0
+impares = 0
+for i in range(1, 51):
+    if i % 2 == 0:
+        pares += 1
+    else:
+        impares += 1
+print(f"Pares: {pares}")
+print(f"Impares: {impares}")</pre></div>
+      </div>
+      <div class="exercise">
+        <div class="lvl">Avançado</div>
+        <p>4. Some todos os números <b>pares</b> de 1 a 100.</p>
+        <button onclick="toggleAns('e6f')">Ver uma resposta possível</button>
+        <div class="ans" id="e6f"><pre class="code" style="margin:0;">soma = 0
+for i in range(2, 101, 2):
+    soma += i
+print(f"Soma dos pares: {soma}")</pre></div>
+      </div>
+      <div class="exercise">
+        <div class="lvl">Desafio</div>
+        <p>5. Jogo da adivinhação: o programa "pensa" num número fixo (ex.: 7) e o usuário tenta acertar; a
+        cada erro, diga "maior" ou "menor"; conte as tentativas.</p>
+        <button onclick="toggleAns('e6g')">Ver uma resposta possível</button>
+        <div class="ans" id="e6g"><pre class="code" style="margin:0;">numero = 7
+tentativas = 0
+acertou = False
+while not acertou:
+    chute = int(input("Seu chute: "))
+    tentativas += 1
+    if chute == numero:
+        acertou = True
+        print(f"Acertou em {tentativas} tentativas!")
+    elif chute > numero:
+        print("Menor!")
+    else:
+        print("Maior!")</pre></div>
+      </div>
+      <p>Use o console abaixo para testar suas próprias respostas:</p>
+      <div class="console-box">
+        <div class="console-label"><span>console59.py</span><span>Python (simulado)</span></div>
+        <textarea id="code59"># escreva seu codigo aqui</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(59)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs59"></div>
+        <div class="console-out" id="out59">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Tentei os exercícios antes de ver as respostas</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">21</div><h3>🚀 Projeto da aula — Caixa JWC Market com loop e cupom</h3></div>
+      <p>Integra <code>while</code> + condicional + acumulador + contador — e ainda aplica desconto com
+      <code>if</code> (Aula 4):</p>
+      <div class="console-box">
+        <div class="console-label"><span>projeto_caixa.py</span><span>Python (simulado)</span></div>
+        <textarea id="code60">print("===== CAIXA JWC MARKET =====")
+total = 0
+qtd_itens = 0
+while True:
+    entrada = input("Preco do item (ou 'fim' para fechar): R$ ")
+    if entrada == "fim":
+        break
+    preco = float(entrada)
+    total += preco
+    qtd_itens += 1
+    print(f"  Item {qtd_itens}: subtotal R$ {total:.2f}")
+print("")
+print("----- CUPOM FISCAL -----")
+print(f"Itens: {qtd_itens}")
+print(f"Total: R$ {total:.2f}")
+if total > 100:
+    desconto = total * 0.05
+    print(f"Desconto fidelidade (5%): -R$ {desconto:.2f}")
+    print(f"TOTAL FINAL: R$ {total - desconto:.2f}")</textarea>
+        <div class="console-runrow"><button class="run-btn" onclick="runConsole(60)">▶ Rodar</button></div>
+        <div class="console-inputs" id="inputs60"></div>
+        <div class="console-out" id="out60">▸ Clique em Rodar para ver a saída aqui.</div>
+      </div>
+      <p style="font-size:12.8px; color:var(--grey);">Teste com <code>50, 100, fim</code> para ver o
+      desconto de fidelidade aparecer (total passa de R$ 100).</p>
+      <div class="teacher-msg"><span class="who">🧑‍🏫 Versione ao final (Aulas 3 e 4)</span>
+      <code>git add .</code> → <code>git commit -m "Cria caixa com loop e cupom"</code> → <code>git
+      push</code>.</div>
+      <p><b>Desafio extra:</b> dar 3 tentativas de senha no início (une <code>while</code>/<code>break</code>/
+      contador com o login da Aula 5).</p>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Terminei o projeto da Caixa JWC Market</div>
+    </div>
+
+    <div class="station">
+      <div class="station-head"><div class="station-num">22</div><h3>Momento reflexão — retomando o Desafio 1</h3></div>
+      <p>🗣️ Retome o Desafio 1 (pesquisa das 3 vagas, passado na Aula 5):</p>
+      <div class="teacher-msg"><span class="who">🧑‍🏫 Pergunta de reflexão</span>
+      "No Desafio 1 você pesquisou as exigências do mercado para a vaga de programador Full Stack. Olhando
+      tudo o que já desenvolvemos até aqui — algoritmos, variáveis, operadores, Git, condicionais, operadores
+      lógicos e agora repetição — quantos desses requisitos você já começou a desenvolver? Como você avalia
+      sua evolução em conhecimentos, habilidades e atitudes?"</div>
+      <div class="checkme"><input type="checkbox" onchange="markDone(this,'a6')"> Refleti sobre minha evolução até aqui</div>
+    </div>
+
+    <div class="summary-box">
+      <h4>📋 Resumo geral da Aula 6</h4>
+      <p><code>for</code> repete um número conhecido de vezes (com <code>range</code>); <code>while</code>
+      repete enquanto uma condição for verdadeira. <code>range(inicio, fim, passo)</code> — o fim é
+      exclusivo ("para um antes"). Contador conta, acumulador soma — inicialize antes do loop.
+      <code>do...while</code> não existe em Python — faça o equivalente com <code>while True</code> +
+      <code>break</code> (roda pelo menos uma vez). <code>break</code> sai do loop; <code>continue</code>
+      pula para a próxima volta. Cuidado com loop infinito: todo <code>while</code> precisa de uma saída.</p>
+    </div>
+
+    <div class="final-note" style="margin-top:16px;">
+      <b>Próximos passos:</b> nossos programas estão ficando maiores — e maiores significam mais chances de
+      erro. Como descobrir por que um cálculo deu errado dentro de um loop, se ele não trava, só entrega o
+      resultado errado? Na Aula 7 aprenderemos <b>teste de mesa e depuração (debugging)</b>: técnicas para
+      "rodar o código na cabeça", rastrear o valor das variáveis passo a passo e caçar bugs como
+      profissionais — inclusive dentro de loops. O loop que você domina agora é justamente o lugar onde mais
+      aparecem bugs sutis (contador que não incrementa, range com limite errado) — o teste de mesa é a
+      ferramenta para encontrá-los.
+    </div>
+  </section>
+
   <!-- ==================== COLA RÁPIDA ==================== -->
   <section class="panel" id="cola">
     <div class="aula-head" style="background:linear-gradient(135deg,var(--navy),#333d5c);">
@@ -1940,6 +2630,11 @@ else:
         <tr><td>5</td><td>and / or / not</td><td>and: TUDO precisa ser True · or: BASTA 1 ser True · not: inverte o valor.</td></tr>
         <tr><td>5</td><td>Curto-circuito</td><td>Em "and", se o 1º for False o Python nem olha o resto — economiza trabalho.</td></tr>
         <tr><td>5</td><td>Aninhar × achatar</td><td>if dentro de if (aninhado) x and/or no mesmo if (achatado) — achatado costuma ser mais legível.</td></tr>
+        <tr><td>6</td><td>for + range</td><td>range(stop) vai de 0 até "um antes de stop"; range(start,stop,step) controla início e passo.</td></tr>
+        <tr><td>6</td><td>while</td><td>Repete enquanto a condição for True — nº de voltas desconhecido.</td></tr>
+        <tr><td>6</td><td>do...while</td><td>Não existe em Python — use while True + break (roda pelo menos 1 vez).</td></tr>
+        <tr><td>6</td><td>break / continue</td><td>break sai do loop · continue pula para a próxima volta.</td></tr>
+        <tr><td>6</td><td>Contador/Acumulador</td><td>Inicialize ANTES do loop (em 0), atualize DENTRO dele — sempre.</td></tr>
       </table>
     </div>
 
@@ -1972,16 +2667,16 @@ print(f"Pretensao: R$ {pretensao:.2f}")</textarea>
     <div class="final-note">
       <b>Uma palavra final:</b> ninguém entende tudo de primeira, e tudo bem repetir uma estação (ou uma aula
       inteira) várias vezes até fazer sentido. Você já tem a base de pensamento computacional, variáveis/tipos,
-      operadores/Git, condicionais (if/elif/else), Git remoto e agora também operadores lógicos (and/or/not),
-      match/case e a diferença entre condições aninhadas e achatadas. A próxima aula (repetição: for/while) vai
-      ensinar o computador a repetir tarefas sozinho — e vai usar tudo que você já construiu até aqui. Estou
-      aqui, seguimos juntos.
+      operadores/Git, condicionais (if/elif/else), Git remoto, operadores lógicos (and/or/not), match/case e
+      agora também repetição (for, while, break, continue). A próxima aula (teste de mesa e depuração —
+      debugging) vai ensinar a rastrear o valor das variáveis passo a passo para caçar bugs, inclusive dentro
+      dos loops que você acabou de aprender. Estou aqui, seguimos juntos.
     </div>
   </section>
 
   <div class="score-bar">
     <span>Progresso geral</span>
-    <span><b id="scoreText">0 / 6</b> abas visitadas</span>
+    <span><b id="scoreText">0 / 7</b> abas visitadas</span>
   </div>
 
   <footer class="tiny">SENAC · Programação em Python · Material de Reforço interativo — Aulas 1, 2 e 3</footer>
@@ -1992,10 +2687,21 @@ print(f"Pretensao: R$ {pretensao:.2f}")</textarea>
    MINI INTERPRETADOR PYTHON DIDÁTICO
    ===================================================================== */
 function PyError(msg) { this.message = msg; this.isPyError = true; }
+function BreakSignal() {}
+function ContinueSignal() {}
 function makeInt(v) { return { type: "int", value: v }; }
 function makeFloat(v) { return { type: "float", value: v }; }
 function makeStr(v) { return { type: "str", value: v }; }
 function makeBool(v) { return { type: "bool", value: v }; }
+function makeList(items) { return { type: "list", value: items }; }
+
+const RANGE_MAX_ITEMS = 200000;
+const LOOP_MAX_ITER = 100000;
+
+function pyReprElem(val) {
+  if (val.type === "str") return "'" + val.value.replace(/\\/g, "\\\\").replace(/'/g, "\\'") + "'";
+  return pyRepr(val);
+}
 
 function pyRepr(val) {
   if (val.type === "str") return val.value;
@@ -2006,12 +2712,16 @@ function pyRepr(val) {
     let s = String(Math.round(val.value * 1e10) / 1e10);
     return s;
   }
+  if (val.type === "list") return "[" + val.value.map(pyReprElem).join(", ") + "]";
+  if (val.type === "range") return "range(...)";
   return String(val.value);
 }
 
 function toBool(val) {
   if (val.type === "bool") return val.value;
   if (val.type === "str") return val.value.length > 0;
+  if (val.type === "list") return val.value.length > 0;
+  if (val.type === "range") return val.value.length > 0;
   return val.value !== 0;
 }
 
@@ -2023,6 +2733,8 @@ function tokenize(src) {
     if (c === " " || c === "\t") { i++; continue; }
     if (c === "(") { tokens.push({ t: "LP" }); i++; continue; }
     if (c === ")") { tokens.push({ t: "RP" }); i++; continue; }
+    if (c === "[") { tokens.push({ t: "LB" }); i++; continue; }
+    if (c === "]") { tokens.push({ t: "RB" }); i++; continue; }
     if (c === ",") { tokens.push({ t: "COMMA" }); i++; continue; }
     if (c === "*") { if (src[i+1] === "*") { tokens.push({t:"OP",v:"**"}); i+=2; continue; } tokens.push({t:"OP",v:"*"}); i++; continue; }
     if (c === "/") { if (src[i+1] === "/") { tokens.push({t:"OP",v:"//"}); i+=2; continue; } tokens.push({t:"OP",v:"/"}); i++; continue; }
@@ -2064,6 +2776,15 @@ function parseExprToAst(src) {
   function next(){ return tokens[pos++]; }
   function isKw(tok, kw){ return tok && tok.t === "ID" && tok.v === kw; }
 
+  function parseArgs(closeType) {
+    const args = [];
+    if (peek() && peek().t !== closeType) {
+      args.push(parseOr());
+      while (peek() && peek().t === "COMMA") { next(); args.push(parseOr()); }
+    }
+    return args;
+  }
+
   function parseAtom() {
     const tok = peek();
     if (!tok) throw new PyError("SyntaxError: expressão incompleta");
@@ -2071,14 +2792,20 @@ function parseExprToAst(src) {
     if (tok.t === "STR") { next(); return { k: "str", v: tok.v }; }
     if (tok.t === "FSTR") { next(); return { k: "fstr", raw: tok.v }; }
     if (tok.t === "LP") { next(); const v = parseOr(); if (!peek()||peek().t!=="RP") throw new PyError("SyntaxError: faltou fechar parêntese )"); next(); return v; }
+    if (tok.t === "LB") {
+      next();
+      const items = parseArgs("RB");
+      if (!peek()||peek().t!=="RB") throw new PyError("SyntaxError: faltou fechar colchete ]");
+      next(); return { k: "list", items };
+    }
     if (tok.t === "ID") {
       next(); const name = tok.v;
       if (name === "True") return { k: "bool", v: true };
       if (name === "False") return { k: "bool", v: false };
       if (peek() && peek().t === "LP") {
-        next(); const argNode = parseOr();
+        next(); const args = parseArgs("RP");
         if (!peek()||peek().t!=="RP") throw new PyError("SyntaxError: faltou fechar parêntese )");
-        next(); return { k: "call", name, arg: argNode };
+        next(); return { k: "call", name, args };
       }
       return { k: "id", name };
     }
@@ -2185,20 +2912,52 @@ function parseFStringRaw(raw, env) {
   return out;
 }
 
-function callFn(name, argNode, env) {
-  const arg = evalAst(argNode, env);
+function callFn(name, argNodes, env) {
+  const args = argNodes.map(a => evalAst(a, env));
   if (name === "int") {
+    const arg = args[0];
     if (arg.type === "str") { const v = arg.value.trim(); if (!/^-?\d+$/.test(v)) throw new PyError('ValueError: invalid literal for int() with base 10: "' + arg.value + '"'); return makeInt(parseInt(v,10)); }
     if (arg.type === "bool") return makeInt(arg.value ? 1 : 0);
     return makeInt(Math.trunc(arg.value));
   }
   if (name === "float") {
+    const arg = args[0];
     if (arg.type === "str") { const v = arg.value.trim(); if (!/^-?\d+(\.\d+)?$/.test(v)) throw new PyError('ValueError: could not convert string to float: "' + arg.value + '"'); return makeFloat(parseFloat(v)); }
     if (arg.type === "bool") return makeFloat(arg.value ? 1 : 0);
     return makeFloat(arg.value);
   }
-  if (name === "str") return makeStr(pyRepr(arg));
-  if (name === "type") return makeStr("<class '" + arg.type + "'>");
+  if (name === "str") return makeStr(pyRepr(args[0]));
+  if (name === "type") return makeStr("<class '" + args[0].type + "'>");
+  if (name === "len") {
+    const a = args[0];
+    if (a.type === "str") return makeInt(a.value.length);
+    if (a.type === "list") return makeInt(a.value.length);
+    throw new PyError("TypeError: object of type '" + a.type + "' has no len()");
+  }
+  if (name === "range") {
+    if (args.length < 1 || args.length > 3) throw new PyError("TypeError: range esperava de 1 a 3 argumentos");
+    for (const a of args) if (a.type !== "int") throw new PyError("TypeError: 'range' só aceita números inteiros");
+    let start, stop, step;
+    if (args.length === 1) { start = 0; stop = args[0].value; step = 1; }
+    else if (args.length === 2) { start = args[0].value; stop = args[1].value; step = 1; }
+    else { start = args[0].value; stop = args[1].value; step = args[2].value; }
+    if (step === 0) throw new PyError("ValueError: range() com passo (3º argumento) igual a zero");
+    const count = step > 0 ? Math.ceil((stop - start) / step) : Math.ceil((start - stop) / -step);
+    if (count > RANGE_MAX_ITEMS) throw new PyError("MemoryError: esse range é grande demais para o simulador (máx. " + RANGE_MAX_ITEMS + " itens)");
+    const items = [];
+    if (step > 0) { for (let v = start; v < stop; v += step) items.push(makeInt(v)); }
+    else { for (let v = start; v > stop; v += step) items.push(makeInt(v)); }
+    return { type: "range", value: items };
+  }
+  if (name === "__inputAt") {
+    const idx = args[0].value;
+    const q = (env.__inputQueues && env.__inputQueues[idx] && env.__inputQueues[idx].length) ? env.__inputQueues[idx] : [""];
+    if (env.__inputPos[idx] === undefined) env.__inputPos[idx] = 0;
+    const pos = env.__inputPos[idx];
+    const val = q[Math.min(pos, q.length - 1)];
+    env.__inputPos[idx] = pos + 1;
+    return makeStr(val);
+  }
   throw new PyError("NameError: name '" + name + "' is not defined");
 }
 
@@ -2211,10 +2970,11 @@ function evalAst(node, env) {
     case "str": return makeStr(node.v);
     case "bool": return makeBool(node.v);
     case "fstr": return makeStr(parseFStringRaw(node.raw, env));
+    case "list": return makeList(node.items.map(it => evalAst(it, env)));
     case "id":
       if (!(node.name in env)) throw new PyError("NameError: name '" + node.name + "' is not defined");
       return env[node.name];
-    case "call": return callFn(node.name, node.arg, env);
+    case "call": return callFn(node.name, node.args, env);
     case "neg": {
       const v = evalAst(node.arg, env);
       if (v.type === "str") throw new PyError("TypeError: bad operand type for unary -: 'str'");
@@ -2280,7 +3040,7 @@ function evalExpr(src, env) {
   return evalAst(parseExprToAst(src), env);
 }
 
-// ---------------- Statements / blocos (if/elif/else, match/case) ----------------
+// ---------------- Statements / blocos (if/elif/else, match/case, for, while) ----------------
 function stripComment(line) {
   let inStr = false, quote = "";
   for (let i = 0; i < line.length; i++) {
@@ -2295,9 +3055,17 @@ function stripComment(line) {
 function parseSimpleStmt(line) {
   const printMatch = line.match(/^print\s*\((.*)\)\s*$/);
   if (printMatch) return { type: "print", expr: printMatch[1] };
+  if (line === "break") return { type: "break" };
+  if (line === "continue") return { type: "continue" };
+  const augMatch = line.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\s*(\+=|-=|\*=|\/=)\s*(.+)$/);
+  if (augMatch) {
+    const opMap = { "+=": "+", "-=": "-", "*=": "*", "/=": "/" };
+    const op = opMap[augMatch[2]];
+    return { type: "assign", name: augMatch[1], expr: augMatch[1] + " " + op + " (" + augMatch[3] + ")" };
+  }
   const assignMatch = line.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\s*=\s*(.+)$/);
   if (assignMatch) return { type: "assign", name: assignMatch[1], expr: assignMatch[2] };
-  throw new PyError('SyntaxError: não entendi a linha "' + line + '" (o simulador entende print(), variavel = valor, if/elif/else e match/case)');
+  throw new PyError('SyntaxError: não entendi a linha "' + line + '" (o simulador entende print(), variavel = valor, if/elif/else, match/case, for, while, break e continue)');
 }
 
 function parseChildBlock(lines, idx, parentIndent) {
@@ -2343,6 +3111,14 @@ function parseBlock(lines, idx, blockIndent) {
         cases.push({ pattern: cm[1], body });
       }
       stmts.push({ type: "match", subjExpr, cases });
+    } else if ((m = line.match(/^for\s+([a-zA-Z_][a-zA-Z0-9_]*)\s+in\s+(.+):$/))) {
+      idx.i++;
+      const body = parseChildBlock(lines, idx, blockIndent);
+      stmts.push({ type: "for", varName: m[1], iterExpr: m[2], body });
+    } else if ((m = line.match(/^while\s+(.+):$/))) {
+      idx.i++;
+      const body = parseChildBlock(lines, idx, blockIndent);
+      stmts.push({ type: "while", cond: m[1], body });
     } else if (/^elif\s+.+:$/.test(line) || /^else\s*:$/.test(line)) {
       throw new PyError('SyntaxError: "' + line + '" sem um if correspondente antes');
     } else if (/^case\s+.+:$/.test(line)) {
@@ -2380,12 +3156,45 @@ function execBlock(stmts, env, out) {
         }
         if (hit) { execBlock(c.body, env, out); break; }
       }
+    } else if (s.type === "for") {
+      const iterVal = evalExpr(s.iterExpr, env);
+      if (iterVal.type !== "range" && iterVal.type !== "list") throw new PyError("TypeError: '" + iterVal.type + "' object is not iterable");
+      for (const item of iterVal.value) {
+        env[s.varName] = item;
+        if (env.__loopBudget-- <= 0) throw new PyError("RuntimeError: o loop passou de " + LOOP_MAX_ITER + " repetições — o simulador parou por segurança (parece um loop infinito).");
+        try {
+          execBlock(s.body, env, out);
+        } catch (e) {
+          if (e instanceof BreakSignal) break;
+          if (e instanceof ContinueSignal) continue;
+          throw e;
+        }
+      }
+    } else if (s.type === "while") {
+      while (toBool(evalExpr(s.cond, env))) {
+        if (env.__loopBudget-- <= 0) throw new PyError("RuntimeError: o loop passou de " + LOOP_MAX_ITER + " repetições — o simulador parou por segurança (confira se a condição do while eventualmente fica False, ou se falta um break).");
+        try {
+          execBlock(s.body, env, out);
+        } catch (e) {
+          if (e instanceof BreakSignal) break;
+          if (e instanceof ContinueSignal) continue;
+          throw e;
+        }
+      }
+    } else if (s.type === "break") {
+      throw new BreakSignal();
+    } else if (s.type === "continue") {
+      throw new ContinueSignal();
     }
   }
 }
 
-function runProgram(code) {
-  const env = {}; const outputLines = [];
+function runProgram(code, inputQueues) {
+  const env = {};
+  env.__inputQueues = inputQueues || {};
+  env.__inputPos = {};
+  env.__loopBudget = LOOP_MAX_ITER;
+  const outputLines = [];
   try {
     const rawLines = code.split("\n");
     const lines = [];
@@ -2400,12 +3209,12 @@ function runProgram(code) {
     if (idx.i < lines.length) throw new PyError('IndentationError: indentação inconsistente perto de "' + lines[idx.i].text + '"');
     execBlock(stmts, env, outputLines);
   } catch (e) {
-    outputLines.push((e && e.message) ? e.message : String(e));
+    if (e instanceof BreakSignal) outputLines.push("SyntaxError: 'break' fora de um loop for/while");
+    else if (e instanceof ContinueSignal) outputLines.push("SyntaxError: 'continue' fora de um loop for/while");
+    else outputLines.push((e && e.message) ? e.message : String(e));
   }
   return outputLines.join("\n");
 }
-
-
 
 /* =====================================================================
    CONSOLE UI
@@ -2423,18 +3232,20 @@ function runConsole(id){
     const needsRender = inputsWrap.dataset.forCode !== code;
     if (needsRender) {
       inputsWrap.dataset.forCode = code;
-      inputsWrap.innerHTML = '<div style="font-size:11px;color:#bbb;margin-bottom:6px; width:100%;">📝 Este código pede dados com input() — preencha os valores abaixo (como se você estivesse digitando) e clique em ▶ Rodar de novo:</div>' +
+      inputsWrap.innerHTML = '<div style="font-size:11px;color:#bbb;margin-bottom:6px; width:100%;">📝 Este código pede dados com input() — preencha os valores abaixo (como se você estivesse digitando) e clique em ▶ Rodar de novo. Se o input() estiver dentro de um for/while, você pode digitar VÁRIOS valores separados por vírgula (um para cada repetição) — se digitar só um valor, ele se repete em todas as repetições:</div>' +
         matches.map((mt,i)=>`<div class="inp-field">${(mt.prompt||'valor')}<input data-idx="${i}"></div>`).join('');
       out.textContent = "▸ Preencha os campos de entrada acima e clique em ▶ Rodar novamente.";
       return;
     }
     const fields = inputsWrap.querySelectorAll('input');
     let finalCode = code;
+    const inputQueues = {};
     matches.forEach((mt,i)=>{
-      const val = fields[i] ? fields[i].value : "";
-      finalCode = finalCode.replace(mt.full, JSON.stringify(val));
+      const raw = fields[i] ? fields[i].value : "";
+      inputQueues[i] = raw.split(",").map(s => s.trim());
+      finalCode = finalCode.replace(mt.full, `__inputAt(${i})`);
     });
-    try { out.textContent = runProgram(finalCode) || "(nenhuma saída — use print() para mostrar algo)"; }
+    try { out.textContent = runProgram(finalCode, inputQueues) || "(nenhuma saída — use print() para mostrar algo)"; }
     catch(e){ out.textContent = "Erro: " + e.message; }
     return;
   }
@@ -2456,7 +3267,7 @@ function resetConsole(id, original){
 const tabBtns = document.querySelectorAll('.tab-btn');
 const panels = document.querySelectorAll('.panel');
 const visited = new Set(['a1']);
-function updateScore(){ document.getElementById('scoreText').textContent = visited.size + ' / 6'; }
+function updateScore(){ document.getElementById('scoreText').textContent = visited.size + ' / 7'; }
 tabBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     tabBtns.forEach(b => b.classList.remove('active'));
@@ -2473,8 +3284,8 @@ function toggleOutput(id){ document.getElementById(id).classList.toggle('shown')
 function toggleAns(id){ document.getElementById(id).classList.toggle('shown'); }
 
 /* progresso por aula (checkboxes "já entendi") */
-const doneCounts = { a1:0, a2:0, a3:0 };
-const totalStations = { a1:9, a2:10, a3:10, a4:16, a5:23 };
+const doneCounts = { a1:0, a2:0, a3:0, a4:0, a5:0, a6:0 };
+const totalStations = { a1:9, a2:10, a3:10, a4:16, a5:20, a6:22 };
 function markDone(el, aula){
   doneCounts[aula] += el.checked ? 1 : -1;
   if (doneCounts[aula] < 0) doneCounts[aula] = 0;
@@ -2544,6 +3355,20 @@ function opCalc(){
   document.getElementById('calcDiv').textContent = Math.floor(total / caixa);
   document.getElementById('calcMod').textContent = total % caixa;
   document.getElementById('calcFloat').textContent = (total / caixa).toFixed(2).replace(/\.00$/, '.0');
+}
+
+/* ---------- RANGE CALC (Aula 6) ---------- */
+function rangeCalc(){
+  const start = parseInt(document.getElementById('rgStart').value) || 0;
+  const stop = parseInt(document.getElementById('rgStop').value) || 0;
+  let step = parseInt(document.getElementById('rgStep').value);
+  if (!step) step = 1;
+  const out = document.getElementById('rgResult');
+  if (step === 0) { out.textContent = "o passo não pode ser 0"; return; }
+  const items = [];
+  if (step > 0) { for (let v = start; v < stop; v += step) { items.push(v); if (items.length > 60) break; } }
+  else { for (let v = start; v > stop; v += step) { items.push(v); if (items.length > 60) break; } }
+  out.textContent = items.length ? items.join(", ") : "(vazio — nenhum número gerado)";
 }
 
 /* ---------- GIT STEPS (Aula 3) ---------- */
@@ -2632,6 +3457,9 @@ const quiz = [
   {q:"idade = 20 and possui_cnh = True. Qual expressão decide se a pessoa PODE dirigir?", opts:["idade >= 18 or possui_cnh","idade >= 18 and possui_cnh","not idade >= 18"], correct:1},
   {q:"Em \"False and print('oi')\", o print roda?", opts:["Sim, sempre roda","Não — curto-circuito: nem avalia o resto","Só se a variável for True"], correct:1},
   {q:"Qual das duas formas abaixo é a \"achatada\" (flat) para checar nota >= 7 and presenca >= 75?", opts:["if nota>=7:\n  if presenca>=75:\n    print('Aprovado')","if nota>=7 and presenca>=75:\n  print('Aprovado')","if nota>=7 or presenca>=75:\n  print('Aprovado')"], correct:1},
+  {q:"range(1, 6) gera quais números?", opts:["1, 2, 3, 4, 5","1, 2, 3, 4, 5, 6","0, 1, 2, 3, 4, 5"], correct:0},
+  {q:"Por que Python não tem do...while?", opts:["Ele tem, só que com outro nome (foreach)","Nunca teve — o equivalente é while True + break","Só funciona em versões antigas"], correct:1},
+  {q:"O que acontece se um while nunca tornar a condição falsa (e não tiver break)?", opts:["O Python corrige sozinho","Loop infinito — trava o programa","Ele para depois de 10 voltas"], correct:1},
 ];
 const quizArea = document.getElementById('quizArea');
 quiz.forEach((item, qi) => {
